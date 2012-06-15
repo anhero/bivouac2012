@@ -59,6 +59,7 @@ void Player::onKeyHold(KeySignalData data) {
             break;
     }
 }
+    
 void Player::onKeyPress(KeySignalData data) {
     switch (data.key) {
         case Key::SPACE:
@@ -69,6 +70,7 @@ void Player::onKeyPress(KeySignalData data) {
             break;
     }
 }
+    
 void Player::onKeyRelease(KeySignalData data) {
     
 }
