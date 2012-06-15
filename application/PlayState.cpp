@@ -22,13 +22,13 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 
-	PlayState::PlayState(const std::string &newName) : State(newName) {
-		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
+	PlayState::PlayState(const std::string &newName) : State(newName),
+	_nbPlayers(0), _usesGamepads(true) {
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
-		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
+        
         camera.setScaling(Vector2(0.88,0.88));
-        initPlayers(1);
+        initPlayers();
         initBridges();
 	}
 
@@ -37,31 +37,48 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 	}
     void PlayState::render() {
     }
-    
-	void PlayState::onKeyRelease( KeySignalData data) {
-		players[0]->onKeyRelease(data);
+	//TODO: Remove debug "SPACE" key...?
+	void PlayState::onKeyPress( KeySignalData data) {
+		if (data.key == Key::F9) {
+			buttons[0]->activate();
+		}
+		if (data.key == Key::F10) {
+			buttons[1]->activate();
+		}
+		if (data.key == Key::F11) {
+			buttons[2]->activate();
+		}
+		if (data.key == Key::F12) {
+			buttons[3]->activate();
+		}
+		if (data.key == Key::ESCAPE) {
+			RedBox::Engine::exitApplication(0);
+		}
 	}
-    
-	void PlayState::onKeyHold( KeySignalData data) {
-		players[0]->onKeyHold(data);
-	}
-    
-    void PlayState::initPlayers(int nbPlayers){
-        for (int i = 0; i < nbPlayers; ++i) {
-            players.push_back(new Player("player", this));
+
+    void PlayState::initPlayers() {
+		//We check the number of available gamepads.
+		std::cout << "Initializing players..." << std::endl;
+		_nbPlayers = InputManager::getInstance().getNbGamePads();
+		if (_nbPlayers > 4) {
+			_nbPlayers = 4;
+		}
+		if (_nbPlayers < 1) {
+			_nbPlayers = 1;
+			_usesGamepads = false;
+		}
+		std::cout << "Number of players: " << _nbPlayers << std::endl;
+		std::cout << "Uses gamepads: " << (_usesGamepads?"yes":"no") << std::endl;
+        for (int i = 0; i < _nbPlayers; ++i) {
+			std::cout << "Creating player #" << i+1 << std::endl;
+            players.push_back(new Player("player", this, i));
             players.back()->setZ(50);
             add(players.back());
+			
+			//TODO: Position players in the middle of the platforms.
             players.back()->setPosition(Vector2(100,450));
         }
     }
-    
-	void PlayState::onKeyPress( KeySignalData data) {
-        players[0]->onKeyPress(data);
-		
-		if (data.key == Key::SPACE) {
-			buttons[1]->activate();
-		}
-	}
 
 	void PlayState::onGetFocus() {
 		MainWindow::getInstance().hideCursor();

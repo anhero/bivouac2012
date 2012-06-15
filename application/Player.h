@@ -22,12 +22,15 @@ enum Direction{
 };
 class Player : public RedBox::Sprite, public sigly::HasSlots<> {
 public:
-	Player(PlayState *parentState);
-	Player(const std::string& image, PlayState *parentState);
+	Player(const std::string& image, PlayState *parentState, int id);
 	~Player();
 	void onKeyPress(RedBox::KeySignalData data);
 	void onKeyHold(RedBox::KeySignalData data);
 	void onKeyRelease(RedBox::KeySignalData data);
+	
+	//void onThumbstickMove(RedBox::GamePadThumbstickSignalData data);
+	void onButtonHold(RedBox::GamePadButtonSignalData data);
+	void onButtonPress(RedBox::GamePadButtonSignalData data);
 	
     void render();
 	void update();
@@ -35,6 +38,8 @@ private:
 	PlayState *_parentState;
     HookShot* _hook;
     Direction isFacing;
+	
+	int _playerID;
 };
 
 }
