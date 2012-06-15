@@ -15,6 +15,10 @@ namespace Bivouac2012 {
 class Bridge : public RedBox::Sprite  {
 public:
 	Bridge(Vector2 pos, bool horizontal);
+	
+	//This resets the timer on the bridge.
+	void activate();
+	
 private:
 	bool _horizontal;
 };

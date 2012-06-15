@@ -19,4 +19,10 @@ void Button::connectBridges(Bridge* bridge1, Bridge* bridge2) {
 	_bridges[1] = bridge2;
 }
 
+void Button::activate() {
+	for (int i=0; i < 2; i++) {
+		_bridges[i]->activate();
+	}
+}
+
 }
