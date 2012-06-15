@@ -3,6 +3,7 @@
 using namespace RedBox;
 
 namespace Bivouac2012 {
+	
 static const int BUTTON_TOP_LEFT     = 0;
 static const int BUTTON_TOP_RIGHT    = 1;
 static const int BUTTON_BOTTOM_LEFT  = 2;
@@ -23,41 +24,48 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 		
 		
+		//Loop for buttons creation
 		for (int i=0; i < 4; i++) {
-			//TODO Properly define offsets for the buttons...
-			//Button *btn = new Button(Vector2( (i%2 + 1) * 150 , (i/2 + 1) * 125 ));
 			int x = 0;
 			int y = 0;
 
-			//X
+			//X position of the button
 			if (i == BUTTON_TOP_LEFT || i == BUTTON_BOTTOM_LEFT) {
 				x = 0 + BUTTON_OFFSET_FROM_SCREEN;
 			}
 			else {
 				x = WIDTH - BUTTON_OFFSET_FROM_SCREEN;
 			}
-			//Y
+			//Y position of the button
 			if (i == BUTTON_TOP_LEFT || i == BUTTON_TOP_RIGHT) {
 				y = 0 + BUTTON_OFFSET_FROM_SCREEN;
 			}
 			else {
 				y = HEIGHT - BUTTON_OFFSET_FROM_SCREEN;
 			}
-				
-				
+			
+			//Creating the button
 			Button *btn = new Button(Vector2(0,0));
+			//Aligning and centering
 			btn->setXPosition(x - btn->getWidth()/2);
 			btn->setYPosition(y - btn->getHeight()/2);
+			
+			//Adding to the buttons array
 			buttons[i] = btn;
+			
 			add(btn);
 		}
+		//Loop for bridges creation
 		for (int i=0; i < 4; i++) {
+			
+			//Should it be an horizontal bridge?
 			bool horiz = true;
 			if (i == BRIDGE_LEFT || i == BRIDGE_RIGHT) {
 				horiz = false;
 			}
-			Bridge *bridge = new Bridge(Vector2(0,0),horiz);
 			
+			//Create the bridge
+			Bridge *bridge = new Bridge(Vector2(0,0),horiz);
 			
 			int x = 0;
 			int y = 0;
@@ -71,6 +79,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			else {
 				x = WIDTH / 2;
 			}
+			//Center it
 			x -= bridge->getWidth() / 2;
 			
 			// Y pos branches
@@ -83,12 +92,16 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			else {
 				y = HEIGHT / 2;
 			}
+			//Center it
 			y -= bridge->getHeight() / 2;
 			
+			//Move it
 			bridge->setPosition(x,y);
+
+			//Adding to the bridges array
+			bridges[i] = bridge;
 			
 			add(bridge);
-			bridges[i] = bridge;
 		}
 	}
 
