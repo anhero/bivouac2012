@@ -1,4 +1,5 @@
 #include "PlayState.h"
+#include "Player.h"
 
 using namespace RedBox;
 
@@ -20,15 +21,55 @@ static const int HEIGHT = 600;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
 	PlayState::PlayState(const std::string &newName) : State(newName) {
+        ResourceManager::loadTextureRelativePath("player", "Player.png");
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
+		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
+		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
+        setBackgroundColor(Color::WHITE);
+        initPlayers(1);
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
+        initBridges();
 		
-		
-		//Loop for buttons creation
+	}
+
+	void PlayState::update() {
+	}
+    void PlayState::render() {
+    }
+    
+	void PlayState::onKeyRelease( KeySignalData data) {
+		players[0]->onKeyRelease(data);
+	}
+    
+	void PlayState::onKeyHold( KeySignalData data) {
+		players[0]->onKeyHold(data);
+	}
+    
+    void PlayState::initPlayers(int nbPlayers){
+        for (int i = 0; i < nbPlayers; ++i) {
+            players.push_back(new Player("player"));
+            add(players.back());
+            players.back()->setPosition(Vector2(100,100));
+        }
+    }
+    
+	void PlayState::onKeyPress( KeySignalData data) {
+        players[0]->onKeyPress(data);
+	}
+
+	void PlayState::onGetFocus() {
+		MainWindow::getInstance().hideCursor();
+	}
+	
+	void PlayState::onLoseFocus() {
+	}
+    void PlayState::initBridges(){
+    
+        //Loop for buttons creation
 		for (int i=0; i < 4; i++) {
 			int x = 0;
 			int y = 0;
-
+            
 			//X position of the button
 			if (i == BUTTON_TOP_LEFT || i == BUTTON_BOTTOM_LEFT) {
 				x = 0 + BUTTON_OFFSET_FROM_SCREEN;
@@ -97,7 +138,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			
 			//Move it
 			bridge->setPosition(x,y);
-
+            
 			//Adding to the bridges array
 			bridges[i] = bridge;
 			
@@ -119,24 +160,5 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 				buttons[i]->connectBridges(bridges[BRIDGE_BOTTOM], bridges[BRIDGE_RIGHT]);
 			}
 		}
-	}
-
-	void PlayState::update() {
-	}
-
-	void PlayState::onKeyRelease(RedBox::KeySignalData data) {
-		if (data.key == Key::ESCAPE) {
-			RedBox::Engine::exitApplication(0);
-		}
-	}
-
-	void PlayState::onKeyPress(RedBox::KeySignalData data) {
-	}
-
-	void PlayState::onGetFocus() {
-		MainWindow::getInstance().hideCursor();
-	}
-	
-	void PlayState::onLoseFocus() {
-	}
+    }
 }

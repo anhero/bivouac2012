@@ -12,6 +12,7 @@
 #include <vector>
 
 namespace Bivouac2012 {
+    class Player;
 	/**
 	 * 
 	 */
@@ -19,12 +20,17 @@ namespace Bivouac2012 {
     public:
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
+        void render();
 
     private:
+        void initPlayers(int nbPlayers);
 		void onKeyRelease(RedBox::KeySignalData data);
 		void onKeyPress(RedBox::KeySignalData data);
+        void onKeyHold(RedBox::KeySignalData data);
 		void onGetFocus();
 		void onLoseFocus();
+        void initBridges();
+        std::vector<Player*> players;
 		
 		Button * buttons[4];
 		Bridge * bridges[4];

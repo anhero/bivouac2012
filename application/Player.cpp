@@ -9,20 +9,37 @@
 using namespace RedBox;
 
 namespace Bivouac2012 {
-
-Player::Player() : RedBox::Sprite() {
-	Keyboard::connectKeyPress(this, &Player::onKeyPress);
-	Keyboard::connectKeyHold(this, &Player::onKeyHold);
-	Keyboard::connectKeyRelease(this, &Player::onKeyRelease);
-}
-
-void Player::onKeyHold(RedBox::KeySignalData data) {
-	
-}
-void Player::onKeyPress(RedBox::KeySignalData data) {
+    
+Player::Player() : Sprite() {
 
 }
-void Player::onKeyRelease(RedBox::KeySignalData data) {
+
+Player::Player(const std::string& image) : Sprite(image) {
+    
+}
+
+void Player::onKeyHold(KeySignalData data) {
+    switch (data.key) {
+        case Key::W:
+            move(Vector2(0,-2));
+            break;
+        case Key::A:
+            move(Vector2(-2,0));
+            break;
+        case Key::S:
+            move(Vector2(0,2));
+            break;
+        case Key::D:
+            move(Vector2(2,0));
+            break;
+        default:
+            break;
+    }
+}
+void Player::onKeyPress(KeySignalData data) {
+
+}
+void Player::onKeyRelease(KeySignalData data) {
 	
 }
 

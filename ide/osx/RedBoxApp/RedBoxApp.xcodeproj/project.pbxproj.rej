@@ -1,0 +1,32 @@
+***************
+*** 508,513 ****
+  					"\"$(SRCROOT)/../../../libraries/redbox/libraries/current/include\"",
+  				);
+  				INFOPLIST_FILE = "RedBoxApp/RedBoxApp-Info.plist";
+  				PRODUCT_NAME = "$(TARGET_NAME)";
+  				WRAPPER_EXTENSION = app;
+  			};
+--- 506,512 ----
+  					"\"$(SRCROOT)/../../../libraries/redbox/libraries/current/include\"",
+  				);
+  				INFOPLIST_FILE = "RedBoxApp/RedBoxApp-Info.plist";
++ 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+  				PRODUCT_NAME = "$(TARGET_NAME)";
+  				WRAPPER_EXTENSION = app;
+  			};
+***************
+*** 523,528 ****
+  					"\"$(SRCROOT)/../../../libraries/redbox/libraries/current/include\"",
+  				);
+  				INFOPLIST_FILE = "RedBoxApp/RedBoxApp-Info.plist";
+  				PRODUCT_NAME = "$(TARGET_NAME)";
+  				WRAPPER_EXTENSION = app;
+  			};
+--- 522,528 ----
+  					"\"$(SRCROOT)/../../../libraries/redbox/libraries/current/include\"",
+  				);
+  				INFOPLIST_FILE = "RedBoxApp/RedBoxApp-Info.plist";
++ 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+  				PRODUCT_NAME = "$(TARGET_NAME)";
+  				WRAPPER_EXTENSION = app;
+  			};
