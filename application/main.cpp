@@ -1,8 +1,12 @@
 #include <RedBox.h>
 #include "PlayState.h"
 
+#define TEX(s) RedBox::ResourceManager::loadTextureRelativePath(s, s ".png");
+
 //TODO: Transfer in a "initState"
 void initResources() {
+	TEX("button");
+	TEX("bridge");
 }
 
 int main(int argc, char *argv[]) {

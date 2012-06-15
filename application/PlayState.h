@@ -6,6 +6,10 @@
 
 #include <RedBox.h>
 
+#include "Button.h"
+#include "Bridge.h"
+
+#include <vector>
 
 namespace Bivouac2012 {
     class Player;
@@ -25,7 +29,11 @@ namespace Bivouac2012 {
         void onKeyHold(RedBox::KeySignalData data);
 		void onGetFocus();
 		void onLoseFocus();
+        void initBridges();
         std::vector<Player*> players;
+		
+		Button * buttons[4];
+		Bridge * bridges[4];
 	};
 }
 
