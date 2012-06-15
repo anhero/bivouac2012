@@ -14,4 +14,9 @@ namespace Bivouac2012 {
 Button::Button(Vector2 pos) : Sprite("button", pos) {
 }
 
+void Button::connectBridges(Bridge* bridge1, Bridge* bridge2) {
+	_bridges[0] = bridge1;
+	_bridges[1] = bridge2;
+}
+
 }

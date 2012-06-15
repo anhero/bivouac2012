@@ -103,6 +103,22 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			
 			add(bridge);
 		}
+		
+		//Bridges connection loop
+		for (int i = 0; i < 4; i++) {
+			if (i == BUTTON_TOP_LEFT) {
+				buttons[i]->connectBridges(bridges[BRIDGE_TOP], bridges[BRIDGE_LEFT]);
+			}
+			else if (i == BUTTON_TOP_RIGHT) {
+				buttons[i]->connectBridges(bridges[BRIDGE_TOP], bridges[BRIDGE_RIGHT]);
+			}
+			else if (i == BUTTON_BOTTOM_LEFT) {
+				buttons[i]->connectBridges(bridges[BRIDGE_BOTTOM], bridges[BRIDGE_LEFT]);
+			}
+			else {
+				buttons[i]->connectBridges(bridges[BRIDGE_BOTTOM], bridges[BRIDGE_RIGHT]);
+			}
+		}
 	}
 
 	void PlayState::update() {
