@@ -14,6 +14,8 @@ namespace Bivouac2012 {
 	static const float ACTIVATING_RATIO = 0.2;
 	static const float RETRACTING_RATIO = 0.05;
 	
+	static const float RETRACTING_DELAY = 0.5;
+	
 Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
 		_retracted(true), _retracting(false), 
 		_horizontal(horizontal), _retractedRatio(1.0), _activating(false) {
@@ -55,27 +57,18 @@ void Bridge::startRetracting() {
 //TODO: Intelligent tweening instead of hack...
 void Bridge::update() {
 	Sprite::update();
-	
+
 	//When the timer is over a certain time, we begin to retract the bridge.
-	if (!_retracted && _timer.getTime() > 0.4) {
+	if (!_retracted && _timer.getTime() > RETRACTING_DELAY) {
 		startRetracting();
 	}
 	if (_retracting) {
 		if (_retractedRatio > 1.0) {
 			stopRetracting();
+			_retractedRatio = 1.0;
 		}
 		else {
 			_retractedRatio += RETRACTING_RATIO;
-		}
-	}
-	if (_activating) {
-		if (_timer.getTime() > 0.2) {
-			_timer.addToTime(-0.2);
-		}
-		_retractedRatio -= ACTIVATING_RATIO;
-		if (_retractedRatio <= 0.0) {
-			_retractedRatio = 0.0;
-			_activating = false;
 		}
 	}
 	
@@ -88,6 +81,16 @@ void Bridge::update() {
 		else {
 			part1->setYPosition((-1 * (part1->getHeight()-10) * _retractedRatio - part1->getHeight()) + this->getYPosition());
 			part2->setYPosition(( 1 * (part2->getHeight()-10) * _retractedRatio                     ) + this->getYPosition());
+		}
+	}
+	if (_activating) {
+		if (_timer.getTime() > 0.2) {
+			_timer.addToTime(-0.2);
+		}
+		_retractedRatio -= ACTIVATING_RATIO;
+		if (_retractedRatio < 0.0) {
+			_retractedRatio = 0.0;
+			_activating = false;
 		}
 	}
 	
