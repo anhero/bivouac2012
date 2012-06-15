@@ -22,6 +22,8 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
 	PlayState::PlayState(const std::string &newName) : State(newName) {
         ResourceManager::loadTextureRelativePath("player", "Player.png");
+        ResourceManager::loadTextureRelativePath("hook", "hook.png");
+        ResourceManager::loadTextureRelativePath("chain", "ring.png");
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
@@ -51,7 +53,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
             players.push_back(new Player("player"));
             players.back()->setZ(50);
             add(players.back());
-            players.back()->setPosition(Vector2(50,50));
+            players.back()->setPosition(Vector2(100,450));
         }
     }
     

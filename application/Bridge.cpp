@@ -6,7 +6,7 @@
  */
 
 #include "Bridge.h"
-
+using namespace RedBox;
 namespace Bivouac2012 {
 	
 Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite("bridge", pos) {
