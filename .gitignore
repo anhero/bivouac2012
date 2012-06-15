@@ -1,0 +1,31 @@
+
+libraries/current
+libraries/workdir
+Thumbs.db
+
+
+Makefile
+Icon?
+
+#Mac OSX file
+.DS_Store
+
+#XCode file
+*.swp
+*~.nib
+*.xcworkspace/
+xcuserdata/
+
+build
+
+*.pbxuser
+*.perspective
+*.perspectivev3
+
+*.mode1v3
+*.mode2v3
+*.mpkg
+*.framework
+*.orig
+
+
