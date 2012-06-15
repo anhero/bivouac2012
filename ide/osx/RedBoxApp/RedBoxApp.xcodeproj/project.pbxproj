@@ -27,6 +27,7 @@
 		5C2A74DC158B3EC900029CFB /* Bridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74D8158B3E3100029CFB /* Bridge.cpp */; };
 		5C2A74DD158B3ECC00029CFB /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74DA158B3E3100029CFB /* Button.cpp */; };
 		5C2A74DF158B3F3800029CFB /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A74DE158B3F3800029CFB /* button.png */; };
+		5C2A74E1158B47A400029CFB /* bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A74E0158B47A400029CFB /* bridge.png */; };
 		5C77DE1215470FFF00519AA3 /* PlayState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CAFE7431547031F00804B5A /* PlayState.cpp */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		5C2A74DA158B3E3100029CFB /* Button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		5C2A74DB158B3E3100029CFB /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		5C2A74DE158B3F3800029CFB /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
+		5C2A74E0158B47A400029CFB /* bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bridge.png; sourceTree = "<group>"; };
 		5CAFE7431547031F00804B5A /* PlayState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayState.cpp; sourceTree = "<group>"; };
 		5CAFE7441547031F00804B5A /* PlayState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayState.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +147,7 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				5C2A74E0158B47A400029CFB /* bridge.png */,
 				5C2A74DE158B3F3800029CFB /* button.png */,
 				5C2A74D6158B3ABF00029CFB /* Player.png */,
 			);
@@ -283,6 +286,7 @@
 				240489DD14F2BA36001F8F61 /* MainMenu.xib in Resources */,
 				5C2A74D7158B3ABF00029CFB /* Player.png in Resources */,
 				5C2A74DF158B3F3800029CFB /* button.png in Resources */,
+				5C2A74E1158B47A400029CFB /* bridge.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
