@@ -10,18 +10,22 @@
 
 #include <RedBox.h>
 
+#include "PlayState.h"
+
 namespace Bivouac2012 {
 
 class Player : public RedBox::Sprite, public sigly::HasSlots<> {
 public:
-	Player();
-	Player(const std::string& image);
+	Player(PlayState *parentState);
+	Player(const std::string& image, PlayState *parentState);
 	
 	void onKeyPress(RedBox::KeySignalData data);
 	void onKeyHold(RedBox::KeySignalData data);
 	void onKeyRelease(RedBox::KeySignalData data);
+	
+	void update();
 private:
-
+	PlayState *_parentState;
 };
 
 }

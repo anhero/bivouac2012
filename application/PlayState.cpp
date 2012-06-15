@@ -20,7 +20,7 @@ static const int WIDTH  = 800;
 static const int HEIGHT = 600;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
-static const int PAD_OFFSET = 20;
+static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 
 	PlayState::PlayState(const std::string &newName) : State(newName) {
         ResourceManager::loadTextureRelativePath("player", "Player.png");
@@ -33,10 +33,6 @@ static const int PAD_OFFSET = 20;
         initBridges();
 
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
-		//TEMP. We activate the bridges to test
-		for (int i=0; i < 4; i++) {
-			buttons[i]->activate();
-		}
 	}
 
 	void PlayState::update() {
@@ -55,10 +51,10 @@ static const int PAD_OFFSET = 20;
     
     void PlayState::initPlayers(int nbPlayers){
         for (int i = 0; i < nbPlayers; ++i) {
-            players.push_back(new Player("player"));
+            players.push_back(new Player("player", this));
             players.back()->setZ(50);
             add(players.back());
-            players.back()->setPosition(Vector2(50,50));
+            players.back()->setPosition(Vector2(100,100));
         }
     }
     
@@ -138,7 +134,7 @@ static const int PAD_OFFSET = 20;
 			add(bridge);
 		}
 		
-		initPads();
+		initRooms();
 
         //Loop for buttons creation
 		for (int i=0; i < 4; i++) {
@@ -188,21 +184,25 @@ static const int PAD_OFFSET = 20;
 			}
 		}
     }
-	void PlayState::initPads() {
-		//Adds the "pads" graphics
+	void PlayState::initRooms() {
+		//Adds the rooms.
 		
-		Sprite *pad;
-		pad = new Sprite("pad_top-left");
-		pad->setPosition(PAD_OFFSET, PAD_OFFSET);
-		add(pad);
-		pad = new Sprite("pad_top-right");
-		pad->setPosition(WIDTH - PAD_OFFSET - pad->getWidth(), PAD_OFFSET);
-		add(pad);
-		pad = new Sprite("pad_bottom-left");
-		pad->setPosition(PAD_OFFSET, HEIGHT - PAD_OFFSET - pad->getHeight());
-		add(pad);
-		pad = new Sprite("pad_bottom-right");
-		pad->setPosition(WIDTH - PAD_OFFSET - pad->getWidth(), HEIGHT - PAD_OFFSET - pad->getHeight());
-		add(pad);
+		Sprite *room;
+		room = new Sprite("pad_top-left");
+		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		add(room);
+		rooms[0] = room;
+		room = new Sprite("pad_top-right");
+		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		add(room);
+		rooms[1] = room;
+		room = new Sprite("pad_bottom-left");
+		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		add(room);
+		rooms[2] = room;
+		room = new Sprite("pad_bottom-right");
+		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		add(room);
+		rooms[3] = room;
 	}
 }
