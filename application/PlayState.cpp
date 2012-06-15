@@ -23,9 +23,6 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 
 	PlayState::PlayState(const std::string &newName) : State(newName) {
-        ResourceManager::loadTextureRelativePath("player", "Player.png");
-        ResourceManager::loadTextureRelativePath("hook", "hook.png");
-        ResourceManager::loadTextureRelativePath("chain", "ring.png");
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);

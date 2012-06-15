@@ -21,8 +21,11 @@ Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(),
 		_horizontal(horizontal), _retractedRatio(0.0), _activating(false) {
 	_timer.stop();
 	
-	part1 = new Sprite("bridge_p1");
-	part2 = new Sprite("bridge_p2");
+	part1 = new Sprite("bridge");
+	part2 = new Sprite("bridge");
+            part2->scale(Vector2(-1,-1));
+            part1->rotate(-90);
+            part2->rotate(-90);
 	
 	if (_horizontal) {
 		rotate(90);
