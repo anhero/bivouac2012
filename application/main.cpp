@@ -6,6 +6,7 @@
 //TODO: Transfer in a "initState"
 void initResources() {
 	TEX("button");
+	TEX("bridge");
 }
 
 int main(int argc, char *argv[]) {

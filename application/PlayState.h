@@ -7,6 +7,7 @@
 #include <RedBox.h>
 
 #include "Button.h"
+#include "Bridge.h"
 
 #include <vector>
 
@@ -26,7 +27,7 @@ namespace Bivouac2012 {
 		void onLoseFocus();
 		
 		Button * buttons[4];
-		//std::vector<Bridge *> bridges;
+		Bridge * bridges[4];
 	};
 }
 
