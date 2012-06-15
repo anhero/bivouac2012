@@ -33,7 +33,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 	}
 
 	void PlayState::update() {
-        calculateButton();
+        calculateCollisionButtons();
 	}
     void PlayState::render() {
     }
@@ -66,11 +66,10 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 	void PlayState::onLoseFocus() {
 	}
     
-    void PlayState::calculateButton(){
+    void PlayState::calculateCollisionButtons(){
         for (int i=0; i<players.size(); ++i) {
             
             for (int j=0; j<4; ++j) {
-                int test = (players[i]->getCentroid() - buttons[j]->getCentroid()).getLength();
                 if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
                     buttons[j]->activate();
                 }

@@ -30,7 +30,7 @@ namespace Bivouac2012 {
 		void onGetFocus();
 		void onLoseFocus();
         void initBridges();
-        void calculateButton();
+        void calculateCollisionButtons();
         
         std::vector<Player*> players;
 		Button * buttons[4];
