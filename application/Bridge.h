@@ -19,8 +19,33 @@ public:
 	//This resets the timer on the bridge.
 	void activate();
 	
+	void update();
+	
+	void render();
+	
+	///Sets position for the middle of the bridge
+	void setPosition(const Vector2& newPosition);
+	///Sets position for the middle of the bridge
+	void setPosition(float newXPosition, float newYPosition);
+	
+	void rotate(float angleToAdd);
+	
+	float getWidth();
+	float getHeight();
+
 private:
 	bool _horizontal;
+	Stopwatch _timer;
+	
+	bool retracting;
+	bool retracted;
+	
+	//0 for closed, 1 for retracted.
+	float _retractedRatio;
+	
+	//Parts of the bridge
+	Sprite *part1;
+	Sprite *part2;
 };
 }
 

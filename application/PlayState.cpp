@@ -32,6 +32,10 @@ static const int PAD_OFFSET = 20;
         initBridges();
         initPlayers(1);
 		
+		//TEMP. We activate the bridges to test
+		for (int i=0; i < 4; i++) {
+			buttons[i]->activate();
+		}
 	}
 
 	void PlayState::update() {
@@ -91,7 +95,7 @@ static const int PAD_OFFSET = 20;
 				x = WIDTH / 2;
 			}
 			//Center it
-			x -= bridge->getWidth() / 2;
+			//x -= bridge->getWidth() / 2;
 			
 			// Y pos branches
 			if (i == BRIDGE_TOP) {
@@ -104,7 +108,7 @@ static const int PAD_OFFSET = 20;
 				y = HEIGHT / 2;
 			}
 			//Center it
-			y -= bridge->getHeight() / 2;
+			//y -= bridge->getHeight() / 2;
 			
 			//Move it
 			bridge->setPosition(x,y);
