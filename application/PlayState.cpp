@@ -20,6 +20,8 @@ static const int WIDTH  = 800;
 static const int HEIGHT = 600;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
+static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
+
 	PlayState::PlayState(const std::string &newName) : State(newName) {
         ResourceManager::loadTextureRelativePath("player", "Player.png");
         ResourceManager::loadTextureRelativePath("hook", "hook.png");
@@ -29,9 +31,10 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
         initPlayers(1);
-        initBridges();
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
-		
+        initBridges();
+
+		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 	}
 
 	void PlayState::update() {
@@ -50,7 +53,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
     
     void PlayState::initPlayers(int nbPlayers){
         for (int i = 0; i < nbPlayers; ++i) {
-            players.push_back(new Player("player"));
+            players.push_back(new Player("player", this));
             players.back()->setZ(50);
             add(players.back());
             players.back()->setPosition(Vector2(100,450));
@@ -59,6 +62,10 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
     
 	void PlayState::onKeyPress( KeySignalData data) {
         players[0]->onKeyPress(data);
+		
+		if (data.key == Key::SPACE) {
+			buttons[1]->activate();
+		}
 	}
 
 	void PlayState::onGetFocus() {
@@ -80,7 +87,57 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
     }
     
     void PlayState::initBridges(){
-    
+    		//Loop for bridges creation
+		for (int i=0; i < 4; i++) {
+			
+			//Should it be an horizontal bridge?
+			bool horiz = true;
+			if (i == BRIDGE_LEFT || i == BRIDGE_RIGHT) {
+				horiz = false;
+			}
+			
+			//Create the bridge
+			Bridge *bridge = new Bridge(Vector2(0,0),horiz);
+			
+			int x = 0;
+			int y = 0;
+			// X pos branches
+			if (i == BRIDGE_LEFT) {
+				x = BRIDGE_OFFSET_FROM_SCREEN;
+			}
+			else if (i == BRIDGE_RIGHT) {
+				x = WIDTH - BRIDGE_OFFSET_FROM_SCREEN;
+			}
+			else {
+				x = WIDTH / 2;
+			}
+			//Center it
+			//x -= bridge->getWidth() / 2;
+			
+			// Y pos branches
+			if (i == BRIDGE_TOP) {
+				y = BRIDGE_OFFSET_FROM_SCREEN;
+			}
+			else if (i == BRIDGE_BOTTOM) {
+				y = HEIGHT - BRIDGE_OFFSET_FROM_SCREEN;
+			}
+			else {
+				y = HEIGHT / 2;
+			}
+			//Center it
+			//y -= bridge->getHeight() / 2;
+			
+			//Move it
+			bridge->setPosition(x,y);
+            
+			//Adding to the bridges array
+			bridges[i] = bridge;
+			
+			add(bridge);
+		}
+		
+		initRooms();
+
         //Loop for buttons creation
 		for (int i=0; i < 4; i++) {
 			int x = 0;
@@ -112,55 +169,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			
 			add(btn);
 		}
-		//Loop for bridges creation
-		for (int i=0; i < 4; i++) {
-			
-			//Should it be an horizontal bridge?
-			bool horiz = true;
-			if (i == BRIDGE_LEFT || i == BRIDGE_RIGHT) {
-				horiz = false;
-			}
-			
-			//Create the bridge
-			Bridge *bridge = new Bridge(Vector2(0,0),horiz);
-			
-			int x = 0;
-			int y = 0;
-			// X pos branches
-			if (i == BRIDGE_LEFT) {
-				x = BRIDGE_OFFSET_FROM_SCREEN;
-			}
-			else if (i == BRIDGE_RIGHT) {
-				x = WIDTH - BRIDGE_OFFSET_FROM_SCREEN;
-			}
-			else {
-				x = WIDTH / 2;
-			}
-			//Center it
-			x -= bridge->getWidth() / 2;
-			
-			// Y pos branches
-			if (i == BRIDGE_TOP) {
-				y = BRIDGE_OFFSET_FROM_SCREEN;
-			}
-			else if (i == BRIDGE_BOTTOM) {
-				y = HEIGHT - BRIDGE_OFFSET_FROM_SCREEN;
-			}
-			else {
-				y = HEIGHT / 2;
-			}
-			//Center it
-			y -= bridge->getHeight() / 2;
-			
-			//Move it
-			bridge->setPosition(x,y);
-            
-			//Adding to the bridges array
-			bridges[i] = bridge;
-			
-			add(bridge);
-		}
-		
+
 		//Bridges connection loop
 		for (int i = 0; i < 4; i++) {
 			if (i == BUTTON_TOP_LEFT) {
@@ -177,4 +186,25 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			}
 		}
     }
+	void PlayState::initRooms() {
+		//Adds the rooms.
+		
+		Sprite *room;
+		room = new Sprite("pad_top-left");
+		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		add(room);
+		rooms[0] = room;
+		room = new Sprite("pad_top-right");
+		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		add(room);
+		rooms[1] = room;
+		room = new Sprite("pad_bottom-left");
+		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		add(room);
+		rooms[2] = room;
+		room = new Sprite("pad_bottom-right");
+		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		add(room);
+		rooms[3] = room;
+	}
 }

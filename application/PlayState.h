@@ -17,6 +17,7 @@ namespace Bivouac2012 {
 	 * 
 	 */
 	class PlayState : public RedBox::State {
+		friend class Player;
     public:
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
@@ -30,11 +31,15 @@ namespace Bivouac2012 {
 		void onGetFocus();
 		void onLoseFocus();
         void initBridges();
+		void initRooms();
         void calculateCollisionButtons();
         
         std::vector<Player*> players;
+		
 		Button * buttons[4];
 		Bridge * bridges[4];
+		
+		RedBox::Sprite * rooms[4];
 	};
 }
 
