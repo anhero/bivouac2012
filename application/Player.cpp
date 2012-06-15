@@ -14,20 +14,29 @@ namespace Bivouac2012 {
 	
 	
 	static const float PLAYER_SPEED = 4;
-    
-Player::Player(PlayState *parentState, bool keyboardPlayer) : Sprite(),
-	_parentState(parentState), _keyboardPlayer(keyboardPlayer) {
 
-}
+	Player::Player(const std::string& image, PlayState *parentState, int id) : Sprite(image),
+	_parentState(parentState), _playerID(id), isFacing(DOWN) {
+		_hook = new HookShot("hook", "ring", this);
 
-Player::Player(const std::string& image, PlayState *parentState, bool keyboardPlayer) : Sprite(image), 
-	_parentState(parentState), _keyboardPlayer(keyboardPlayer){
-    _hook = new HookShot("hook","ring", this);
-}
-Player::~Player(){
-    delete _hook;
-}
+		//Player 1 is controllable via keyboar, always
+		if (_playerID == 0) {
+			Keyboard::connectKeyPress(this, &Player::onKeyPress);
+			Keyboard::connectKeyHold(this, &Player::onKeyHold);
+			Keyboard::connectKeyRelease(this, &Player::onKeyRelease);
+		}
+		if (InputManager::getInstance().getNbGamePads() > 0) {
+			//InputManager::getInstance().getGamePad(_playerID)->connectThumbstickMove(this, &Player::onThumbstickMove);
+			InputManager::getInstance().getGamePad(_playerID)->connectButtonHold(this, &Player::onButtonHold);
+			InputManager::getInstance().getGamePad(_playerID)->connectButtonPress(this, &Player::onButtonPress);
+		}
+	}
 
+	Player::~Player() {
+		delete _hook;
+	}
+
+	//KEYBOARD HANDLING
 void Player::onKeyHold(KeySignalData data) {
     switch (data.key) {
         case Key::W:
@@ -50,7 +59,6 @@ void Player::onKeyHold(KeySignalData data) {
             break;
     }
 }
-    
 void Player::onKeyPress(KeySignalData data) {
     switch (data.key) {
         case Key::SPACE:
@@ -61,10 +69,33 @@ void Player::onKeyPress(KeySignalData data) {
             break;
     }
 }
-    
 void Player::onKeyRelease(KeySignalData data) {
     
 }
+/*
+	//GAMEPAD HANDLING
+	void Player::onThumbstickMove(RedBox::GamePadThumbstickSignalData data) {
+		//std::cout << data.thumbstickIndex << "::" << data.gamePadState.getThumbstick(data.thumbstickIndex) << std::endl;
+		if (data.thumbstickIndex == 0) {
+			if (data.gamePadState.getThumbstick(0) < -0.2) {
+				move(Vector2(-PLAYER_SPEED,0));
+				isFacing = LEFT;
+			}
+			else if (data.gamePadState.getThumbstick(0) > 0.2) {
+				move(Vector2(PLAYER_SPEED,0));
+				isFacing = RIGHT;
+			}
+		}
+	}
+ */
+	void Player::onButtonHold(RedBox::GamePadButtonSignalData data) {
+		
+	}
+	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
+		if (data.buttonIndex >= 0 && data.buttonIndex < 4) {
+			_hook->throwGraplin(isFacing);
+		}
+	}
 
 void Player::render(){
     Sprite::render();
@@ -72,6 +103,27 @@ void Player::render(){
 }
 
 void Player::update() {
+	//Player movements through thumbsticks
+	if (InputManager::getInstance().getNbGamePads() > 0) {
+		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
+		if (gamePadState.getThumbstick(0) < -0.2) {
+			move(Vector2(-PLAYER_SPEED,0));
+			isFacing = LEFT;
+		}
+		else if (gamePadState.getThumbstick(0) > 0.2) {
+			move(Vector2(PLAYER_SPEED,0));
+			isFacing = RIGHT;
+		}
+		if (gamePadState.getThumbstick(1) < -0.2) {
+			move(Vector2(0,-PLAYER_SPEED));
+			isFacing = UP;
+		}
+		else if (gamePadState.getThumbstick(1) > 0.2) {
+			move(Vector2(0,PLAYER_SPEED));
+			isFacing = DOWN;
+		}
+	}
+
     ////////////////////////////////////////
     //
     // fait une fonction à part.
