@@ -15,4 +15,8 @@ Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite("bridge", pos) {
 	}
 }
 
+void Bridge::activate() {
+	//TODO: reset the timer
+}
+
 }
