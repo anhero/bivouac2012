@@ -7,6 +7,11 @@
 void initResources() {
 	TEX("button");
 	TEX("bridge");
+	
+	TEX("pad_top-left");
+	TEX("pad_top-right");
+	TEX("pad_bottom-left");
+	TEX("pad_bottom-right");
 }
 
 int main(int argc, char *argv[]) {

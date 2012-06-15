@@ -20,15 +20,17 @@ static const int WIDTH  = 800;
 static const int HEIGHT = 600;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
+static const int PAD_OFFSET = 20;
+
 	PlayState::PlayState(const std::string &newName) : State(newName) {
         ResourceManager::loadTextureRelativePath("player", "Player.png");
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
-        initPlayers(1);
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
         initBridges();
+        initPlayers(1);
 		
 	}
 
@@ -64,39 +66,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 	void PlayState::onLoseFocus() {
 	}
     void PlayState::initBridges(){
-    
-        //Loop for buttons creation
-		for (int i=0; i < 4; i++) {
-			int x = 0;
-			int y = 0;
-            
-			//X position of the button
-			if (i == BUTTON_TOP_LEFT || i == BUTTON_BOTTOM_LEFT) {
-				x = 0 + BUTTON_OFFSET_FROM_SCREEN;
-			}
-			else {
-				x = WIDTH - BUTTON_OFFSET_FROM_SCREEN;
-			}
-			//Y position of the button
-			if (i == BUTTON_TOP_LEFT || i == BUTTON_TOP_RIGHT) {
-				y = 0 + BUTTON_OFFSET_FROM_SCREEN;
-			}
-			else {
-				y = HEIGHT - BUTTON_OFFSET_FROM_SCREEN;
-			}
-			
-			//Creating the button
-			Button *btn = new Button(Vector2(0,0));
-			//Aligning and centering
-			btn->setXPosition(x - btn->getWidth()/2);
-			btn->setYPosition(y - btn->getHeight()/2);
-			
-			//Adding to the buttons array
-			buttons[i] = btn;
-			
-			add(btn);
-		}
-		//Loop for bridges creation
+    		//Loop for bridges creation
 		for (int i=0; i < 4; i++) {
 			
 			//Should it be an horizontal bridge?
@@ -145,6 +115,40 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			add(bridge);
 		}
 		
+		initPads();
+
+        //Loop for buttons creation
+		for (int i=0; i < 4; i++) {
+			int x = 0;
+			int y = 0;
+            
+			//X position of the button
+			if (i == BUTTON_TOP_LEFT || i == BUTTON_BOTTOM_LEFT) {
+				x = 0 + BUTTON_OFFSET_FROM_SCREEN;
+			}
+			else {
+				x = WIDTH - BUTTON_OFFSET_FROM_SCREEN;
+			}
+			//Y position of the button
+			if (i == BUTTON_TOP_LEFT || i == BUTTON_TOP_RIGHT) {
+				y = 0 + BUTTON_OFFSET_FROM_SCREEN;
+			}
+			else {
+				y = HEIGHT - BUTTON_OFFSET_FROM_SCREEN;
+			}
+			
+			//Creating the button
+			Button *btn = new Button(Vector2(0,0));
+			//Aligning and centering
+			btn->setXPosition(x - btn->getWidth()/2);
+			btn->setYPosition(y - btn->getHeight()/2);
+			
+			//Adding to the buttons array
+			buttons[i] = btn;
+			
+			add(btn);
+		}
+
 		//Bridges connection loop
 		for (int i = 0; i < 4; i++) {
 			if (i == BUTTON_TOP_LEFT) {
@@ -161,4 +165,21 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 			}
 		}
     }
+	void PlayState::initPads() {
+		//Adds the "pads" graphics
+		
+		Sprite *pad;
+		pad = new Sprite("pad_top-left");
+		pad->setPosition(PAD_OFFSET, PAD_OFFSET);
+		add(pad);
+		pad = new Sprite("pad_top-right");
+		pad->setPosition(WIDTH - PAD_OFFSET - pad->getWidth(), PAD_OFFSET);
+		add(pad);
+		pad = new Sprite("pad_bottom-left");
+		pad->setPosition(PAD_OFFSET, HEIGHT - PAD_OFFSET - pad->getHeight());
+		add(pad);
+		pad = new Sprite("pad_bottom-right");
+		pad->setPosition(WIDTH - PAD_OFFSET - pad->getWidth(), HEIGHT - PAD_OFFSET - pad->getHeight());
+		add(pad);
+	}
 }
