@@ -6,13 +6,15 @@
 //TODO: Transfer in a "initState"
 void initResources() {
 	TEX("button");
-	TEX("bridge_p1");
-	TEX("bridge_p2");
+	TEX("bridge");
 	
 	TEX("pad_top-left");
 	TEX("pad_top-right");
 	TEX("pad_bottom-left");
 	TEX("pad_bottom-right");
+    TEX("player");
+    TEX("hook");
+    TEX("ring");
 }
 
 int main(int argc, char *argv[]) {

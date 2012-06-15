@@ -20,7 +20,7 @@ Player::Player(PlayState *parentState) : Sprite(), _parentState(parentState) {
 }
 
 Player::Player(const std::string& image, PlayState *parentState) : Sprite(image), _parentState(parentState){
-    _hook = new HookShot("hook","chain", this);
+    _hook = new HookShot("hook","ring", this);
 }
 Player::~Player(){
     delete _hook;
