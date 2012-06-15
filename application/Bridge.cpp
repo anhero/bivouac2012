@@ -12,9 +12,9 @@ namespace Bivouac2012 {
 	static const float ACTIVATING_RATIO = 0.2;
 	static const float RETRACTING_RATIO = 0.05;
 	
-	static const float RETRACTING_DELAY = 0.7;
+	static const float RETRACTING_DELAY = 1.7;
 	
-	static const int STICK_OUT = 10;
+	static const int STICK_OUT = 14;
 	
 Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
 		_retracted(false), _retracting(true), 
@@ -153,6 +153,41 @@ void Bridge::rotate(float angleToAdd) {
 void Bridge::render() {
 	part1->render();
 	part2->render();
+}
+
+bool Bridge::checkIsOnBridge(Vector2 point, bool oldPos) {
+	//I add a padding for floating point innaccuracies
+	static const float padding = 1.0f;
+	
+	if (oldPos) {
+		if (
+			point.x > part1->getOldXPosition()-padding && point.x < part1->getOldXPosition()+part1->getWidth()+padding
+		&&	point.y > part1->getOldYPosition()-padding && point.y < part1->getOldYPosition()+part1->getHeight()+padding
+		) {
+			return true;
+		}
+		if (
+			point.x > part2->getOldXPosition()-padding && point.x < part2->getOldXPosition()+part2->getWidth()+padding
+		&&	point.y > part2->getOldYPosition()-padding && point.y < part2->getOldYPosition()+part2->getHeight()+padding
+		) {
+			return true;
+		}
+	}
+	else {
+		if (
+			point.x > part1->getXPosition() && point.x < part1->getXPosition()+part1->getWidth()
+		&&	point.y > part1->getYPosition() && point.y < part1->getYPosition()+part1->getHeight()
+		) {
+			return true;
+		}
+		if (
+			point.x > part2->getXPosition() && point.x < part2->getXPosition()+part2->getWidth()
+		&&	point.y > part2->getYPosition() && point.y < part2->getYPosition()+part2->getHeight()
+		) {
+			return true;
+		}
+	}
+	return false;
 }
 
 }

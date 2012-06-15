@@ -39,6 +39,9 @@ public:
 	void activate();
 	///To be called when the bridge is to be retracted
 	void startRetracting();
+	
+	///Checks if the point is on a part of the bridge.
+	bool checkIsOnBridge(Vector2 point, bool oldPos = false);
 
 private:
 	bool _horizontal;
