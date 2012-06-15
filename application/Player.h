@@ -38,6 +38,7 @@ private:
 	int _playerID;
 	
 	void thumbStickMovements();
+	void collisionsAndShits();
 };
 
 }

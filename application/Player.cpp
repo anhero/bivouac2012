@@ -78,22 +78,7 @@ void Player::onKeyPress(KeySignalData data) {
 void Player::onKeyRelease(KeySignalData data) {
     
 }
-/*
-	//GAMEPAD HANDLING
-	void Player::onThumbstickMove(RedBox::GamePadThumbstickSignalData data) {
-		//std::cout << data.thumbstickIndex << "::" << data.gamePadState.getThumbstick(data.thumbstickIndex) << std::endl;
-		if (data.thumbstickIndex == 0) {
-			if (data.gamePadState.getThumbstick(0) < -0.2) {
-				move(Vector2(-PLAYER_SPEED,0));
-				isFacing = LEFT;
-			}
-			else if (data.gamePadState.getThumbstick(0) > 0.2) {
-				move(Vector2(PLAYER_SPEED,0));
-				isFacing = RIGHT;
-			}
-		}
-	}
- */
+
 	void Player::onButtonHold(RedBox::GamePadButtonSignalData data) {
 		
 	}
@@ -129,17 +114,19 @@ void Player::thumbStickMovements() {
 void Player::update() {
 	thumbStickMovements();
 
-    ////////////////////////////////////////
-    //
-    // fait une fonction à part.
-    //
-    ////////////////////////////////////////
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
 		Sprite::update();
 		return;
 	}
-	float oldX = 0;
+	collisionsAndShits();
+	
+	Sprite::update();
+    _hook->update();
+}
+
+void Player::collisionsAndShits() {
+		float oldX = 0;
 	float oldY = 0;
 	oldX = this->getOldXPosition() + this->getWidth()/2;
 	oldY = this->getOldYPosition() + this->getHeight()/2;
@@ -197,8 +184,6 @@ void Player::update() {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
 	
-	Sprite::update();
-    _hook->update();
 }
 
 }
