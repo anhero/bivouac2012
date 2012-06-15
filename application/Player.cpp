@@ -70,11 +70,6 @@ void Player::render(){
 }
 
 void Player::update() {
-    ////////////////////////////////////////
-    //
-    // fait une fonction à part.
-    //
-    ////////////////////////////////////////
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
 		Sprite::update();
@@ -133,9 +128,6 @@ void Player::update() {
 	}
 	if (last_room == NULL && last_bridge == NULL) {
 		std::cout << "YOU DYING" << std::endl;
-	}
-	else {
-		//std::cout << "YOU SAFE" << std::endl;
 	}
 	
 	Sprite::update();

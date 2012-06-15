@@ -16,17 +16,18 @@ static const int BRIDGE_LEFT   = 1;
 static const int BRIDGE_RIGHT  = 2;
 static const int BRIDGE_BOTTOM = 3;
 
-static const int WIDTH  = 800;
-static const int HEIGHT = 600;
-static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
+static const int WIDTH  = 900;
+static const int HEIGHT = 900;
+static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 
-static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
+static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 
 	PlayState::PlayState(const std::string &newName) : State(newName) {
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
+        camera.setScaling(Vector2(0.88,0.88));
         initPlayers(1);
         initBridges();
 	}
@@ -92,7 +93,6 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 			
 			//Create the bridge
 			Bridge *bridge = new Bridge(Vector2(0,0),horiz);
-			
 			int x = 0;
 			int y = 0;
 			// X pos branches
@@ -122,6 +122,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 			//y -= bridge->getHeight() / 2;
 			
 			//Move it
+			bridge->setScaling(Vector2(2,1));
 			bridge->setPosition(x,y);
             
 			//Adding to the bridges array
@@ -134,34 +135,10 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 
         //Loop for buttons creation
 		for (int i=0; i < 4; i++) {
-			int x = 0;
-			int y = 0;
-            
-			//X position of the button
-			if (i == BUTTON_TOP_LEFT || i == BUTTON_BOTTOM_LEFT) {
-				x = 0 + BUTTON_OFFSET_FROM_SCREEN;
-			}
-			else {
-				x = WIDTH - BUTTON_OFFSET_FROM_SCREEN;
-			}
-			//Y position of the button
-			if (i == BUTTON_TOP_LEFT || i == BUTTON_TOP_RIGHT) {
-				y = 0 + BUTTON_OFFSET_FROM_SCREEN;
-			}
-			else {
-				y = HEIGHT - BUTTON_OFFSET_FROM_SCREEN;
-			}
 			
-			//Creating the button
-			Button *btn = new Button(Vector2(0,0));
-			//Aligning and centering
-			btn->setXPosition(x - btn->getWidth()/2);
-			btn->setYPosition(y - btn->getHeight()/2);
-			
-			//Adding to the buttons array
-			buttons[i] = btn;
-			
-			add(btn);
+            buttons[i] = new Button(Vector2(0,0));
+            buttons[i]->setPosition(rooms[i]->getPositionCenter() - Vector2(buttons[i]->getWidth()/2,buttons[i]->getHeight()/2));
+			add(buttons[i]);
 		}
 
 		//Bridges connection loop
@@ -184,20 +161,20 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 		//Adds the rooms.
 		
 		Sprite *room;
-		room = new Sprite("pad_top-left");
-		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		room = new Sprite("floor");
+		room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)));
 		add(room);
 		rooms[0] = room;
-		room = new Sprite("pad_top-right");
-		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), ROOM_OFFSET_FROM_EDGE_OF_SCREEN);
+		room = new Sprite("floor");
+		room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(),0));
 		add(room);
 		rooms[1] = room;
-		room = new Sprite("pad_bottom-left");
-		room->setPosition(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		room = new Sprite("floor");
+		room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0,room->getHeight()));
 		add(room);
 		rooms[2] = room;
-		room = new Sprite("pad_bottom-right");
-		room->setPosition(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getWidth(), HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN - room->getHeight());
+		room = new Sprite("floor");
+		room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) -Vector2(room->getWidth(), room->getHeight()));
 		add(room);
 		rooms[3] = room;
 	}

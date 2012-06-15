@@ -12,7 +12,7 @@ namespace Bivouac2012 {
 	static const float ACTIVATING_RATIO = 0.2;
 	static const float RETRACTING_RATIO = 0.05;
 	
-	static const float RETRACTING_DELAY = 1.7;
+	static const float RETRACTING_DELAY = 0.0;
 	
 	static const int STICK_OUT = 14;
 	
@@ -22,7 +22,9 @@ Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(),
 	_timer.stop();
 	
 	part1 = new Sprite("bridge");
-	part2 = new Sprite("bridge");
+            part2 = new Sprite("bridge");
+            part1->setScaling(Vector2(1,1.5));
+            part2->setScaling(Vector2(1,1.5));
             part2->scale(Vector2(-1,-1));
             part1->rotate(-90);
             part2->rotate(-90);
@@ -62,7 +64,7 @@ void Bridge::update() {
 	Sprite::update();
 
 	//When the timer is over a certain time, we begin to retract the bridge.
-	if (!_retracted && _timer.getTime() > RETRACTING_DELAY) {
+	if (!_activating && !_retracted && _timer.getTime() > RETRACTING_DELAY) {
 		startRetracting();
 	}
 	if (_retracting) {
