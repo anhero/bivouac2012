@@ -9,19 +9,19 @@
 #define	BRIDGE_H
 
 #include <RedBox.h>
-using namespace RedBox;
+
 namespace Bivouac2012 {
 
 class Bridge : public RedBox::Sprite  {
 public:
-	Bridge(Vector2 pos, bool horizontal);
+	Bridge(RedBox::Vector2 pos, bool horizontal);
 	
 	void update();
 	
 	void render();
 	
 	///Sets position for the middle of the bridge
-	void setPosition(const Vector2& newPosition);
+	void setPosition(const RedBox::Vector2& newPosition);
 	///Sets position for the middle of the bridge
 	void setPosition(float newXPosition, float newYPosition);
 	
@@ -41,11 +41,11 @@ public:
 	void startRetracting();
 	
 	///Checks if the point is on a part of the bridge.
-	bool checkIsOnBridge(Vector2 point, bool oldPos = false);
+	bool checkIsOnBridge(RedBox::Vector2 point, bool oldPos = false);
 
 private:
 	bool _horizontal;
-	Stopwatch _timer;
+	RedBox::Stopwatch _timer;
 	
 	bool _retracting;
 	bool _retracted;
@@ -55,8 +55,8 @@ private:
 	float _retractedRatio;
 	
 	//Parts of the bridge
-	Sprite *part1;
-	Sprite *part2;
+	RedBox::Sprite *part1;
+	RedBox::Sprite *part2;
 };
 }
 

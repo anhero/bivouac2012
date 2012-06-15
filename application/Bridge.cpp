@@ -6,7 +6,7 @@
  */
 
 #include "Bridge.h"
-
+using namespace RedBox;
 namespace Bivouac2012 {
 	
 	static const float ACTIVATING_RATIO = 0.2;

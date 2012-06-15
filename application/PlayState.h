@@ -39,7 +39,7 @@ namespace Bivouac2012 {
 		Button * buttons[4];
 		Bridge * bridges[4];
 		
-		Sprite * rooms[4];
+		RedBox::Sprite * rooms[4];
 	};
 }
 
