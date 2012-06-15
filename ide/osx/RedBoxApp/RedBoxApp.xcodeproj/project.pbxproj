@@ -22,6 +22,8 @@
 		240489E914F2BA40001F8F61 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404899614F2B655001F8F61 /* OpenGL.framework */; };
 		240489F414F2BAA2001F8F61 /* libRedBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404897614F2B508001F8F61 /* libRedBox.a */; };
 		2489A5E315047EC40032DE88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2489A5C215047EAA0032DE88 /* main.cpp */; };
+		5C2A74D3158B35A200029CFB /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74D1158B27CC00029CFB /* Player.cpp */; };
+		5C2A74D7158B3ABF00029CFB /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A74D6158B3ABF00029CFB /* Player.png */; };
 		5C77DE1215470FFF00519AA3 /* PlayState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CAFE7431547031F00804B5A /* PlayState.cpp */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +68,9 @@
 		240489D914F2BA35001F8F61 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		240489DC14F2BA36001F8F61 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2489A5C215047EAA0032DE88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		5C2A74D1158B27CC00029CFB /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		5C2A74D2158B27CC00029CFB /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		5C2A74D6158B3ABF00029CFB /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
 		5CAFE7431547031F00804B5A /* PlayState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayState.cpp; sourceTree = "<group>"; };
 		5CAFE7441547031F00804B5A /* PlayState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayState.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +120,8 @@
 		2404895214F2B4B4001F8F61 /* application */ = {
 			isa = PBXGroup;
 			children = (
+				5C2A74D1158B27CC00029CFB /* Player.cpp */,
+				5C2A74D2158B27CC00029CFB /* Player.h */,
 				5CAFE7431547031F00804B5A /* PlayState.cpp */,
 				5CAFE7441547031F00804B5A /* PlayState.h */,
 				2489A5C215047EAA0032DE88 /* main.cpp */,
@@ -126,6 +133,7 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				5C2A74D6158B3ABF00029CFB /* Player.png */,
 			);
 			name = resources;
 			path = ../../../resources;
@@ -260,6 +268,7 @@
 				240489D114F2BA35001F8F61 /* InfoPlist.strings in Resources */,
 				240489D714F2BA35001F8F61 /* Credits.rtf in Resources */,
 				240489DD14F2BA36001F8F61 /* MainMenu.xib in Resources */,
+				5C2A74D7158B3ABF00029CFB /* Player.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +281,7 @@
 			files = (
 				2489A5E315047EC40032DE88 /* main.cpp in Sources */,
 				5C77DE1215470FFF00519AA3 /* PlayState.cpp in Sources */,
+				5C2A74D3158B35A200029CFB /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
