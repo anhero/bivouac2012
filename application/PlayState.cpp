@@ -27,12 +27,13 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
         initPlayers(1);
-		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
         initBridges();
+		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 		
 	}
 
 	void PlayState::update() {
+        
 	}
     void PlayState::render() {
     }
@@ -48,6 +49,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
     void PlayState::initPlayers(int nbPlayers){
         for (int i = 0; i < nbPlayers; ++i) {
             players.push_back(new Player("player"));
+            players.back()->setZ(50);
             add(players.back());
             players.back()->setPosition(Vector2(100,100));
         }
@@ -63,6 +65,18 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 	
 	void PlayState::onLoseFocus() {
 	}
+    
+    void PlayState::calculateButton(){
+        for (int i=0; i<players.size(); ++i) {
+            
+            for (int j=0; j<4; ++j) {
+                if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() > buttons[j]->getWidth()) {
+                    //buttons[j]->active();
+                }
+            }
+        }
+    }
+    
     void PlayState::initBridges(){
     
         //Loop for buttons creation
