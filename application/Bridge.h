@@ -16,9 +16,6 @@ class Bridge : public RedBox::Sprite  {
 public:
 	Bridge(Vector2 pos, bool horizontal);
 	
-	//This resets the timer on the bridge.
-	void activate();
-	
 	void update();
 	
 	void render();
@@ -32,13 +29,24 @@ public:
 	
 	float getWidth();
 	float getHeight();
+	
+	/* Bridge movements */
+	
+	///To be called when the bridge is completely retracted
+	void stopRetracting();
+	///To be called when the bridge is titillated
+	//This resets the timer on the bridge.
+	void activate();
+	///To be called when the bridge is to be retracted
+	void startRetracting();
 
 private:
 	bool _horizontal;
 	Stopwatch _timer;
 	
-	bool retracting;
-	bool retracted;
+	bool _retracting;
+	bool _retracted;
+	bool _activating;
 	
 	//0 for closed, 1 for retracted.
 	float _retractedRatio;

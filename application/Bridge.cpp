@@ -11,7 +11,12 @@
 
 namespace Bivouac2012 {
 	
-Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), retracted(true), retracting(false), _horizontal(horizontal) {
+	static const float ACTIVATING_RATIO = 0.2;
+	static const float RETRACTING_RATIO = 0.05;
+	
+Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
+		_retracted(true), _retracting(false), 
+		_horizontal(horizontal), _retractedRatio(1.0), _activating(false) {
 	_timer.stop();
 	
 	part1 = new Sprite("bridge_p1");
@@ -24,37 +29,68 @@ Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), retracted(true), retrac
 }
 
 void Bridge::activate() {
-	_timer.start();
-	retracted = false;
-	retracting = false;
-	_retractedRatio = 0.0;
+	if (!_timer.isStarted() || _retracting) {
+		_timer.start();
+	}
+	_retracted = false;
+	_retracting = false;
+	//This goes in the update...
+//	_retractedRatio = 0.0;
+	
+	_activating = true;
+}
+
+void Bridge::stopRetracting() {
+	_timer.stop();
+	_retracted = true;
+	_retracting = false;
+	_retractedRatio = 1.0;
+	_activating = false;
+}
+void Bridge::startRetracting() {
+	_retracting = true;
+	_activating = false;
 }
 
 //TODO: Intelligent tweening instead of hack...
 void Bridge::update() {
 	Sprite::update();
+	
 	//When the timer is over a certain time, we begin to retract the bridge.
-	if (!retracted && _timer.getTime() > 0.4) {
-		retracting = true;
+	if (!_retracted && _timer.getTime() > 0.4) {
+		startRetracting();
 	}
-	if (retracting) {
+	if (_retracting) {
 		if (_retractedRatio > 1.0) {
-			retracted = true;
-			retracting = false;
-			_retractedRatio = 1.0;
+			stopRetracting();
 		}
 		else {
-			_retractedRatio += 0.02;
+			_retractedRatio += RETRACTING_RATIO;
 		}
 	}
-	if (_horizontal) {
-		part1->setXPosition((-1 * part1->getWidth() * _retractedRatio - part1->getWidth()) + this->getXPosition());
-		part2->setXPosition(( 1 * part2->getWidth() * _retractedRatio /*+ part2->getWidth()*/) + this->getXPosition());
+	if (_activating) {
+		if (_timer.getTime() > 0.2) {
+			_timer.addToTime(-0.2);
+		}
+		_retractedRatio -= ACTIVATING_RATIO;
+		if (_retractedRatio <= 0.0) {
+			_retractedRatio = 0.0;
+			_activating = false;
+		}
 	}
-	else {
-		part1->setYPosition((-1 * part1->getHeight() * _retractedRatio - part1->getHeight()) + this->getYPosition());
-		part2->setYPosition(( 1 * part2->getHeight() * _retractedRatio /*+ part2->getHeight()*/) + this->getYPosition());
+	
+	//Updating the position according to the factor.
+	if (_retracting || _activating) {
+		if (_horizontal) {
+			part1->setXPosition((-1 * (part1->getWidth()-10) * _retractedRatio - part1->getWidth()) + this->getXPosition());
+			part2->setXPosition(( 1 * (part2->getWidth()-10) * _retractedRatio                    ) + this->getXPosition());
+		}
+		else {
+			part1->setYPosition((-1 * (part1->getHeight()-10) * _retractedRatio - part1->getHeight()) + this->getYPosition());
+			part2->setYPosition(( 1 * (part2->getHeight()-10) * _retractedRatio                     ) + this->getYPosition());
+		}
 	}
+	
 	part1->update();
 	part2->update();
 }
@@ -79,6 +115,7 @@ float Bridge::getWidth() {
 void Bridge::setPosition(const Vector2& newPosition) {
 	setPosition(newPosition.x, newPosition.y);
 }
+
 void Bridge::setPosition(float newXPosition, float newYPosition) {
 	Sprite::setPosition(newXPosition, newYPosition);
 	

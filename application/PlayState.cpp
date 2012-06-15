@@ -28,10 +28,11 @@ static const int PAD_OFFSET = 20;
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
+        initPlayers(1);
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
         initBridges();
-        initPlayers(1);
-		
+
+		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 		//TEMP. We activate the bridges to test
 		for (int i=0; i < 4; i++) {
 			buttons[i]->activate();
@@ -39,6 +40,7 @@ static const int PAD_OFFSET = 20;
 	}
 
 	void PlayState::update() {
+        calculateCollisionButtons();
 	}
     void PlayState::render() {
     }
@@ -54,13 +56,18 @@ static const int PAD_OFFSET = 20;
     void PlayState::initPlayers(int nbPlayers){
         for (int i = 0; i < nbPlayers; ++i) {
             players.push_back(new Player("player"));
+            players.back()->setZ(50);
             add(players.back());
-            players.back()->setPosition(Vector2(100,100));
+            players.back()->setPosition(Vector2(50,50));
         }
     }
     
 	void PlayState::onKeyPress( KeySignalData data) {
         players[0]->onKeyPress(data);
+		
+		if (data.key == Key::SPACE) {
+			buttons[1]->activate();
+		}
 	}
 
 	void PlayState::onGetFocus() {
@@ -69,6 +76,18 @@ static const int PAD_OFFSET = 20;
 	
 	void PlayState::onLoseFocus() {
 	}
+    
+    void PlayState::calculateCollisionButtons(){
+        for (int i=0; i<players.size(); ++i) {
+            
+            for (int j=0; j<4; ++j) {
+                if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
+                    buttons[j]->activate();
+                }
+            }
+        }
+    }
+    
     void PlayState::initBridges(){
     		//Loop for bridges creation
 		for (int i=0; i < 4; i++) {
