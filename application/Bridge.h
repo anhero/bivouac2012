@@ -41,7 +41,7 @@ public:
 	void startRetracting();
 	
 	///Checks if the point is on a part of the bridge.
-	bool checkIsOnBridge(Vector2 point, bool oldPos = false);
+	bool checkIsOnBridge(RedBox::Vector2 point, bool oldPos = false);
 
 private:
 	bool _horizontal;

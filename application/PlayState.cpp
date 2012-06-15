@@ -28,10 +28,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
         initPlayers(1);
-		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
         initBridges();
-
-		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 	}
 
 	void PlayState::update() {
