@@ -7,18 +7,18 @@
 
 #include "Bridge.h"
 
-#include <ios>
-
 namespace Bivouac2012 {
 	
 	static const float ACTIVATING_RATIO = 0.2;
 	static const float RETRACTING_RATIO = 0.05;
 	
-	static const float RETRACTING_DELAY = 0.5;
+	static const float RETRACTING_DELAY = 0.7;
+	
+	static const int STICK_OUT = 10;
 	
 Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
-		_retracted(true), _retracting(false), 
-		_horizontal(horizontal), _retractedRatio(1.0), _activating(false) {
+		_retracted(false), _retracting(true), 
+		_horizontal(horizontal), _retractedRatio(0.0), _activating(false) {
 	_timer.stop();
 	
 	part1 = new Sprite("bridge_p1");
@@ -75,12 +75,12 @@ void Bridge::update() {
 	//Updating the position according to the factor.
 	if (_retracting || _activating) {
 		if (_horizontal) {
-			part1->setXPosition((-1 * (part1->getWidth()-10) * _retractedRatio - part1->getWidth()) + this->getXPosition());
-			part2->setXPosition(( 1 * (part2->getWidth()-10) * _retractedRatio                    ) + this->getXPosition());
+			part1->setXPosition((-1 * (part1->getWidth()-STICK_OUT) * _retractedRatio - part1->getWidth()) + this->getXPosition());
+			part2->setXPosition(( 1 * (part2->getWidth()-STICK_OUT) * _retractedRatio                    ) + this->getXPosition());
 		}
 		else {
-			part1->setYPosition((-1 * (part1->getHeight()-10) * _retractedRatio - part1->getHeight()) + this->getYPosition());
-			part2->setYPosition(( 1 * (part2->getHeight()-10) * _retractedRatio                     ) + this->getYPosition());
+			part1->setYPosition((-1 * (part1->getHeight()-STICK_OUT) * _retractedRatio - part1->getHeight()) + this->getYPosition());
+			part2->setYPosition(( 1 * (part2->getHeight()-STICK_OUT) * _retractedRatio                     ) + this->getYPosition());
 		}
 	}
 	if (_activating) {
