@@ -6,6 +6,9 @@
 
 #include <RedBox.h>
 
+#include "Button.h"
+
+#include <vector>
 
 namespace Bivouac2012 {
 	/**
@@ -21,6 +24,9 @@ namespace Bivouac2012 {
 		void onKeyPress(RedBox::KeySignalData data);
 		void onGetFocus();
 		void onLoseFocus();
+		
+		Button * buttons[4];
+		//std::vector<Bridge *> bridges;
 	};
 }
 
