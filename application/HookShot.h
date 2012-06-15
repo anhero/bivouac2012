@@ -18,7 +18,7 @@ namespace Bivouac2012 {
     public:
         HookShot();
         HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser);
-        void throwGraplin(Direction facing);
+        void throwGraplin(float &facing);
         void update();
         void render();
         

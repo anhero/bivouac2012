@@ -12,11 +12,15 @@ using namespace RedBox;
 
 namespace Bivouac2012 {
 	
+	static const float UP = 0.0;
+	static const float RIGHT = 90.0;
+	static const float DOWN = 180.0;
+	static const float LEFT = 270.0;
 	
-	static const float PLAYER_SPEED = 4;
+	static const float PLAYER_SPEED = 5;
 
 	Player::Player(const std::string& image, PlayState *parentState, int id) : Sprite(image),
-	_parentState(parentState), _playerID(id), isFacing(DOWN) {
+	_parentState(parentState), _playerID(id), facingAngle(DOWN) {
 		_hook = new HookShot("hook", "ring", this);
 
 		//Player 1 is controllable via keyboar, always
@@ -41,19 +45,19 @@ void Player::onKeyHold(KeySignalData data) {
     switch (data.key) {
         case Key::W:
             move(Vector2(0,-PLAYER_SPEED));
-            isFacing = UP;
+            facingAngle = UP;
             break;
         case Key::A:
             move(Vector2(-PLAYER_SPEED,0));
-            isFacing = LEFT;
+            facingAngle = LEFT;
             break;
         case Key::S:
             move(Vector2(0,PLAYER_SPEED));
-            isFacing = DOWN;
+            facingAngle = DOWN;
             break;
         case Key::D:
             move(Vector2(PLAYER_SPEED,0));
-            isFacing = RIGHT;
+            facingAngle = RIGHT;
             break;
         default:
             break;
@@ -63,7 +67,7 @@ void Player::onKeyHold(KeySignalData data) {
 void Player::onKeyPress(KeySignalData data) {
     switch (data.key) {
         case Key::SPACE:
-            _hook->throwGraplin(isFacing);
+            _hook->throwGraplin(facingAngle);
             break;
             
         default:
@@ -95,7 +99,7 @@ void Player::onKeyRelease(KeySignalData data) {
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
 		if (data.buttonIndex >= 0 && data.buttonIndex < 4) {
-			_hook->throwGraplin(isFacing);
+			_hook->throwGraplin(facingAngle);
 		}
 	}
 
@@ -104,27 +108,26 @@ void Player::render(){
     _hook->render();
 }
 
-void Player::update() {
+void Player::thumbStickMovements() {
 	//Player movements through thumbsticks
 	if (InputManager::getInstance().getNbGamePads() > 0) {
 		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
-		if (gamePadState.getThumbstick(0) < -0.2) {
-			move(Vector2(-PLAYER_SPEED,0));
-			isFacing = LEFT;
+		float x = gamePadState.getThumbstick(0);
+		float y = gamePadState.getThumbstick(1);
+		if (fabs(x) < 0.2) {
+			x = 0.0;
 		}
-		else if (gamePadState.getThumbstick(0) > 0.2) {
-			move(Vector2(PLAYER_SPEED,0));
-			isFacing = RIGHT;
+		if (fabs(y) < 0.2) {
+			y = 0.0;
 		}
-		if (gamePadState.getThumbstick(1) < -0.2) {
-			move(Vector2(0,-PLAYER_SPEED));
-			isFacing = UP;
-		}
-		else if (gamePadState.getThumbstick(1) > 0.2) {
-			move(Vector2(0,PLAYER_SPEED));
-			isFacing = DOWN;
-		}
+		Vector2 direction = Vector2(x,y);
+		facingAngle = direction.getAngle();
+		move(Vector2(x * PLAYER_SPEED, y * PLAYER_SPEED));
 	}
+}
+
+void Player::update() {
+	thumbStickMovements();
 
     ////////////////////////////////////////
     //

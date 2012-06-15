@@ -14,12 +14,7 @@
 
 namespace Bivouac2012 {
     class HookShot;
-enum Direction{
-    UP,
-    LEFT,
-    DOWN,
-    RIGHT
-};
+
 class Player : public RedBox::Sprite, public sigly::HasSlots<> {
 public:
 	Player(const std::string& image, PlayState *parentState, int id);
@@ -37,9 +32,12 @@ public:
 private:
 	PlayState *_parentState;
     HookShot* _hook;
-    Direction isFacing;
+	//Angle at which the player is facing.
+    float facingAngle;
 	
 	int _playerID;
+	
+	void thumbStickMovements();
 };
 
 }
