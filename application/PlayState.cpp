@@ -4,6 +4,8 @@ using namespace RedBox;
 
 namespace Bivouac2012 {
 	PlayState::PlayState(const std::string &newName) : State(newName) {
+		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
+		Keyboard::connectKeyRelease(this, &PlayState::onKeyPress);
 	}
 
 	void PlayState::update() {
@@ -11,7 +13,7 @@ namespace Bivouac2012 {
 
 	void PlayState::onKeyRelease(RedBox::KeySignalData data) {
 		if (data.key == Key::ESCAPE) {
-			//TODO
+			RedBox::Engine::exitApplication(0);
 		}
 	}
 
