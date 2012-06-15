@@ -15,11 +15,13 @@ namespace Bivouac2012 {
 	
 	static const float PLAYER_SPEED = 4;
     
-Player::Player(PlayState *parentState) : Sprite(), _parentState(parentState) {
+Player::Player(PlayState *parentState, bool keyboardPlayer) : Sprite(),
+	_parentState(parentState), _keyboardPlayer(keyboardPlayer) {
 
 }
 
-Player::Player(const std::string& image, PlayState *parentState) : Sprite(image), _parentState(parentState){
+Player::Player(const std::string& image, PlayState *parentState, bool keyboardPlayer) : Sprite(image), 
+	_parentState(parentState), _keyboardPlayer(keyboardPlayer){
     _hook = new HookShot("hook","ring", this);
 }
 Player::~Player(){

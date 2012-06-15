@@ -22,12 +22,13 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 130;
 
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 
-	PlayState::PlayState(const std::string &newName) : State(newName) {
+	PlayState::PlayState(const std::string &newName) : State(newName),
+	_nbPlayers(0), _usesGamepads(true) {
 		Keyboard::connectKeyRelease(this, &PlayState::onKeyRelease);
 		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
-        initPlayers(1);
+        initPlayers();
         initBridges();
 	}
 
@@ -45,8 +46,21 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 20;
 		players[0]->onKeyHold(data);
 	}
     
-    void PlayState::initPlayers(int nbPlayers){
-        for (int i = 0; i < nbPlayers; ++i) {
+    void PlayState::initPlayers() {
+		//We check the number of available gamepads.
+		std::cout << "Initializing players..." << std::endl;
+		_nbPlayers = InputManager::getInstance().getNbGamePads();
+		if (_nbPlayers > 4) {
+			_nbPlayers = 4;
+		}
+		if (_nbPlayers < 1) {
+			_nbPlayers = 1;
+			_usesGamepads = false;
+		}
+		std::cout << "Number of players: " << _nbPlayers << std::endl;
+		std::cout << "Uses gamepads: " << (_usesGamepads?"yes":"no") << std::endl;
+        for (int i = 0; i < _nbPlayers; ++i) {
+			std::cout << "Creating player #" << i+1 << std::endl;
             players.push_back(new Player("player", this));
             players.back()->setZ(50);
             add(players.back());

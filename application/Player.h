@@ -22,8 +22,8 @@ enum Direction{
 };
 class Player : public RedBox::Sprite, public sigly::HasSlots<> {
 public:
-	Player(PlayState *parentState);
-	Player(const std::string& image, PlayState *parentState);
+	Player(PlayState *parentState, bool keyboardPlayer = false);
+	Player(const std::string& image, PlayState *parentState, bool keyboardPlayer = false);
 	~Player();
 	void onKeyPress(RedBox::KeySignalData data);
 	void onKeyHold(RedBox::KeySignalData data);
@@ -35,6 +35,8 @@ private:
 	PlayState *_parentState;
     HookShot* _hook;
     Direction isFacing;
+	
+	bool _keyboardPlayer;
 };
 
 }

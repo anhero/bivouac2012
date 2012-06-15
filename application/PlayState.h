@@ -24,7 +24,7 @@ namespace Bivouac2012 {
         void render();
 
     private:
-        void initPlayers(int nbPlayers);
+        void initPlayers();
 		void onKeyRelease(RedBox::KeySignalData data);
 		void onKeyPress(RedBox::KeySignalData data);
         void onKeyHold(RedBox::KeySignalData data);
@@ -40,6 +40,9 @@ namespace Bivouac2012 {
 		Bridge * bridges[4];
 		
 		RedBox::Sprite * rooms[4];
+		
+		int _nbPlayers;
+		bool _usesGamepads;
 	};
 }
 
