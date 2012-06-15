@@ -184,6 +184,8 @@ void Player::collisionsAndShits() {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
 	
+	Sprite::update();
+    _hook->update();
 }
 
 }

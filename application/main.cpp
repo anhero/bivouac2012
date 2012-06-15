@@ -8,10 +8,7 @@ void initResources() {
 	TEX("button");
 	TEX("bridge");
 	
-	TEX("pad_top-left");
-	TEX("pad_top-right");
-	TEX("pad_bottom-left");
-	TEX("pad_bottom-right");
+	TEX("floor");
     TEX("player");
     TEX("hook");
     TEX("ring");
@@ -29,7 +26,7 @@ int main(int argc, char *argv[]) {
 	RedBox::Engine::setMinFps(5);
 
 	// We initialize the engine with a screen resolution.
-	RedBox::Engine::initializeEngine(800, 600);
+	RedBox::Engine::initializeEngine(900, 900);
 
 	initResources();
 
