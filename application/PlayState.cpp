@@ -32,8 +32,8 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         setBackgroundColor(Color(0, 0, 0));
         
         camera.setScaling(Vector2(0.88,0.88));
-        initPlayers();
         initBridges();
+        initPlayers();
 	}
 
 	void PlayState::update() {
@@ -276,13 +276,13 @@ void PlayState::initRooms() {
                 }
                 //if there is a player hooked drags him with the hook
             }else if (currentHook->hookedPlayer()){
-                players[currentHook->getHooked()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
+                players[currentHook->getTargetId()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
             }
             players[i]->setState(MOBILE);
         }
         for (int i=0; i<_nbPlayers; ++i) {
             if(players[i]->getHook()->hookedPlayer()){
-                players[players[i]->getHook()->getHooked()]->setState(HOOKED);
+                players[players[i]->getHook()->getTargetId()]->setState(HOOKED);
             }
         }
         
