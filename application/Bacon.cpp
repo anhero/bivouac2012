@@ -1,7 +1,9 @@
 #include "Bacon.h"
+
+#define BACON_TIMER_LIMIT 150
 using namespace RedBox;
 namespace Bivouac2012 {
-    Bacon::Bacon(RedBox::Vector2 coord, PlayState *parentState) : BivouacSprite("bacon_strip", parentState){
+    Bacon::Bacon(RedBox::Vector2 coord, PlayState *parentState) : BivouacSprite("bacon_strip", parentState), startedFlicking(false){
         _parentState = parentState;
         deleteTimer = 0;
         setPosition(coord);
@@ -12,10 +14,15 @@ namespace Bivouac2012 {
         
         
         collisionsAndShits();
-        deleteTimer++;
-        if(deleteTimer > 500){
-            this->setToBeDeleted(true);
-        }
+//        deleteTimer++;
+//        
+//        if(deleteTimer > BACON_TIMER_LIMIT){
+//            this->setToBeDeleted(true);
+//        }
+//        else if(deleteTimer > BACON_TIMER_LIMIT /2 && !startedFlicking ){
+//            flick();
+//            startedFlicking = true;
+//        }
     }
     
     
@@ -60,18 +67,22 @@ namespace Bivouac2012 {
             //LEFT EDGE
             if (this->getXPositionCenter() <= last_room->getXPosition()) {
                 this->setXPosition(oldX - this->getWidth()/2);
+                this->setXVelocity(this->getXVelocity() * -1);
             }
             //RIGHT EDGE
             else if (this->getXPositionCenter() >= last_room->getXPosition() + last_room->getWidth()) {
                 this->setXPosition(oldX - this->getWidth()/2);
+                this->setXVelocity(this->getXVelocity() * -1);
             }
             //TOP EDGE
             if (this->getYPositionCenter() <= last_room->getYPosition()) {
                 this->setYPosition(oldY - this->getHeight()/2);
+                this->setYVelocity(this->getYVelocity() * -1);
             }
             //BOTTOM EDGE
             else if (this->getYPositionCenter() >= last_room->getYPosition() + last_room->getHeight()) {
                 this->setYPosition(oldY - this->getHeight()/2);
+                this->setYVelocity(this->getYVelocity() * -1);
             }
         }
         if (last_room == NULL && last_bridge == NULL) {
