@@ -24,7 +24,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true) {
-		Keyboard::connectKeyPress(this, &PlayState::onKeyPress);
+		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color::WHITE);
         
         camera.setScaling(Vector2(0.88,0.88));
@@ -39,7 +39,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
     void PlayState::render() {
     }
 	//TODO: Remove debug "SPACE" key...?
-	void PlayState::onKeyPress( KeySignalData data) {
+	void PlayState::onKeyHold( KeySignalData data) {
 		if (data.key == Key::F9) {
 			buttons[0]->activate();
 		}

@@ -42,6 +42,10 @@ public:
 	
 	///Checks if the point is on a part of the bridge.
 	bool checkIsOnBridge(RedBox::Vector2 point, bool oldPos = false);
+	///Gets the part (Sprite) of the bridge at a certain point. Can be in the past.
+	RedBox::Sprite *getPartAtPoint(RedBox::Vector2 point, bool oldPos = false);
+	
+	RedBox::Vector2 getOldPositionForPart(RedBox::Sprite * part);
 
 private:
 	bool _horizontal;
@@ -57,6 +61,8 @@ private:
 	//Parts of the bridge
 	RedBox::Sprite *part1;
 	RedBox::Sprite *part2;
+	
+	RedBox::Vector2 oldPositions[2];
 };
 }
 

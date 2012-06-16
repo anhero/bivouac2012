@@ -25,7 +25,7 @@ namespace Bivouac2012 {
 
     private:
         void initPlayers();
-		void onKeyPress(RedBox::KeySignalData data);
+		void onKeyHold(RedBox::KeySignalData data);
 		void onGetFocus();
 		void onLoseFocus();
         void initBridges();

@@ -31,8 +31,8 @@ namespace Bivouac2012 {
 		}
 		if (InputManager::getInstance().getNbGamePads() > 0) {
 			//InputManager::getInstance().getGamePad(_playerID)->connectThumbstickMove(this, &Player::onThumbstickMove);
-			InputManager::getInstance().getGamePad(_playerID)->connectButtonHold(this, &Player::onButtonHold);
-			InputManager::getInstance().getGamePad(_playerID)->connectButtonPress(this, &Player::onButtonPress);
+			InputManager::getInstance().getGamePad(_playerID)->buttonHold.connect(this, &Player::onButtonHold);
+			InputManager::getInstance().getGamePad(_playerID)->buttonPress.connect(this, &Player::onButtonPress);
 		}
 	}
 
@@ -155,12 +155,15 @@ void Player::collisionsAndShits() {
 		}
 	}
 	
+	//If we're on a bridge
 	if (last_bridge != NULL) {
-		/*//If the player quits the bridge, on current bridge position.
-		if (!last_bridge->checkIsOnBridge(this->getPositionCenter())) {
-			//And not in a room.
-			std::cout << "YOU NOT ON BRIDGE ANYMORE" << std::endl;
-		}*/
+		//And not in a room
+		if (last_room == NULL) {
+			Sprite* bridgePart = last_bridge->getPartAtPoint(this->getPositionCenter());
+			if (bridgePart != NULL) {
+				this->move(bridgePart->getPosition() - last_bridge->getOldPositionForPart(bridgePart));
+			}
+		}
 	}
 	//If the player was in a room, we check the boundaries
 	else if (last_room != NULL) {
