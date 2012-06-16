@@ -33,6 +33,9 @@ public:
     bool isMobile(){return _isMobile;}
     void setMobile(bool newHooked){ _isMobile = newHooked;}
     void baconAssplosion();
+	
+	static const std::string ANIMATIONS[9];
+	
 private:
     HookShot* _hook;
 	//Angle at which the player is facing.

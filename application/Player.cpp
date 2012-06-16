@@ -13,10 +13,18 @@
 #define MIN_BACON_VELOCITY 100
 #define MAX_BACON_VELOCITY 150
 
+#define FRAME_OF_DIRECTION(x) (x + frameOffset + i*5)
+
 using namespace RedBox;
 
 namespace Bivouac2012 {
-	
+
+const std::string Player::ANIMATIONS[9] =  {
+		"standing_up","standing_down","standing_left","standing_right",
+		"walking_up","walking_down","walking_left","walking_right",
+		"shocked"
+};
+
 	static const float UP = 0.0;
 	static const float LEFT = 90.0;
 	static const float DOWN = 180.0;
@@ -42,7 +50,21 @@ namespace Bivouac2012 {
 		
 		//Animation construction!
 		int frameOffset = _playerID * 22;
-		this->addAnimation("standing_down", 0.1, 1, 1, 0 + frameOffset);
+		for (int i=0; i < 4; i++) {
+			this->addAnimation(ANIMATIONS[i], 0.1, 1, 1, FRAME_OF_DIRECTION(0));
+		}
+		for (int i=0; i < 4; i++) {
+			this->addAnimation(ANIMATIONS[i+4], 0.1, -1, 8
+				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(1) ,FRAME_OF_DIRECTION(2) ,FRAME_OF_DIRECTION(1) 
+				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(3) ,FRAME_OF_DIRECTION(4) ,FRAME_OF_DIRECTION(3)
+			);
+		}
+		{
+			this->addAnimation(ANIMATIONS[8], 0.1, -1, 2
+				, frameOffset + 20
+				, frameOffset + 21
+			);
+		}
 		
 		this->startAnimation("standing_down");
 	}
