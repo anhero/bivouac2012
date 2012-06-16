@@ -10,9 +10,8 @@
 
 #include <RedBox.h>
 
-#include "Bridge.h"
-
 namespace Bivouac2012 {
+	class Bridge;
 class Button : public RedBox::Sprite {
 public:
 	Button(RedBox::Vector2 pos);
