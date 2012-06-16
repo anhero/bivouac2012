@@ -31,8 +31,8 @@ namespace Bivouac2012 {
 		}
 		if (InputManager::getInstance().getNbGamePads() > 0) {
 			//InputManager::getInstance().getGamePad(_playerID)->connectThumbstickMove(this, &Player::onThumbstickMove);
-			InputManager::getInstance().getGamePad(_playerID)->connectButtonHold(this, &Player::onButtonHold);
-			InputManager::getInstance().getGamePad(_playerID)->connectButtonPress(this, &Player::onButtonPress);
+			InputManager::getInstance().getGamePad(_playerID)->buttonHold.connect(this, &Player::onButtonHold);
+			InputManager::getInstance().getGamePad(_playerID)->buttonPress.connect(this, &Player::onButtonPress);
 		}
 	}
 
