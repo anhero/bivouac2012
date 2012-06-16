@@ -11,7 +11,7 @@ void initResources() {
 	TEX("pierre_2");
 	TEX("pierre_3");
 	
-	TEX("smoke");
+	TEX("pedantic_smoke_1");
 	
 	TEX("floor");
     TEX("player");

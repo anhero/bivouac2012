@@ -45,8 +45,7 @@ _finisedClosing(false) {
 				particle = new GraphicElement<Collidable > ("pierre_2");
 				break;
 			case 2:
-				particle = new GraphicElement<Collidable > ("smoke");
-				particle->setAlpha(50);
+				particle = new GraphicElement<Collidable > ("pedantic_smoke_1");
 				break;
 			default:
 				particle = new GraphicElement<Collidable > ("pierre_3");
