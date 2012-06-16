@@ -24,6 +24,7 @@ static const int HEIGHT = 900;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
+static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true) {
@@ -200,28 +201,49 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 				buttons[i]->connectBridges(bridges[BRIDGE_BOTTOM], bridges[BRIDGE_RIGHT]);
 			}
 		}
-    }
-	void PlayState::initRooms() {
-		//Adds the rooms.
-		
-		Sprite *room;
-		room = new Sprite("floor");
-		room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)));
-		add(room);
-		rooms[0] = room;
-		room = new Sprite("floor");
-		room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(),0));
-		add(room);
-		rooms[1] = room;
-		room = new Sprite("floor");
-		room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0,room->getHeight()));
-		add(room);
-		rooms[2] = room;
-		room = new Sprite("floor");
-		room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) -Vector2(room->getWidth(), room->getHeight()));
-		add(room);
-		rooms[3] = room;
-	}
+}
+
+void PlayState::initRooms() {
+	//Adds the rooms.
+	Sprite *room;
+	room = new Sprite("floor");
+	room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)));
+	add(room);
+	rooms[0] = room;
+	room = new Sprite("floor");
+	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
+	add(room);
+	rooms[1] = room;
+	room = new Sprite("floor");
+	room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
+	add(room);
+	rooms[2] = room;
+	room = new Sprite("floor");
+	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
+	add(room);
+	rooms[3] = room;
+
+	//Add the background to the rooms.
+	room = new Sprite("floor_V2(2)");
+	room->setZ(-150);
+	room->setPosition(camera.screenToWorld(Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)));
+	add(room);
+
+	room = new Sprite("floor_V2(2)");
+	room->setZ(-150);
+	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
+	add(room);
+
+	room = new Sprite("floor_V2(2)");
+	room->setZ(-150);
+	room->setPosition(camera.screenToWorld(Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
+	add(room);
+
+	room = new Sprite("floor_V2(2)");
+	room->setZ(-150);
+	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
+	add(room);
+}
     void PlayState::calculateHookGrabing()
     {
         for (int i=0; i<_nbPlayers; ++i) {

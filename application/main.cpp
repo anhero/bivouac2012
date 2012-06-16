@@ -14,6 +14,7 @@ void initResources() {
 	TEX("pedantic_smoke_1");
 	
 	TEX("floor");
+	TEX("floor_V2(2)")
     TEX("player");
     TEX("hook");
     TEX("ring");
