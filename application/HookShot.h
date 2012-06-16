@@ -21,8 +21,8 @@ namespace Bivouac2012 {
         void render();
         bool isThrown(){return _isThrown;}
         void setThrown(bool newThrown){ _isThrown = newThrown;}
-        bool grabedPlayer(){return _grabedPlayer;}
-        int getGrabed(){return _playerGrabed;}
+        bool hookedPlayer(){return _hookedPlayer;}
+        int getHooked(){return _playerHooked;}
         void grab(int playerId);
         RedBox::Vector2 getPosition();
         void setPosition(RedBox::Vector2 newPos);
@@ -31,8 +31,8 @@ namespace Bivouac2012 {
         const float _hookDelay;     
         RedBox::Stopwatch _timer;
         bool _isThrown;
-        bool _grabedPlayer;
-        int _playerGrabed;
+        bool _hookedPlayer;
+        int _playerHooked;
         RedBox::Vector2 _targetHook;
         RedBox::Sprite* _hook;
         int steps;

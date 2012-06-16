@@ -275,14 +275,14 @@ void PlayState::initRooms() {
                     }
                 }
                 //if there is a player hooked drags him with the hook
-            }else if (currentHook->grabedPlayer()){
-                players[currentHook->getGrabed()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
+            }else if (currentHook->hookedPlayer()){
+                players[currentHook->getHooked()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
             }
             players[i]->setState(MOBILE);
         }
         for (int i=0; i<_nbPlayers; ++i) {
-            if(players[i]->getHook()->grabedPlayer()){
-                players[players[i]->getHook()->getGrabed()]->setState(HOOKED);
+            if(players[i]->getHook()->hookedPlayer()){
+                players[players[i]->getHook()->getHooked()]->setState(HOOKED);
             }
         }
         
