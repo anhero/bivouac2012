@@ -40,7 +40,7 @@ void initResources() {
     TEX("crack_3");
 
     TEX("lava");
-    
+    TEX("BaconSheet");
 }
 
 int main(int argc, char *argv[]) {

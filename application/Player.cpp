@@ -142,7 +142,12 @@ void Player::onKeyRelease(KeySignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
-                    _parentState->getPlayers()[_hook->getTargetId()]->stun();
+                    Player* target = _parentState->getPlayers()[_hook->getTargetId()];
+                    Vector2 temp = Vector2(-300,0);
+                    temp.setAngle(facingAngle);
+                    target->setVelocity(temp);
+                    target->setGlobalDrag(200);
+                    target->stun();
                     _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
                     _graber->getHook()->grabedshacle();

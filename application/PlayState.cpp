@@ -30,7 +30,11 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
-        setBackgroundColor(Color(0, 0, 0));
+        setBackgroundColor(Color(255, 0, 0));
+		
+		
+		
+		
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
         

@@ -3,7 +3,11 @@
 #define BACON_TIMER_LIMIT 150
 using namespace RedBox;
 namespace Bivouac2012 {
-    Bacon::Bacon(RedBox::Vector2 coord, PlayState *parentState) : BivouacSprite("bacon_strip", parentState), startedFlicking(false){
+    Bacon::Bacon(RedBox::Vector2 coord, PlayState *parentState) : BivouacSprite("BaconSheet", Vector2(35,67), Vector2(), 5,parentState), startedFlicking(false){
+		
+		addAnimation("bobuludaule", 0.06, -1, 8, 0,1,2,3,4,3,2,1);
+		startAnimation("bobuludaule");
+//		setDefaultFrame(4);
         _parentState = parentState;
         deleteTimer = 0;
         setPosition(coord);
