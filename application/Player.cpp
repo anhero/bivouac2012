@@ -264,7 +264,7 @@ void Player::update() {
     _hook->update();
     refreshGrabed();
     debugCircle->update();
-    std::cout << "bacon count : " << baconCount << std::endl;
+//    std::cout << "bacon count : " << baconCount << std::endl;
 }
     
     
@@ -278,6 +278,7 @@ void Player::harvestBacon(){
         if (!(*i)->getIsFlicking() && ((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
 				(*i)->setToBeDeleted(true);
 				i = _parentState->bacons.erase(i);
+				baconCount++;
         }
         else{
             i++;
