@@ -38,7 +38,8 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 
 	void PlayState::update() {
         calculateCollisionButtons();
-        calculateHookGrabing();
+        calculateHook();
+        calculateGrabing();
 	}
     void PlayState::render() {
     }
@@ -244,7 +245,7 @@ void PlayState::initRooms() {
 	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
 	add(room);
 }
-    void PlayState::calculateHookGrabing()
+    void PlayState::calculateHook()
     {
         for (int i=0; i<_nbPlayers; ++i) {
             //Verify the grabing conditions.
@@ -257,15 +258,20 @@ void PlayState::initRooms() {
                         currentHook->grab(j);
                     }
                 }
-            }else if (currentHook->isGrabed()){
+                //if there is a player hooked drags him with the hook
+            }else if (currentHook->grabedPlayer()){
                 players[currentHook->getGrabed()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
             }
-            players[i]->setMobile(true);
+            players[i]->setState(MOBILE);
         }
         for (int i=0; i<_nbPlayers; ++i) {
-            if(players[i]->getHook()->isGrabed()){
-                players[players[i]->getHook()->getGrabed()]->setMobile(false);
+            if(players[i]->getHook()->grabedPlayer()){
+                players[players[i]->getHook()->getGrabed()]->setState(HOOKED);
             }
         }
+        
+    }
+    void PlayState::calculateGrabing(){
+        
     }
 }

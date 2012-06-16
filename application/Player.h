@@ -15,7 +15,13 @@
 
 #include "BivouacSprite.h"
 namespace Bivouac2012 {
-
+    enum PlayerState{
+        MOBILE,
+        IMMUNE,
+        HOOKED,
+        CARRIED,
+        STUNTED
+    };
     class Player : public BivouacSprite, public sigly::HasSlots<> {
 public:
 	Player(PlayState *parentState, int id);
@@ -30,8 +36,8 @@ public:
 	HookShot* getHook(){return _hook;}
     void render();
 	void update();
-    bool isMobile(){return _isMobile;}
-    void setMobile(bool newHooked){ _isMobile = newHooked;}
+    bool isMobile(){return _state <= IMMUNE;}
+    void setState(PlayerState newState){ _state = newState;}
     void baconAssplosion();
 private:
     HookShot* _hook;
@@ -39,7 +45,7 @@ private:
     float facingAngle;
 	
 	int _playerID;
-    bool _isMobile;
+    PlayerState _state;
 	
     
 	void thumbStickMovements();
