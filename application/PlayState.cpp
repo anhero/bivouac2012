@@ -19,29 +19,40 @@ static const int BRIDGE_LEFT   = 1;
 static const int BRIDGE_RIGHT  = 2;
 static const int BRIDGE_BOTTOM = 3;
 
-static const int WIDTH  = 900;
-static const int HEIGHT = 900;
+//Of the game area
+static const int WIDTH  = 1100;
+static const int HEIGHT = 1100;
 static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
-static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
+static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
-        setBackgroundColor(Color(0, 0, 0));
+        setBackgroundColor(Color(255, 0, 0));
+		
+		
+		
+		
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
         
-        camera.setScaling(Vector2(0.88,0.88));
+		//camera.setScaling(768.0f/1100.0f,768.0f/1100.0f);
+		//camera.setScaling(0.5,0.5);
         initBridges();
         initPlayers();
         initGrille();
         initCrack();
         Text* myFont = new Text("font");
-        myFont->setText("test324");
+        myFont->setText("0123456789");
+		myFont->setColor(Color::YELLOW);
         add(myFont);
         myFont->setPosition(250,250);
+		
+		Sprite *hud = new Sprite("hud");
+		hud->setPosition(1000,20);
+		add(hud);
         
         
 	}
@@ -52,21 +63,21 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 
     
     void PlayState::initCrack(){
-        Sprite * crack1;
-        Sprite * crack2;
-        Sprite * crack3;
-        
-        crack1 = new Sprite("crack_1");
-        add(crack1);
-        crack1->setPosition(264, -36);
-        
-        crack2 = new Sprite("crack_2");
-        crack2->setPosition(-36, 264);
-        add(crack2);
-
-        crack3 = new Sprite("crack_3");
-        crack3->setPosition(264, 264);
-        add(crack3);
+//        Sprite * crack1;
+//        Sprite * crack2;
+//        Sprite * crack3;
+//        
+//        crack1 = new Sprite("crack_1");
+//        add(crack1);
+//        crack1->setPosition(264, -36);
+//        
+//        crack2 = new Sprite("crack_2");
+//        crack2->setPosition(-36, 264);
+//        add(crack2);
+//
+//        crack3 = new Sprite("crack_3");
+//        crack3->setPosition(264, 264);
+//        add(crack3);
 
     }
     
@@ -88,84 +99,23 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         
         //plateforme1
         
-        createLavaGrill(-36, -36);
+        createLavaGrill(20, 20);
         
         
         //plateforme2
-        createLavaGrill(815, -36);
+        createLavaGrill(950, 20);
 //        createLavaGrill
         
         
         //plateforme3
-        createLavaGrill(-36, 825);
+        createLavaGrill(315, 665);
         
         
         //plateforme 4
-        createLavaGrill(818, 525);
-        createLavaGrill(518, 525);
-        createLavaGrill(518, 825);
-        
-        
-//        lavamodel->setDefaultFrame(5);
-        
-        //plateform 1
-//        Sprite * lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, -36);
-//        lava->addAnimation("glow", 0.3, -1, 11, 0,1,2,3,4,5,4,3,2,1);
+        createLavaGrill(955, 665);
+        createLavaGrill(955, 960);
+        createLavaGrill(665, 665);
 
-//        lava->startAnimation("glow");
-//        add(lava);
-//        Sprite * grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        
-//        
-//        //plateform2
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(815, -36);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        //plateforme3
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//
-//        //plateforme4
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(818, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-        
-        
         
         
     }
@@ -396,41 +346,41 @@ void PlayState::initRooms() {
 	//Adds the rooms.
 	Sprite *room;
 	room = new Sprite("floor");
-	room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)));
+	room->setPosition((Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)));
 	add(room);
 	rooms[0] = room;
 	room = new Sprite("floor");
-	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
+	room->setPosition((Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
 	add(room);
 	rooms[1] = room;
 	room = new Sprite("floor");
-	room->setPosition(camera.screenToWorld(Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
+	room->setPosition((Vector2(ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
 	add(room);
 	rooms[2] = room;
 	room = new Sprite("floor");
-	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
+	room->setPosition((Vector2(WIDTH - ROOM_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
 	add(room);
 	rooms[3] = room;
 
 	//Add the background to the rooms.
 	room = new Sprite("floor_V2(2)");
 	room->setZ(-150);
-	room->setPosition(camera.screenToWorld(Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)));
+	room->setPosition((Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)));
 	add(room);
 
 	room = new Sprite("floor_V2(2)");
 	room->setZ(-150);
-	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
+	room->setPosition((Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), 0));
 	add(room);
 
 	room = new Sprite("floor_V2(2)");
 	room->setZ(-150);
-	room->setPosition(camera.screenToWorld(Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
+	room->setPosition((Vector2(ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(0, room->getHeight()));
 	add(room);
 
 	room = new Sprite("floor_V2(2)");
 	room->setZ(-150);
-	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
+	room->setPosition((Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
 	add(room);
 }
     void PlayState::calculateHook()
