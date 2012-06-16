@@ -55,6 +55,9 @@ namespace Bivouac2012 {
         
         std::vector<Player*> players;
 		
+        void reset();
+        bool _reset = false;
+        
 		Button * buttons[4];
 		Bridge * bridges[4];
 		

@@ -169,8 +169,13 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         
         
     }
-    
+    void PlayState::reset(){
+        clearBacon();
+        _reset = false;
+        initPlayers();
+    }
 	void PlayState::update() {
+        if (!_reset) {
         calculateCollisionButtons();
         calculateHook();
 		
@@ -184,7 +189,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 			_zRefreshCounter = 4;
 		}
 		_zRefreshCounter--;
-        
+        }else{
+            reset();
+        }
 	}
     void PlayState::render() {
     }
@@ -222,7 +229,10 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         }
         
 		if (data.key == Key::ESCAPE) {
-			RedBox::Engine::exitApplication(0);
+            for (int i = 0; i<_nbPlayers; ++i) {
+                players[i]->setToBeDeleted(true);
+            }
+			_reset = true;
 		}
 	}
     
