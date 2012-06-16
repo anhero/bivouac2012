@@ -70,25 +70,21 @@ namespace Bivouac2012 {
 						if (this->getXPositionCenter() <= last_bridge_x) {
 							this->setXPosition(oldX - this->getWidth()/2);
 							this->setXVelocity(this->getXVelocity() * -1);
-							std::cout << "Hitting the left" << std::endl;
 						}
 						//RIGHT EDGE
 						else if (this->getXPositionCenter() >= last_bridge_x + last_bridge->getWidth()) {
 							this->setXPosition(oldX - this->getWidth()/2);
 							this->setXVelocity(this->getXVelocity() * -1);
-							std::cout << "Hitting the right" << std::endl;
 						}
 						//TOP EDGE
 						if (this->getYPositionCenter() <= last_bridge_y) {
 							this->setYPosition(oldY - this->getHeight()/2);
 							this->setYVelocity(this->getYVelocity() * -1);
-							std::cout << "Hitting the top" << std::endl;
 						}
 						//BOTTOM EDGE
 						else if (this->getYPositionCenter() >= last_bridge_y + last_bridge->getHeight()) {
 							this->setYPosition(oldY - this->getHeight()/2);
 							this->setYVelocity(this->getYVelocity() * -1);
-							std::cout << "Hitting the bottom" << std::endl;
 						}
 					}
 					else {
