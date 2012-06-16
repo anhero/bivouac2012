@@ -79,7 +79,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 		std::cout << "Uses gamepads: " << (_usesGamepads?"yes":"no") << std::endl;
         for (int i = 0; i < _nbPlayers; ++i) {
 			std::cout << "Creating player #" << i+1 << std::endl;
-            players.push_back(new Player("player", this, i));
+            players.push_back(new Player(this, i));
             players.back()->setZ(50);
             add(players.back());
 			

@@ -2,7 +2,12 @@
 
 using namespace RedBox;
 namespace Bivouac2012 {
-    BivouacSprite::BivouacSprite(const std::string& image, PlayState *parentState): Sprite(image), isFLicking(false), _parentState(parentState), flickFrequencyCount(0), flickCount(0){}
+    BivouacSprite::BivouacSprite(const std::string& image, PlayState *parentState): Sprite(image),
+			isFLicking(false), _parentState(parentState), flickFrequencyCount(0), flickCount(0){}
+    BivouacSprite::BivouacSprite(const std::string& image, const Vector2 &newSize, 
+			const Vector2 &newTextureOffset, unsigned int nbFrames, PlayState *parentState)
+			: Sprite(image, Vector2(), newSize, newTextureOffset, nbFrames),
+			isFLicking(false), _parentState(parentState), flickFrequencyCount(0), flickCount(0){}
 
     
     void BivouacSprite::flick(){

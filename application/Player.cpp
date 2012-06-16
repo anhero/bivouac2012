@@ -24,7 +24,7 @@ namespace Bivouac2012 {
 	
 	static const float PLAYER_SPEED = 5;
 
-	Player::Player(const std::string& image, PlayState *parentState, int id) : BivouacSprite(image, parentState),
+	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
 	 _playerID(id), facingAngle(DOWN) {
 		_hook = new HookShot("hook", "ring", this);
 
@@ -39,6 +39,12 @@ namespace Bivouac2012 {
 			InputManager::getInstance().getGamePad(_playerID)->buttonHold.connect(this, &Player::onButtonHold);
 			InputManager::getInstance().getGamePad(_playerID)->buttonPress.connect(this, &Player::onButtonPress);
 		}
+		
+		//Animation construction!
+		int frameOffset = _playerID * 22;
+		this->addAnimation("standing_down", 0.1, 1, 1, 0 + frameOffset);
+		
+		this->startAnimation("standing_down");
 	}
 
 	Player::~Player() {

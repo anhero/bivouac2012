@@ -13,6 +13,9 @@ namespace Bivouac2012 {
 	class BivouacSprite : public RedBox::Sprite {
     public:
         BivouacSprite(const std::string& image, PlayState *parentState);
+        BivouacSprite(const std::string& image, const RedBox::Vector2 &newSize, 
+			const RedBox::Vector2 &newTextureOffset, unsigned int nbFrames, PlayState *parentState);
+		
         void update();
         void flick();
     protected:

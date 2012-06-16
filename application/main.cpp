@@ -15,7 +15,7 @@ void initResources() {
 	
 	TEX("floor");
 	TEX("floor_V2(2)")
-    TEX("player");
+    TEX("spritesheet_players_eyes");
     TEX("hook");
     TEX("ring");
     TEX("bacon_glow");

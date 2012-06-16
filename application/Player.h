@@ -18,7 +18,7 @@ namespace Bivouac2012 {
 
     class Player : public BivouacSprite, public sigly::HasSlots<> {
 public:
-	Player(const std::string& image, PlayState *parentState, int id);
+	Player(PlayState *parentState, int id);
 	~Player();
 	void onKeyPress(RedBox::KeySignalData data);
 	void onKeyHold(RedBox::KeySignalData data);
