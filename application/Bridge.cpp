@@ -39,16 +39,16 @@ _finisedClosing(false) {
 		GraphicElement<Collidable> *particle;
 		switch (i%NB_EMITTERS) {
 			case 0:
-				particle = new GraphicElement<Collidable > ("pierre_1");
+				particle = new GraphicElement<Collidable > ("rock_1");
 				break;
 			case 1:
-				particle = new GraphicElement<Collidable > ("pierre_2");
+				particle = new GraphicElement<Collidable > ("rock_2");
 				break;
 			case 2:
 				particle = new GraphicElement<Collidable > ("pedantic_smoke_1");
 				break;
 			default:
-				particle = new GraphicElement<Collidable > ("pierre_3");
+				particle = new GraphicElement<Collidable > ("rock_3");
 				break;
 
 		}
