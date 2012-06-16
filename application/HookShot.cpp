@@ -16,7 +16,7 @@ namespace Bivouac2012 {
 
     
     HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): 
-	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _playerGrabed(-1), _grabedPlayer(false)
+	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _playerHooked(-1), _hookedPlayer(false)
 	{
         _timer.stop();
         _hook = new Sprite(hook);
@@ -29,7 +29,7 @@ namespace Bivouac2012 {
     
     void HookShot::update()
     {
-        if (steps == _nbChains || _grabedPlayer) {
+        if (steps == _nbChains || _hookedPlayer) {
             _isThrown = false;
             if (!_timer.isStarted()) {
                 _timer.start();
@@ -52,7 +52,8 @@ namespace Bivouac2012 {
                 
         }else {
             _timer.stop();
-            _grabedPlayer = false;
+            _hookedPlayer = false;
+            
             
         }
     }
@@ -93,7 +94,7 @@ namespace Bivouac2012 {
     
     void HookShot::grab(int playerId){
         _isThrown = false;
-        _grabedPlayer = true;
-        _playerGrabed = playerId;
+        _hookedPlayer = true;
+        _playerHooked = playerId;
     }
 }
