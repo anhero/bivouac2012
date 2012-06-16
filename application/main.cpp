@@ -6,6 +6,8 @@
 //TODO: Transfer in a "initState"
 void initResources() {
 	TEX("button");
+	TEX("button_on");
+	TEX("button_off");
 	TEX("bridge");
 	TEX("pierre_1");
 	TEX("pierre_2");
