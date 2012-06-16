@@ -9,22 +9,29 @@
 #define	HOOKSHOT_H
 
 #include <RedBox.h>
-#include "Player.h"
 
 
 namespace Bivouac2012 {
-    
+    class Player;
     class HookShot  {
     public:
-        HookShot();
         HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser);
         void throwGraplin(float facing);
         void update();
         void render();
-        
+        bool isThrown(){return _isThrown;}
+        void setThrown(bool newThrown){ _isThrown = newThrown;}
+        bool isGrabed(){return _isGrabed;}
+        int getGrabed(){return _playerGrabed;}
+        void grab(int playerId);
+        RedBox::Vector2 getPosition();
     private:
-        const int _nbChains = 10;
+        const int _nbChains;
+        const float _hookDelay;     
+        RedBox::Stopwatch _timer;
         bool _isThrown;
+        bool _isGrabed;
+        int _playerGrabed;
         RedBox::Vector2 _targetHook;
         RedBox::Sprite* _hook;
         int steps;

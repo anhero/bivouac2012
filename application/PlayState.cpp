@@ -38,7 +38,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 
 	void PlayState::update() {
         calculateCollisionButtons();
-       
+        calculateHookGrabing();
 	}
     void PlayState::render() {
     }
@@ -244,4 +244,22 @@ void PlayState::initRooms() {
 	room->setPosition(camera.screenToWorld(Vector2(WIDTH - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN, HEIGHT - ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN)) - Vector2(room->getWidth(), room->getHeight()));
 	add(room);
 }
+    void PlayState::calculateHookGrabing()
+    {
+        for (int i=0; i<_nbPlayers; ++i) {
+            //Verify the grabing conditions.
+            HookShot* currentHook = players[i]->getHook();
+            if (currentHook->isThrown()) {
+                //verify the collision with other players
+                for (int j=0; j<_nbPlayers; ++j) {
+                    if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30) {
+                        players[j]->setCanMove(false);
+                        currentHook->grab(j);
+                    }
+                }
+            }else if (currentHook->isGrabed()){
+                players[currentHook->getGrabed()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
+            }
+        }
+    }
 }

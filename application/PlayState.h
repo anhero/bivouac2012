@@ -34,6 +34,7 @@ namespace Bivouac2012 {
         void initBridges();
 		void initRooms();
         void calculateCollisionButtons();
+        void calculateHookGrabing();
         
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
