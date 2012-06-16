@@ -9,11 +9,10 @@
 #define	HOOKSHOT_H
 
 #include <RedBox.h>
-#include "Player.h"
 
 
 namespace Bivouac2012 {
-    
+    class Player;
     class HookShot  {
     public:
         HookShot();
@@ -21,10 +20,14 @@ namespace Bivouac2012 {
         void throwGraplin(float facing);
         void update();
         void render();
-        
+        bool isThrown(){return _isThrown;}
+        void setThrown(bool newThrown){ _isThrown = newThrown;}
+        bool isGrabed(){return _isGrabed;}
+        RedBox::Vector2 getPosition();
     private:
-        const int _nbChains = 10;
+        const int _nbChains;
         bool _isThrown;
+        bool _isGrabed;
         RedBox::Vector2 _targetHook;
         RedBox::Sprite* _hook;
         int steps;

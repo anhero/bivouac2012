@@ -11,9 +11,9 @@
 #include <RedBox.h>
 
 #include "PlayState.h"
+#include "HookShot.h"
 
 namespace Bivouac2012 {
-    class HookShot;
 
 class Player : public RedBox::Sprite, public sigly::HasSlots<> {
 public:
@@ -26,9 +26,11 @@ public:
 	//void onThumbstickMove(RedBox::GamePadThumbstickSignalData data);
 	void onButtonHold(RedBox::GamePadButtonSignalData data);
 	void onButtonPress(RedBox::GamePadButtonSignalData data);
-	
+	HookShot* getHook(){return _hook;}
     void render();
 	void update();
+    bool getCanMove(){return _canMove;}
+    void setCanMove(bool newHooked){ _canMove = newHooked;}
 private:
 	PlayState *_parentState;
     HookShot* _hook;
@@ -36,6 +38,7 @@ private:
     float facingAngle;
 	
 	int _playerID;
+    bool _canMove;
 	
 	void thumbStickMovements();
 	void collisionsAndShits();

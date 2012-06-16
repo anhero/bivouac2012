@@ -31,6 +31,7 @@ namespace Bivouac2012 {
         void initBridges();
 		void initRooms();
         void calculateCollisionButtons();
+        void calculateHookGrabing();
         
         std::vector<Player*> players;
 		

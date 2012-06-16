@@ -83,10 +83,11 @@ void Player::onKeyRelease(KeySignalData data) {
 		
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
-        std::cout << data.gamePadIndex << std::endl;
-		if (data.buttonIndex < 4) {
-			_hook->throwGraplin(facingAngle);
-		}
+        if (data.gamePadIndex == _playerID) {
+            if (data.buttonIndex < 4) {
+                _hook->throwGraplin(facingAngle);
+            }
+        }
 	}
 
 void Player::render(){

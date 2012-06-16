@@ -7,15 +7,18 @@
 //
 
 #include "HookShot.h"
+
+#include "Player.h"
+
 using namespace RedBox;
 
 namespace Bivouac2012 {
     
-    HookShot::HookShot() {
+    HookShot::HookShot() : _nbChains(10) {
         
     }
     
-    HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): _isThrown(false),steps(0){
+    HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): _isThrown(false), steps(0), _nbChains(10){
         _hook = new Sprite(hook);
         _myOwner = myCrazyFuckUser;
         
@@ -31,6 +34,7 @@ namespace Bivouac2012 {
         }
         if (steps != 0 || _isThrown) {
             _hook->setPosition( _targetHook - (_targetHook - _myOwner->getPosition())/_nbChains*(_nbChains-steps));
+            std::cout << _hook->getPositionCenter() << std::endl;
             for (int i=0; i< _chains.size(); ++i) {
                 _chains[i]->setPosition(_myOwner->getPositionCenter() + (_hook->getPositionCenter() - _myOwner->getPositionCenter())/_chains.size()*i - Vector2(_chains[i]->getWidth()/2,_chains[i]->getHeight()/2));
                 _chains[i]->update();
@@ -50,33 +54,17 @@ namespace Bivouac2012 {
     }
     void HookShot::throwGraplin(float facing){
 		Vector2 temp;
-        /*
-        if (!_isThrown) {
-            switch (facing) {
-                case LEFT:
-                    temp = Vector2(-1,0);
-                    break;
-                case RIGHT:
-                    temp = Vector2(1,0);
-                    break;
-                case DOWN:
-                    temp = Vector2(0,1);
-                    break;
-                case UP:
-                    temp = Vector2(0,-1);
-                    break;
-                default:
-                    break;
-            }
-		 */
-			temp = Vector2(1,0);
-			temp.setAngle(facing);
-			//L'endroit où le hook ira.
-			_targetHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
-            _hook->setAngle(facing);
-            _isThrown = true;
-            steps = 1;
-            update();
-		//}
+
+        temp = Vector2(1,0);
+        temp.setAngle(facing);
+        //L'endroit où le hook ira.
+        _targetHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
+        _hook->setAngle(facing);
+        _isThrown = true;
+        steps = 1;
+        update();
+    }
+    Vector2 HookShot::getPosition(){
+        return _hook->getPositionCenter();
     }
 }
