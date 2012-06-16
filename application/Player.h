@@ -30,8 +30,8 @@ public:
 	HookShot* getHook(){return _hook;}
     void render();
 	void update();
-    bool getCanMove(){return _canMove;}
-    void setCanMove(bool newHooked){ _canMove = newHooked;}
+    bool isMobile(){return _isMobile;}
+    void setMobile(bool newHooked){ _isMobile = newHooked;}
     void baconAssplosion();
 private:
     HookShot* _hook;
@@ -39,7 +39,7 @@ private:
     float facingAngle;
 	
 	int _playerID;
-    bool _canMove;
+    bool _isMobile;
 	
     
 	void thumbStickMovements();

@@ -253,7 +253,7 @@ void PlayState::initRooms() {
                 //verify the collision with other players
                 for (int j=0; j<_nbPlayers; ++j) {
                     if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30) {
-                        players[j]->setCanMove(false);
+                        players[j]->setMobile(false);
                         currentHook->grab(j);
                     }
                 }

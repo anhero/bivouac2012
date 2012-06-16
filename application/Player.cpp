@@ -25,7 +25,7 @@ namespace Bivouac2012 {
 	static const float PLAYER_SPEED = 5;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-	 _playerID(id), facingAngle(DOWN) {
+	 _playerID(id), facingAngle(DOWN), _isMobile(true) {
 		_hook = new HookShot("hook", "ring", this);
 
 		//Player 1 is controllable via keyboar, always
@@ -108,7 +108,7 @@ void Player::render(){
 
 void Player::thumbStickMovements() {
 	//Player movements through thumbsticks
-	if (InputManager::getInstance().getNbGamePads() > 0) {
+	if (InputManager::getInstance().getNbGamePads() > 0 && _isMobile) {
 		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
 		float x = gamePadState.getThumbstick(0);
 		float y = gamePadState.getThumbstick(1);
@@ -156,6 +156,9 @@ void Player::baconAssplosion(){
 }
     
 void Player::collisionsAndShits() {
+    if (_isMobile) {
+        
+    
 		float oldX = 0;
 	float oldY = 0;
 	oldX = this->getOldXPosition() + this->getWidth()/2;
@@ -216,7 +219,7 @@ void Player::collisionsAndShits() {
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
-
+    }
 }
 
 }

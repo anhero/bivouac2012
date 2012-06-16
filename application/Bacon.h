@@ -20,7 +20,7 @@ namespace Bivouac2012 {
         
         void update();
     private:
-        
+        bool startedFlicking;
         PlayState *_parentState;
 
         int deleteTimer;
