@@ -51,6 +51,10 @@ public:
 	void setCollisionPosition(RedBox::Vector2 position);
 	void setCollisionPosition(float newX, float newY);
 	
+	float getYCollisionPosition();
+	float getXCollisionPosition();
+	RedBox::Vector2 getCollisionPosition();
+
 private:
     HookShot* _hook;
 	//Angle at which the player is facing.

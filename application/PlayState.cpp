@@ -125,12 +125,13 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
     
     void PlayState::calculateCollisionButtons(){
 		//HACK
+		const int button_deadzone = 40;
 		bool activated[4] = {false,false,false,false};
         for (int i=0; i<players.size(); ++i) {
 			
             for (int j=0; j<4; ++j) {
 				if (!activated[j]) {
-					if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
+					if (((players[i]->getCollisionPosition() - buttons[j]->getCentroid()).getLength() + button_deadzone) < buttons[j]->getWidth()/2) {
 						activated[j] = true;
 						buttons[j]->activate();
 					}

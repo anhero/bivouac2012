@@ -146,17 +146,17 @@ void Player::render(){
     
     void Player::resetPosition(){
         if(_playerID == 0){
-            setPosition(Vector2(170,170));
+            setCollisionPosition(Vector2(170,170));
         }
         else if(_playerID == 1){
-            setPosition(Vector2(730,170));
+            setCollisionPosition(Vector2(730,170));
 
         }
         else if(_playerID == 2){
-            setPosition(Vector2(170,730));
+            setCollisionPosition(Vector2(170,730));
         }
         else if(_playerID == 3){
-            setPosition(Vector2(730,730));
+            setCollisionPosition(Vector2(730,730));
 
         }
     }
@@ -284,6 +284,16 @@ void Player::setCollisionPosition(float newX, float newY) {
 	setXCollisionPosition(newX);
 }
 
+Vector2 Player::getCollisionPosition() {
+	return positionToCollisionPoint(getPosition());
+}
+float Player::getXCollisionPosition() {
+	return getCollisionPosition().x;
+}
+float Player::getYCollisionPosition() {
+	return getCollisionPosition().y;
+}
+
 void Player::collisionsAndShits() {
     if (_state <= IMMUNE) {
         
@@ -328,19 +338,19 @@ void Player::collisionsAndShits() {
 	else if (last_room != NULL) {
 		//LEFT EDGE
 		if (collisionPoint.x - PLAYER_COLLISION_CIRCLE <= last_room->getXPosition()) {
-			this->setXCollisionPosition(oldX + 1);
+			this->setXCollisionPosition(oldX);
 		}
 		//RIGHT EDGE
 		else if (collisionPoint.x + PLAYER_COLLISION_CIRCLE >= last_room->getXPosition() + last_room->getWidth()) {
-			this->setXCollisionPosition(oldX - 1);
+			this->setXCollisionPosition(oldX);
 		}
 		//TOP EDGE
 		if (collisionPoint.y - PLAYER_COLLISION_CIRCLE <= last_room->getYPosition()) {
-			this->setYCollisionPosition(oldY + 1);
+			this->setYCollisionPosition(oldY);
 		}
 		//BOTTOM EDGE
 		else if (collisionPoint.y + PLAYER_COLLISION_CIRCLE >= last_room->getYPosition() + last_room->getHeight()) {
-			this->setYCollisionPosition(oldY - 1);
+			this->setYCollisionPosition(oldY);
 		}
 	}
 	if (last_room == NULL && last_bridge == NULL) {
