@@ -63,21 +63,21 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
     
     void PlayState::initCrack(){
-        Sprite * crack1;
-        Sprite * crack2;
-        Sprite * crack3;
-        
-        crack1 = new Sprite("crack_1");
-        add(crack1);
-        crack1->setPosition(264, -36);
-        
-        crack2 = new Sprite("crack_2");
-        crack2->setPosition(-36, 264);
-        add(crack2);
-
-        crack3 = new Sprite("crack_3");
-        crack3->setPosition(264, 264);
-        add(crack3);
+//        Sprite * crack1;
+//        Sprite * crack2;
+//        Sprite * crack3;
+//        
+//        crack1 = new Sprite("crack_1");
+//        add(crack1);
+//        crack1->setPosition(264, -36);
+//        
+//        crack2 = new Sprite("crack_2");
+//        crack2->setPosition(-36, 264);
+//        add(crack2);
+//
+//        crack3 = new Sprite("crack_3");
+//        crack3->setPosition(264, 264);
+//        add(crack3);
 
     }
     
@@ -99,84 +99,23 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         
         //plateforme1
         
-        createLavaGrill(-36, -36);
+        createLavaGrill(20, 20);
         
         
         //plateforme2
-        createLavaGrill(815, -36);
+        createLavaGrill(950, 20);
 //        createLavaGrill
         
         
         //plateforme3
-        createLavaGrill(-36, 825);
+        createLavaGrill(315, 665);
         
         
         //plateforme 4
-        createLavaGrill(818, 525);
-        createLavaGrill(518, 525);
-        createLavaGrill(518, 825);
-        
-        
-//        lavamodel->setDefaultFrame(5);
-        
-        //plateform 1
-//        Sprite * lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, -36);
-//        lava->addAnimation("glow", 0.3, -1, 11, 0,1,2,3,4,5,4,3,2,1);
+        createLavaGrill(955, 665);
+        createLavaGrill(955, 960);
+        createLavaGrill(665, 665);
 
-//        lava->startAnimation("glow");
-//        add(lava);
-//        Sprite * grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        
-//        
-//        //plateform2
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(815, -36);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        //plateforme3
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//
-//        //plateforme4
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(818, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-        
-        
         
         
     }
