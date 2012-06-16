@@ -31,6 +31,12 @@ void initResources() {
     TEX("grille");
     TEX("lava_square");
     
+    
+    TEX("crack_1");
+    TEX("crack_2");
+    TEX("crack_3");
+
+    
 }
 
 int main(int argc, char *argv[]) {

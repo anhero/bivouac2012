@@ -44,6 +44,8 @@ namespace Bivouac2012 {
         void syncPlayerStatus();
         void clearBacon();
         
+        
+        void initCrack();
         void initGrille();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         

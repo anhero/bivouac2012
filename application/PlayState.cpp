@@ -37,12 +37,33 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         initBridges();
         initPlayers();
         initGrille();
+        initCrack();
 	}
 
     void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){
         std::cout << data.getPosition() << std::endl;
     }
 
+    
+    void PlayState::initCrack(){
+        Sprite * crack1;
+        Sprite * crack2;
+        Sprite * crack3;
+        
+        crack1 = new Sprite("crack_1");
+        add(crack1);
+        crack1->setPosition(264, -36);
+        
+        crack2 = new Sprite("crack_2");
+        crack2->setPosition(-36, 264);
+        add(crack2);
+
+        crack3 = new Sprite("crack_3");
+        crack3->setPosition(264, 264);
+        add(crack3);
+
+    }
+    
     void PlayState::initGrille(){
         
         
