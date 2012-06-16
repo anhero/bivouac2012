@@ -116,6 +116,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
                 if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
                     buttons[j]->activate();
                 }
+                else {
+                    buttons[j]->disengage();
+                }
             }
         }
     }

@@ -21,8 +21,11 @@ public:
 	
 	//Activates a bridge. The bridge itself decides how to handle that "signal".
 	void activate();
+    
+    void disengage();
 private:
 	Bridge *_bridges[2];
+//    bool isOn;
 };
 }
 
