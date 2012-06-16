@@ -23,6 +23,7 @@ namespace Bivouac2012 {
         STUNTED
     };
     class Player : public BivouacSprite, public sigly::HasSlots<> {
+		friend class PlayState;
 public:
 	Player(PlayState *parentState, int id);
 	~Player();

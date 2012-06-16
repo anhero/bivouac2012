@@ -130,6 +130,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {
 				players[i]->setZ(players[i]->getYPosition()+200);
+				if (players[i]->_state == CARRIED) {
+					players[i]->setZ(players[i]->getZ() + 92);
+				}
 			}
 			_zRefreshCounter = 4;
 		}
