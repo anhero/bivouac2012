@@ -18,6 +18,9 @@ namespace Bivouac2012 {
 	 */
 	class PlayState : public RedBox::State {
 		friend class Player;
+		//Hack because of getCamera being const...
+		friend class Bridge;
+        friend class Bacon;
     public:
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
@@ -32,6 +35,8 @@ namespace Bivouac2012 {
 		void initRooms();
         void calculateCollisionButtons();
         void calculateHookGrabing();
+        
+//        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
         std::vector<Player*> players;
 		

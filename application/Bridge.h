@@ -11,9 +11,14 @@
 #include <RedBox.h>
 
 namespace Bivouac2012 {
+	
+	class PlayState;
 
 class Bridge : public RedBox::Sprite  {
+	friend class PlayState;
 public:
+	static const int NB_EMITTERS = 4;
+	
 	Bridge(RedBox::Vector2 pos, bool horizontal);
 	
 	void update();
@@ -39,6 +44,8 @@ public:
 	void activate();
 	///To be called when the bridge is to be retracted
 	void startRetracting();
+	///To be called to do the effects when the bridge is closed.
+	void finishClosing();
 	
 	///Checks if the point is on a part of the bridge.
 	bool checkIsOnBridge(RedBox::Vector2 point, bool oldPos = false);
@@ -54,6 +61,7 @@ private:
 	bool _retracting;
 	bool _retracted;
 	bool _activating;
+	bool _finisedClosing;
 	
 	//0 for closed, 1 for retracted.
 	float _retractedRatio;
@@ -63,6 +71,10 @@ private:
 	RedBox::Sprite *part2;
 	
 	RedBox::Vector2 oldPositions[2];
+	
+	RedBox::SpriteEmitter *_emitters[NB_EMITTERS];
+	
+	PlayState *_parentState;
 };
 }
 

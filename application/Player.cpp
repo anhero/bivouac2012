@@ -7,7 +7,12 @@
 
 #include "Player.h"
 #include "HookShot.h"
+#include "Bacon.h"
 #include <ios>
+
+#define MIN_BACON_VELOCITY 100
+#define MAX_BACON_VELOCITY 150
+
 using namespace RedBox;
 
 namespace Bivouac2012 {
@@ -19,8 +24,8 @@ namespace Bivouac2012 {
 	
 	static const float PLAYER_SPEED = 5;
 
-	Player::Player(const std::string& image, PlayState *parentState, int id) : Sprite(image),
-	_parentState(parentState), _playerID(id), facingAngle(DOWN) {
+	Player::Player(const std::string& image, PlayState *parentState, int id) : BivouacSprite(image, parentState),
+	 _playerID(id), facingAngle(DOWN) {
 		_hook = new HookShot("hook", "ring", this);
 
 		//Player 1 is controllable via keyboar, always
@@ -91,7 +96,7 @@ void Player::onKeyRelease(KeySignalData data) {
 	}
 
 void Player::render(){
-    Sprite::render();
+    BivouacSprite::render();
     _hook->render();
 }
 
@@ -120,15 +125,30 @@ void Player::update() {
 
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
-		Sprite::update();
+		BivouacSprite::update();
 		return;
 	}
 	collisionsAndShits();
 	
-	Sprite::update();
+	BivouacSprite::update();
     _hook->update();
 }
 
+void Player::baconAssplosion(){
+//    _parentState->baconAssplosionAt(this->getPosition(), 50);
+    for (int i = 0; i < 50; i++) {
+        Bacon * bacon = new Bacon(this->getPosition(), _parentState);
+        Vector2 baconVelocity;
+        baconVelocity.x =1;
+        baconVelocity.setAngle(Random::getRandomInteger(0, 360));
+        baconVelocity.normalize();
+        baconVelocity *= Random::getRandomFloat(MIN_BACON_VELOCITY, MAX_BACON_VELOCITY);
+        bacon->setVelocity(baconVelocity);
+        bacon->setGlobalDrag(30);
+        _parentState->add(bacon);
+    }
+}
+    
 void Player::collisionsAndShits() {
 		float oldX = 0;
 	float oldY = 0;
@@ -190,9 +210,7 @@ void Player::collisionsAndShits() {
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
-	
-	Sprite::update();
-    _hook->update();
+
 }
 
 }

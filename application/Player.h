@@ -13,9 +13,10 @@
 #include "PlayState.h"
 #include "HookShot.h"
 
+#include "BivouacSprite.h"
 namespace Bivouac2012 {
 
-class Player : public RedBox::Sprite, public sigly::HasSlots<> {
+    class Player : public BivouacSprite, public sigly::HasSlots<> {
 public:
 	Player(const std::string& image, PlayState *parentState, int id);
 	~Player();
@@ -31,8 +32,8 @@ public:
 	void update();
     bool getCanMove(){return _canMove;}
     void setCanMove(bool newHooked){ _canMove = newHooked;}
+    void baconAssplosion();
 private:
-	PlayState *_parentState;
     HookShot* _hook;
 	//Angle at which the player is facing.
     float facingAngle;
@@ -40,8 +41,10 @@ private:
 	int _playerID;
     bool _canMove;
 	
+    
 	void thumbStickMovements();
 	void collisionsAndShits();
+    
 };
 
 }

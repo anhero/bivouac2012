@@ -7,6 +7,8 @@
 
 #include "Button.h"
 
+#include "Bridge.h"
+
 using namespace RedBox;
 
 namespace Bivouac2012 {

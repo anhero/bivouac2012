@@ -22,6 +22,10 @@
 		240489E914F2BA40001F8F61 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404899614F2B655001F8F61 /* OpenGL.framework */; };
 		240489F414F2BAA2001F8F61 /* libRedBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404897614F2B508001F8F61 /* libRedBox.a */; };
 		2489A5E315047EC40032DE88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2489A5C215047EAA0032DE88 /* main.cpp */; };
+		51F38BCA158CA49F008EF15D /* bacon_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51F38BC8158CA49F008EF15D /* bacon_glow.png */; };
+		51F38BCB158CA49F008EF15D /* bacon_strip.png in Resources */ = {isa = PBXBuildFile; fileRef = 51F38BC9158CA49F008EF15D /* bacon_strip.png */; };
+		51F38BD7158CB03C008EF15D /* Bacon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51F38BD5158CB03C008EF15D /* Bacon.cpp */; };
+		51F38BF2158CBDC9008EF15D /* BivouacSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51F38BF0158CBDC9008EF15D /* BivouacSprite.cpp */; };
 		5C2A74D3158B35A200029CFB /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74D1158B27CC00029CFB /* Player.cpp */; };
 		5C2A74D7158B3ABF00029CFB /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A74D6158B3ABF00029CFB /* Player.png */; };
 		5C2A74DC158B3EC900029CFB /* Bridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74D8158B3E3100029CFB /* Bridge.cpp */; };
@@ -81,6 +85,12 @@
 		240489D914F2BA35001F8F61 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		240489DC14F2BA36001F8F61 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2489A5C215047EAA0032DE88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		51F38BC8158CA49F008EF15D /* bacon_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_glow.png; sourceTree = "<group>"; };
+		51F38BC9158CA49F008EF15D /* bacon_strip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_strip.png; sourceTree = "<group>"; };
+		51F38BD5158CB03C008EF15D /* Bacon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bacon.cpp; sourceTree = "<group>"; };
+		51F38BD6158CB03C008EF15D /* Bacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bacon.h; sourceTree = "<group>"; };
+		51F38BF0158CBDC9008EF15D /* BivouacSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BivouacSprite.cpp; sourceTree = "<group>"; };
+		51F38BF1158CBDC9008EF15D /* BivouacSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BivouacSprite.h; sourceTree = "<group>"; };
 		5C2A74D1158B27CC00029CFB /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		5C2A74D2158B27CC00029CFB /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		5C2A74D6158B3ABF00029CFB /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
@@ -160,6 +170,10 @@
 				2489A5C215047EAA0032DE88 /* main.cpp */,
 				5C2A74F4158B4F1800029CFB /* HookShot.cpp */,
 				5C2A74F6158B4F2300029CFB /* HookShot.h */,
+				51F38BD5158CB03C008EF15D /* Bacon.cpp */,
+				51F38BD6158CB03C008EF15D /* Bacon.h */,
+				51F38BF0158CBDC9008EF15D /* BivouacSprite.cpp */,
+				51F38BF1158CBDC9008EF15D /* BivouacSprite.h */,
 			);
 			name = application;
 			path = ../../../application;
@@ -168,6 +182,8 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				51F38BC8158CA49F008EF15D /* bacon_glow.png */,
+				51F38BC9158CA49F008EF15D /* bacon_strip.png */,
 				5C9A18E9158BCD5E00F235D9 /* floor.png */,
 				5C2A750F158BAC8F00029CFB /* button.png */,
 				5C2A7510158BAC8F00029CFB /* pad_bottom-left.png */,
@@ -324,6 +340,8 @@
 				5C2A7519158BAC8F00029CFB /* pad_top-left.png in Resources */,
 				5C2A751A158BAC8F00029CFB /* pad_top-right.png in Resources */,
 				5C9A18EA158BCD5E00F235D9 /* floor.png in Resources */,
+				51F38BCA158CA49F008EF15D /* bacon_glow.png in Resources */,
+				51F38BCB158CA49F008EF15D /* bacon_strip.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +358,8 @@
 				5C2A74DC158B3EC900029CFB /* Bridge.cpp in Sources */,
 				5C2A74DD158B3ECC00029CFB /* Button.cpp in Sources */,
 				5C2A74F5158B4F1800029CFB /* HookShot.cpp in Sources */,
+				51F38BD7158CB03C008EF15D /* Bacon.cpp in Sources */,
+				51F38BF2158CBDC9008EF15D /* BivouacSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

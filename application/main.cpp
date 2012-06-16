@@ -7,11 +7,18 @@
 void initResources() {
 	TEX("button");
 	TEX("bridge");
+	TEX("pierre_1");
+	TEX("pierre_2");
+	TEX("pierre_3");
+	
+	TEX("pedantic_smoke_1");
 	
 	TEX("floor");
     TEX("player");
     TEX("hook");
     TEX("ring");
+    TEX("bacon_glow");
+    TEX("bacon_strip");
 }
 
 int main(int argc, char *argv[]) {
