@@ -22,6 +22,7 @@
 		240489E914F2BA40001F8F61 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404899614F2B655001F8F61 /* OpenGL.framework */; };
 		240489F414F2BAA2001F8F61 /* libRedBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404897614F2B508001F8F61 /* libRedBox.a */; };
 		2489A5E315047EC40032DE88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2489A5C215047EAA0032DE88 /* main.cpp */; };
+		510955AB158D2DF300F58D57 /* lava.png in Resources */ = {isa = PBXBuildFile; fileRef = 510955AA158D2DF300F58D57 /* lava.png */; };
 		51820095158D16C200FA5802 /* bacon_glow_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820061158D16C200FA5802 /* bacon_glow_shadow.png */; };
 		51820096158D16C200FA5802 /* bacon_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820062158D16C200FA5802 /* bacon_glow.png */; };
 		51820097158D16C200FA5802 /* bacon_strip_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820063158D16C200FA5802 /* bacon_strip_shadow.png */; };
@@ -124,6 +125,7 @@
 		240489D914F2BA35001F8F61 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		240489DC14F2BA36001F8F61 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2489A5C215047EAA0032DE88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		510955AA158D2DF300F58D57 /* lava.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lava.png; sourceTree = "<group>"; };
 		51820061158D16C200FA5802 /* bacon_glow_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_glow_shadow.png; sourceTree = "<group>"; };
 		51820062158D16C200FA5802 /* bacon_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_glow.png; sourceTree = "<group>"; };
 		51820063158D16C200FA5802 /* bacon_strip_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_strip_shadow.png; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				510955AA158D2DF300F58D57 /* lava.png */,
 				51820061158D16C200FA5802 /* bacon_glow_shadow.png */,
 				51820062158D16C200FA5802 /* bacon_glow.png */,
 				51820063158D16C200FA5802 /* bacon_strip_shadow.png */,
@@ -498,6 +501,7 @@
 				518200C7158D16C200FA5802 /* star.png in Resources */,
 				518200C8158D16C200FA5802 /* title_screen_5.png in Resources */,
 				518200CA158D170D00FA5802 /* spritesheet_players_eyes.png in Resources */,
+				510955AB158D2DF300F58D57 /* lava.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
