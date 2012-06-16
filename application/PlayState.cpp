@@ -171,6 +171,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {
 				players[i]->setZ(players[i]->getYPosition()+200);
+				if (players[i]->_state == CARRIED) {
+					players[i]->setZ(players[i]->getZ() + 92);
+				}
 			}
 			_zRefreshCounter = 4;
 		}
@@ -181,10 +184,21 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
     }
 	//TODO: Remove debug "SPACE" key...?
 	void PlayState::onKeyHold( KeySignalData data) {
+		if (data.key == Key::V) {
+            players[0]->stun();
+		}
+		if (players.size() > 1 && data.key == Key::B) {
+            players[1]->stun();
+		}
+		if (players.size() > 2 && data.key == Key::N) {
+            players[2]->stun();
+		}
+		if (players.size() > 3 && data.key == Key::M) {
+            players[3]->stun();
+		}
+		
 		if (data.key == Key::F9) {
 			buttons[0]->activate();
-            players[0]->baconAssplosion();
-            players[0]->flick();
 		}
 		if (data.key == Key::F10) {
 			buttons[1]->activate();
@@ -411,7 +425,8 @@ void PlayState::initRooms() {
             if (currentHook->isThrown()) {
                 //verify the collision with other players
                 for (int j=0; j<_nbPlayers; ++j) {
-                    if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30) {
+                    if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30 &&
+                        !players[j]->getIsFlicking()) {
                         
                         currentHook->grab(j);
                     }

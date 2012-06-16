@@ -26,7 +26,8 @@ namespace Bivouac2012 {
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
         void render();
-        std::vector<Player*> getPlayers(){return players;}
+        std::vector<Player*> getPlayers(){return players;}		
+		void stun();
 
     private:
         

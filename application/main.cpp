@@ -9,9 +9,9 @@ void initResources() {
 	TEX("button_on");
 	TEX("button_off");
 	TEX("bridge");
-	TEX("pierre_1");
-	TEX("pierre_2");
-	TEX("pierre_3");
+	TEX("rock_1");
+	TEX("rock_2");
+	TEX("rock_3");
 	
 	TEX("pedantic_smoke_1");
 	

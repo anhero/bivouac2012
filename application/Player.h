@@ -23,6 +23,7 @@ namespace Bivouac2012 {
         STUNTED
     };
     class Player : public BivouacSprite, public sigly::HasSlots<> {
+		friend class PlayState;
 public:
 	Player(PlayState *parentState, int id);
 	~Player();
@@ -56,6 +57,8 @@ public:
 	float getYCollisionPosition();
 	float getXCollisionPosition();
 	RedBox::Vector2 getCollisionPosition();
+	
+	void stun();
 
 private:
     HookShot* _hook;
@@ -74,6 +77,9 @@ private:
     void harvestBacon();    
      
         RedBox::Sprite * debugCircle;    
+		
+		bool _stunned;
+		unsigned int _stunned_counter;
 };
 
 }

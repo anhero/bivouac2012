@@ -19,6 +19,7 @@ namespace Bivouac2012 {
         void update();
         void flick();
         PlayState *_parentState;
+        bool getIsFlicking(){return isFLicking;}
     protected:
         
         virtual void finishedFlicking();

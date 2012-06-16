@@ -36,9 +36,12 @@ const std::string Player::ANIMATIONS[9] =  {
 	
 	static const float PLAYER_Y_COLLISION_POINT = 75;
 	static const float PLAYER_COLLISION_CIRCLE = 11;
+	
+	static const int STUN_LENGTH = 100;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-    _playerID(id), facingAngle(DOWN), _state(MOBILE), _graber(0) {
+    _playerID(id), facingAngle(DOWN), _state(MOBILE),
+	_stunned(false), _stunned_counter(0), _graber(0) {
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -91,6 +94,7 @@ const std::string Player::ANIMATIONS[9] =  {
 
 	//KEYBOARD HANDLING
 void Player::onKeyHold(KeySignalData data) {
+	if (!_stunned) {
     switch (data.key) {
         case Key::W:
             move(Vector2(0,-PLAYER_SPEED));
@@ -111,6 +115,7 @@ void Player::onKeyHold(KeySignalData data) {
         default:
             break;
     }
+	}
 }
     
 void Player::onKeyPress(KeySignalData data) {
@@ -135,6 +140,7 @@ void Player::onKeyRelease(KeySignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
+                    _parentState->getPlayers()[_hook->getTargetId()]->stun();
                     _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
                     _graber->getHook()->grabedshacle();
@@ -170,7 +176,7 @@ void Player::render(){
 
 void Player::thumbStickMovements() {
 	//Player movements through thumbsticks
-	if (InputManager::getInstance().getNbGamePads() > 0 && _state <= IMMUNE) {
+	if (InputManager::getInstance().getNbGamePads() > 0 && _state <= IMMUNE && !_stunned) {
 		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
 		float x = gamePadState.getThumbstick(0);
 		float y = gamePadState.getThumbstick(1);
@@ -190,7 +196,7 @@ void Player::thumbStickMovements() {
 
 void Player::update() {
 	thumbStickMovements();
-    
+
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
 		BivouacSprite::update();
@@ -200,11 +206,25 @@ void Player::update() {
     
     if(!isFLicking)harvestBacon();
 	
-    
+	//////////////////////
+	// Stunned player...
+	if (_stunned) {
+		if (flickCount >= 100) {
+			flick();
+		}
+		if (--_stunned_counter == 0) {
+			_stunned = false;
+		}
+	}
+	
 	//////////////////////
 	// Animation settings...
-	
-    if (_state == CARRIED) {
+	if (_stunned) {
+		if (getCurrentAnimation() != "shocked") {
+			startAnimation("shocked");
+		}
+	}
+    else if (_state == CARRIED) {
         startAnimation("shocked");
         setAngle(90);
     }else{
@@ -265,7 +285,7 @@ void Player::harvestBacon(){
 void Player::baconAssplosion(){
 //    _parentState->baconAssplosionAt(this->getPosition(), 50);
     for (int i = 0; i < 50; i++) {
-        Bacon * bacon = new Bacon(this->getPosition(), _parentState);
+        Bacon * bacon = new Bacon(this->getCollisionPosition(), _parentState);
         Vector2 baconVelocity;
         baconVelocity.x =1;
         baconVelocity.setAngle(Random::getRandomInteger(0, 360));
@@ -273,6 +293,8 @@ void Player::baconAssplosion(){
         baconVelocity *= Random::getRandomFloat(MIN_BACON_VELOCITY, MAX_BACON_VELOCITY);
         bacon->setVelocity(baconVelocity);
         bacon->setGlobalDrag(30);
+		bacon->moveX(- bacon->getWidth()/2);
+		bacon->moveY(- bacon->getHeight()/2);
         _parentState->add(bacon);
         _parentState->bacons.push_back(bacon);
     }
@@ -370,6 +392,7 @@ void Player::collisionsAndShits() {
 	}
 	if (last_room == NULL && last_bridge == NULL) {
         resetPosition();
+		stun();
 	}
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
@@ -382,6 +405,16 @@ void Player::collisionsAndShits() {
             setPosition(_graber->getPositionCenter() - Vector2(0,30) - getSize()/2);
         }
     }
+
+	void Player::stun() {
+		if (!_stunned) {
+			baconAssplosion();
+			flick();
+			_stunned = true;
+			_stunned_counter = STUN_LENGTH;
+		}
+	}
+	
     void Player::setGraber(Player* graber){
         _graber = graber;
     }
