@@ -60,6 +60,37 @@ namespace Bivouac2012 {
                 if (bridgePart != NULL) {
                     this->move(bridgePart->getPosition() - last_bridge->getOldPositionForPart(bridgePart));
                 }
+				else {
+					bridgePart = last_bridge->getPartAtPoint(Vector2(oldX, oldY), true);
+					if (bridgePart != NULL) {
+						float last_bridge_x = last_bridge->getXPosition() - last_bridge->getWidth()/2;
+						float last_bridge_y = last_bridge->getYPosition() - last_bridge->getHeight()/2;
+						
+						//LEFT EDGE
+						if (this->getXPositionCenter() <= last_bridge_x) {
+							this->setXPosition(oldX - this->getWidth()/2);
+							this->setXVelocity(this->getXVelocity() * -1);
+						}
+						//RIGHT EDGE
+						else if (this->getXPositionCenter() >= last_bridge_x + last_bridge->getWidth()) {
+							this->setXPosition(oldX - this->getWidth()/2);
+							this->setXVelocity(this->getXVelocity() * -1);
+						}
+						//TOP EDGE
+						if (this->getYPositionCenter() <= last_bridge_y) {
+							this->setYPosition(oldY - this->getHeight()/2);
+							this->setYVelocity(this->getYVelocity() * -1);
+						}
+						//BOTTOM EDGE
+						else if (this->getYPositionCenter() >= last_bridge_y + last_bridge->getHeight()) {
+							this->setYPosition(oldY - this->getHeight()/2);
+							this->setYVelocity(this->getYVelocity() * -1);
+						}
+					}
+					else {
+						std::cout << "[BACON] YOU ARE NOT ON A BRIDGE AND WERE NOT ON A BRIDGE  OMGWTFBBQ" << std::endl;
+					}
+				}
             }
         }
         //If the player was in a room, we check the boundaries
@@ -86,7 +117,7 @@ namespace Bivouac2012 {
             }
         }
         if (last_room == NULL && last_bridge == NULL) {
-            std::cout << "YOU DYING" << std::endl;
+            //std::cout << "BACON BE OUT" << std::endl;
         }
         else {
             //std::cout << "YOU SAFE" << std::endl;

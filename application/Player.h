@@ -39,6 +39,9 @@ public:
     bool isMobile(){return _state <= IMMUNE;}
     void setState(PlayerState newState){ _state = newState;}
     void baconAssplosion();
+	
+	static const std::string ANIMATIONS[9];
+	
 private:
     HookShot* _hook;
 	//Angle at which the player is facing.
@@ -47,10 +50,14 @@ private:
 	int _playerID;
     PlayerState _state;
 	
+        bool canHarvestBacon;
     
 	void thumbStickMovements();
 	void collisionsAndShits();
     
+    void harvestBacon();    
+     
+        RedBox::Sprite * debugCircle;    
 };
 
 }

@@ -9,14 +9,24 @@
 #include "HookShot.h"
 #include "Bacon.h"
 #include <ios>
+#include <math.h>
+
 
 #define MIN_BACON_VELOCITY 100
 #define MAX_BACON_VELOCITY 150
 
+#define FRAME_OF_DIRECTION(x) (x + frameOffset + i*5)
+
 using namespace RedBox;
 
 namespace Bivouac2012 {
-	
+
+const std::string Player::ANIMATIONS[9] =  {
+		"standing_up","standing_down","standing_left","standing_right",
+		"walking_up","walking_down","walking_left","walking_right",
+		"shocked"
+};
+
 	static const float UP = 0.0;
 	static const float LEFT = 90.0;
 	static const float DOWN = 180.0;
@@ -46,9 +56,28 @@ namespace Bivouac2012 {
 		
 		//Animation construction!
 		int frameOffset = _playerID * 22;
-		this->addAnimation("standing_down", 0.1, 1, 1, 0 + frameOffset);
+		for (int i=0; i < 4; i++) {
+			this->addAnimation(ANIMATIONS[i], 0.1, 1, 1, FRAME_OF_DIRECTION(0));
+		}
+		for (int i=0; i < 4; i++) {
+			this->addAnimation(ANIMATIONS[i+4], 0.07, -1, 8
+				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(1) ,FRAME_OF_DIRECTION(2) ,FRAME_OF_DIRECTION(1) 
+				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(3) ,FRAME_OF_DIRECTION(4) ,FRAME_OF_DIRECTION(3)
+			);
+		}
+		{
+			this->addAnimation(ANIMATIONS[8], 0.1, -1, 2
+				, frameOffset + 20
+				, frameOffset + 21
+			);
+		}
 		
 		this->startAnimation("standing_down");
+         
+         
+         canHarvestBacon = true;
+         
+         debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
 	}
 
 	Player::~Player() {
@@ -139,9 +168,61 @@ void Player::update() {
 		return;
 	}
 	collisionsAndShits();
+    if(!isFLicking)harvestBacon();
+	
+	//////////////////////
+	// Animation settings...
+	{
+		// Direction
+		int animationIndex = 0;
+		float angle = facingAngle;
+		angle += 180.0f;
+		angle += 360.0f;
+		angle -=  45.0f;
+		angle = fmod(angle,360);
+		if (angle < 90.0f) {
+			animationIndex = 3;
+		}
+		else if (angle < 180.0f) {
+			animationIndex = 0;
+		}
+		else if (angle < 270.0f) {
+			animationIndex = 2;
+		}
+		else {
+			animationIndex = 1;
+		}
+		
+		if (getOldPosition() != getPosition()) {
+			animationIndex += 4;
+		}
+		
+		if (getCurrentAnimation() != ANIMATIONS[animationIndex]) {
+			startAnimation(ANIMATIONS[animationIndex]);
+		}
+	}
 	
 	BivouacSprite::update();
     _hook->update();
+    debugCircle->update();
+}
+    
+    
+void Player::harvestBacon(){
+    Vector2 colCirclePosition(getPosition().x +getWidth()/2 , getPosition().y +getHeight() - 50);
+    int radius = 45;
+    
+    debugCircle->setPosition(colCirclePosition);
+    debugCircle->setScaling(Vector2(radius,radius));
+    for (std::list<Bacon*>::iterator i = _parentState->bacons.begin(); i != _parentState->bacons.end(); ) {
+        if (((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
+            (*i)->setToBeDeleted(true);
+            i = _parentState->bacons.erase(i);
+        }
+        else{
+            i++;
+        }
+    }
 }
 
 void Player::baconAssplosion(){
@@ -156,6 +237,7 @@ void Player::baconAssplosion(){
         bacon->setVelocity(baconVelocity);
         bacon->setGlobalDrag(30);
         _parentState->add(bacon);
+        _parentState->bacons.push_back(bacon);
     }
 }
     

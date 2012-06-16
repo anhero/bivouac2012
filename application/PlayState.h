@@ -8,10 +8,11 @@
 
 #include "Button.h"
 #include "Bridge.h"
-
+#include <list>
 #include <vector>
 
 namespace Bivouac2012 {
+    class Bacon;
     class Player;
 	/**
 	 * 
@@ -36,7 +37,7 @@ namespace Bivouac2012 {
         void calculateCollisionButtons();
         void calculateHook();
         void calculateGrabing();
-        
+        void clearBacon();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
         std::vector<Player*> players;
@@ -48,6 +49,8 @@ namespace Bivouac2012 {
 		
 		int _nbPlayers;
 		bool _usesGamepads;
+        std::list<Bacon*> bacons;
+        
 	};
 }
 
