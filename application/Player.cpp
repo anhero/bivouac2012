@@ -37,7 +37,7 @@ const std::string Player::ANIMATIONS[9] =  {
 	static const float PLAYER_Y_COLLISION_POINT = 75;
 	static const float PLAYER_COLLISION_CIRCLE = 11;
 	
-	static const int STUN_LENGTH = 60;
+	static const int STUN_LENGTH = 100;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
     _playerID(id), facingAngle(DOWN), _state(MOBILE),
@@ -140,6 +140,7 @@ void Player::onKeyRelease(KeySignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
+                    _parentState->getPlayers()[_hook->getTargetId()]->stun();
                     _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
                     _graber->getHook()->grabedshacle();
