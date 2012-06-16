@@ -25,8 +25,12 @@ namespace Bivouac2012 {
 	static const float PLAYER_SPEED = 5;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-	 _playerID(id), facingAngle(DOWN), _isMobile(true) {
-		_hook = new HookShot("hook", "ring", this);
+    _playerID(id), facingAngle(DOWN), _isMobile(true) {
+        std::string hookStr = "hook";
+        hookStr.append(Parser::intToString(id));
+        std::string ringStr = "chain";
+        ringStr.append(Parser::intToString(id));
+		_hook = new HookShot(hookStr, ringStr, this);
 
 		//Player 1 is controllable via keyboar, always
 		if (_playerID == 0) {
