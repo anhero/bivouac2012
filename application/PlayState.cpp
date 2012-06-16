@@ -52,10 +52,14 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         myFont->setPosition(250,250);
 		
 		Sprite *hud = new Sprite("hud");
-		hud->setPosition(1000,20);
+		hud->setPosition(1100 + 105,100);
+        
+		Sprite *blackbg = SpriteFactory::makePolygon(4,1,Color::BLACK);
+		blackbg->setScaling(660,1100);
+		blackbg->setPosition(1100,0);
+        
+		add(blackbg);
 		add(hud);
-        
-        
 	}
 
     void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){
