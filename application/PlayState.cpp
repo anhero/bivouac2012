@@ -39,7 +39,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 	void PlayState::update() {
         calculateCollisionButtons();
         calculateHook();
-        calculateGrabing();
 		
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {

@@ -136,7 +136,7 @@ void Player::onKeyRelease(KeySignalData data) {
             if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
                     //SMASH THE FUCK OUT OF HIM!!!!
-                }else if(_state == CARRIED){
+                }else if(_state == CARRIED || _state == HOOKED){
                     _graber->getHook()->grabedshacle();
                 }
                 else{
@@ -190,19 +190,26 @@ void Player::thumbStickMovements() {
 
 void Player::update() {
 	thumbStickMovements();
-
+    
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
 		BivouacSprite::update();
 		return;
 	}
 	collisionsAndShits();
+    
     if(!isFLicking)harvestBacon();
 	
+    
 	//////////////////////
 	// Animation settings...
-	{
+	
+    if (_state == CARRIED) {
+        startAnimation("shocked");
+        setAngle(90);
+    }else{
 		// Direction
+        setAngle(0);
 		int animationIndex = 0;
 		float angle = facingAngle;
 		angle += 180.0f;
