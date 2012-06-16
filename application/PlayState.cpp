@@ -31,15 +31,101 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
         
+//        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
+        
         camera.setScaling(Vector2(0.88,0.88));
-        initPlayers();
         initBridges();
+        initPlayers();
+        initGrille();
+        initCrack();
 	}
 
+    void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){
+        std::cout << data.getPosition() << std::endl;
+    }
+
+    
+    void PlayState::initCrack(){
+        Sprite * crack1;
+        Sprite * crack2;
+        Sprite * crack3;
+        
+        crack1 = new Sprite("crack_1");
+        add(crack1);
+        crack1->setPosition(264, -36);
+        
+        crack2 = new Sprite("crack_2");
+        crack2->setPosition(-36, 264);
+        add(crack2);
+
+        crack3 = new Sprite("crack_3");
+        crack3->setPosition(264, 264);
+        add(crack3);
+
+    }
+    
+    void PlayState::initGrille(){
+        
+        
+        
+        //plateform 1
+        Sprite * lava = new Sprite("lava_square");
+        lava->setPosition(-36, -36);
+        add(lava);
+        Sprite * grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        
+        
+        //plateform2
+        lava = new Sprite("lava_square");
+        lava->setPosition(815, -36);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        //plateforme3
+        lava = new Sprite("lava_square");
+        lava->setPosition(-36, 825);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+
+        //plateforme4
+        lava = new Sprite("lava_square");
+        lava->setPosition(818, 525);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        lava = new Sprite("lava_square");
+        lava->setPosition(518, 525);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        lava = new Sprite("lava_square");
+        lava->setPosition(518, 825);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        
+        
+        
+        
+    }
+    
 	void PlayState::update() {
         calculateCollisionButtons();
         calculateHook();
-        calculateGrabing();
 		
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {
@@ -48,6 +134,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 			_zRefreshCounter = 4;
 		}
 		_zRefreshCounter--;
+        
 	}
     void PlayState::render() {
     }
@@ -136,7 +223,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 //    }
 
 	void PlayState::onGetFocus() {
-		MainWindow::getInstance().hideCursor();
+//		MainWindow::getInstance().hideCursor();
 	}
 	
 	void PlayState::onLoseFocus() {
@@ -301,18 +388,23 @@ void PlayState::initRooms() {
                 }
                 //if there is a player hooked drags him with the hook
             }else if (currentHook->hookedPlayer()){
-                players[currentHook->getHooked()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
+                players[currentHook->getTargetId()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
             }
             players[i]->setState(MOBILE);
         }
+        syncPlayerStatus();
+    }
+    void PlayState::syncPlayerStatus(){
         for (int i=0; i<_nbPlayers; ++i) {
             if(players[i]->getHook()->hookedPlayer()){
-                players[players[i]->getHook()->getHooked()]->setState(HOOKED);
+                players[players[i]->getHook()->getTargetId()]->setState(HOOKED);
             }
         }
-        
-    }
-    void PlayState::calculateGrabing(){
-        
+        for (int i=0; i<_nbPlayers; ++i) {
+            if(players[i]->getHook()->grabedPlayer()){
+                players[players[i]->getHook()->getTargetId()]->setState(CARRIED);
+                players[players[i]->getHook()->getTargetId()]->setGraber(players[i]);
+            }
+        }
     }
 }

@@ -40,7 +40,8 @@ const std::string Player::ANIMATIONS[9] =  {
 	static const int STUN_LENGTH = 60;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-    _playerID(id), facingAngle(DOWN), _state(MOBILE), _stunned(false), _stunned_counter(0) {
+    _playerID(id), facingAngle(DOWN), _state(MOBILE),
+	_stunned(false), _stunned_counter(0), _graber(0) {
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -138,7 +139,14 @@ void Player::onKeyRelease(KeySignalData data) {
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
-                _hook->throwGraplin(facingAngle);
+                if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
+                    _hook->releasePlayer();
+                }else if(_state == CARRIED || _state == HOOKED){
+                    _graber->getHook()->grabedshacle();
+                }
+                else{
+                    _hook->throwGraplin(facingAngle);
+                }
             }
         }
 	}
@@ -194,6 +202,7 @@ void Player::update() {
 		return;
 	}
 	collisionsAndShits();
+    
     if(!isFLicking)harvestBacon();
 	
 	//////////////////////
@@ -214,8 +223,12 @@ void Player::update() {
 			startAnimation("shocked");
 		}
 	}
-	else {
+    else if (_state == CARRIED) {
+        startAnimation("shocked");
+        setAngle(90);
+    }else{
 		// Direction
+        setAngle(0);
 		int animationIndex = 0;
 		float angle = facingAngle;
 		angle += 180.0f;
@@ -246,6 +259,7 @@ void Player::update() {
 	
 	BivouacSprite::update();
     _hook->update();
+    refreshGrabed();
     debugCircle->update();
 }
     
@@ -382,15 +396,25 @@ void Player::collisionsAndShits() {
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
+    }    
+}
+    
+    void Player::refreshGrabed(){
+        if (_state == CARRIED) {
+            setPosition(_graber->getPositionCenter() - Vector2(0,30) - getSize()/2);
+        }
     }
-}
 
-void Player::stun() {
-	if (!_stunned) {
-		baconAssplosion();
-		flick();
-		_stunned = true;
-		_stunned_counter = STUN_LENGTH;
+	void Player::stun() {
+		if (!_stunned) {
+			baconAssplosion();
+			flick();
+			_stunned = true;
+			_stunned_counter = STUN_LENGTH;
+		}
 	}
-}
+	
+    void Player::setGraber(Player* graber){
+        _graber = graber;
+    }
 }

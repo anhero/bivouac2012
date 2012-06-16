@@ -38,9 +38,11 @@ public:
 	void update();
     bool isMobile(){return _state <= IMMUNE;}
     void setState(PlayerState newState){ _state = newState;}
+    void setGraber(Player* graber);
     void baconAssplosion();
-        
-        void resetPosition();
+    
+    void refreshGrabed();    
+    void resetPosition();
 	
 	static const std::string ANIMATIONS[9];
 	
@@ -63,6 +65,7 @@ private:
     float facingAngle;
 	
 	int _playerID;
+    Player* _graber;
     PlayerState _state;
 	
         bool canHarvestBacon;
