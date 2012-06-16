@@ -53,10 +53,21 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
     }
 	//TODO: Remove debug "SPACE" key...?
 	void PlayState::onKeyHold( KeySignalData data) {
+		if (data.key == Key::V) {
+            players[0]->stun();
+		}
+		if (players.size() > 1 && data.key == Key::B) {
+            players[1]->stun();
+		}
+		if (players.size() > 2 && data.key == Key::N) {
+            players[2]->stun();
+		}
+		if (players.size() > 3 && data.key == Key::M) {
+            players[3]->stun();
+		}
+		
 		if (data.key == Key::F9) {
 			buttons[0]->activate();
-            players[0]->baconAssplosion();
-            players[0]->flick();
 		}
 		if (data.key == Key::F10) {
 			buttons[1]->activate();

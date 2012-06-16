@@ -36,9 +36,11 @@ const std::string Player::ANIMATIONS[9] =  {
 	
 	static const float PLAYER_Y_COLLISION_POINT = 75;
 	static const float PLAYER_COLLISION_CIRCLE = 11;
+	
+	static const int STUN_LENGTH = 60;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-    _playerID(id), facingAngle(DOWN), _state(MOBILE) {
+    _playerID(id), facingAngle(DOWN), _state(MOBILE), _stunned(false), _stunned_counter(0) {
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -91,6 +93,7 @@ const std::string Player::ANIMATIONS[9] =  {
 
 	//KEYBOARD HANDLING
 void Player::onKeyHold(KeySignalData data) {
+	if (!_stunned) {
     switch (data.key) {
         case Key::W:
             move(Vector2(0,-PLAYER_SPEED));
@@ -111,6 +114,7 @@ void Player::onKeyHold(KeySignalData data) {
         default:
             break;
     }
+	}
 }
     
 void Player::onKeyPress(KeySignalData data) {
@@ -163,7 +167,7 @@ void Player::render(){
 
 void Player::thumbStickMovements() {
 	//Player movements through thumbsticks
-	if (InputManager::getInstance().getNbGamePads() > 0 && _state <= IMMUNE) {
+	if (InputManager::getInstance().getNbGamePads() > 0 && _state <= IMMUNE && !_stunned) {
 		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
 		float x = gamePadState.getThumbstick(0);
 		float y = gamePadState.getThumbstick(1);
@@ -193,8 +197,24 @@ void Player::update() {
     if(!isFLicking)harvestBacon();
 	
 	//////////////////////
+	// Stunned player...
+	if (_stunned) {
+		if (flickCount >= 100) {
+			flick();
+		}
+		if (--_stunned_counter == 0) {
+			_stunned = false;
+		}
+	}
+	
+	//////////////////////
 	// Animation settings...
-	{
+	if (_stunned) {
+		if (getCurrentAnimation() != "shocked") {
+			startAnimation("shocked");
+		}
+	}
+	else {
 		// Direction
 		int animationIndex = 0;
 		float angle = facingAngle;
@@ -250,7 +270,7 @@ void Player::harvestBacon(){
 void Player::baconAssplosion(){
 //    _parentState->baconAssplosionAt(this->getPosition(), 50);
     for (int i = 0; i < 50; i++) {
-        Bacon * bacon = new Bacon(this->getPosition(), _parentState);
+        Bacon * bacon = new Bacon(this->getCollisionPosition(), _parentState);
         Vector2 baconVelocity;
         baconVelocity.x =1;
         baconVelocity.setAngle(Random::getRandomInteger(0, 360));
@@ -258,6 +278,8 @@ void Player::baconAssplosion(){
         baconVelocity *= Random::getRandomFloat(MIN_BACON_VELOCITY, MAX_BACON_VELOCITY);
         bacon->setVelocity(baconVelocity);
         bacon->setGlobalDrag(30);
+		bacon->moveX(- bacon->getWidth()/2);
+		bacon->moveY(- bacon->getHeight()/2);
         _parentState->add(bacon);
         _parentState->bacons.push_back(bacon);
     }
@@ -355,6 +377,7 @@ void Player::collisionsAndShits() {
 	}
 	if (last_room == NULL && last_bridge == NULL) {
         resetPosition();
+		stun();
 	}
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
@@ -362,4 +385,12 @@ void Player::collisionsAndShits() {
     }
 }
 
+void Player::stun() {
+	if (!_stunned) {
+		baconAssplosion();
+		flick();
+		_stunned = true;
+		_stunned_counter = STUN_LENGTH;
+	}
+}
 }

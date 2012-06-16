@@ -26,6 +26,8 @@ namespace Bivouac2012 {
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
         void render();
+		
+		void stun();
 
     private:
         void initPlayers();

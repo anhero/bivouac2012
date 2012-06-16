@@ -54,6 +54,8 @@ public:
 	float getYCollisionPosition();
 	float getXCollisionPosition();
 	RedBox::Vector2 getCollisionPosition();
+	
+	void stun();
 
 private:
     HookShot* _hook;
@@ -71,6 +73,9 @@ private:
     void harvestBacon();    
      
         RedBox::Sprite * debugCircle;    
+		
+		bool _stunned;
+		unsigned int _stunned_counter;
 };
 
 }
