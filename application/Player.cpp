@@ -33,6 +33,9 @@ const std::string Player::ANIMATIONS[9] =  {
 	static const float RIGHT = 270.0;
 	
 	static const float PLAYER_SPEED = 5;
+	
+	static const float PLAYER_Y_COLLISION_POINT = 75;
+	static const float PLAYER_COLLISION_CIRCLE = 11;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
     _playerID(id), facingAngle(DOWN), _state(MOBILE) {
@@ -259,15 +262,37 @@ void Player::baconAssplosion(){
         _parentState->bacons.push_back(bacon);
     }
 }
-    
+
+//Transforms a point from the top-left to its collision point.
+Vector2 Player::positionToCollisionPoint(Vector2 point) {
+	return Vector2(
+				point.x + getWidth()/2,
+				point.y + PLAYER_Y_COLLISION_POINT
+		);
+}
+void Player::setYCollisionPosition(float newY) {
+	setYPosition(newY - PLAYER_Y_COLLISION_POINT);
+}
+void Player::setXCollisionPosition(float newX) {
+	setXPosition(newX - getWidth()/2);
+}
+void Player::setCollisionPosition(RedBox::Vector2 position) {
+	setCollisionPosition(position.x, position.y);
+}
+void Player::setCollisionPosition(float newX, float newY) {
+	setYCollisionPosition(newY);
+	setXCollisionPosition(newX);
+}
+
 void Player::collisionsAndShits() {
     if (_state <= IMMUNE) {
         
-    
-		float oldX = 0;
-	float oldY = 0;
-	oldX = this->getOldXPosition() + this->getWidth()/2;
-	oldY = this->getOldYPosition() + this->getHeight()/2;
+		//The collision point.
+		Vector2 collisionPoint =  positionToCollisionPoint(getPosition());
+		
+		Vector2 oldPosition = positionToCollisionPoint(getOldPosition());
+	float oldX = oldPosition.x;
+	float oldY = oldPosition.y;
 
 	Sprite * last_room = NULL;
 	//We check in which room the player was, if applicable
@@ -293,7 +318,7 @@ void Player::collisionsAndShits() {
 	if (last_bridge != NULL) {
 		//And not in a room
 		if (last_room == NULL) {
-			Sprite* bridgePart = last_bridge->getPartAtPoint(this->getPositionCenter());
+			Sprite* bridgePart = last_bridge->getPartAtPoint(collisionPoint);
 			if (bridgePart != NULL) {
 				this->move(bridgePart->getPosition() - last_bridge->getOldPositionForPart(bridgePart));
 			}
@@ -302,24 +327,23 @@ void Player::collisionsAndShits() {
 	//If the player was in a room, we check the boundaries
 	else if (last_room != NULL) {
 		//LEFT EDGE
-		if (this->getXPositionCenter() <= last_room->getXPosition()) {
-			this->setXPosition(oldX - this->getWidth()/2);
+		if (collisionPoint.x - PLAYER_COLLISION_CIRCLE <= last_room->getXPosition()) {
+			this->setXCollisionPosition(oldX);
 		}
 		//RIGHT EDGE
-		else if (this->getXPositionCenter() >= last_room->getXPosition() + last_room->getWidth()) {
-			this->setXPosition(oldX - this->getWidth()/2);
+		else if (collisionPoint.x + PLAYER_COLLISION_CIRCLE >= last_room->getXPosition() + last_room->getWidth()) {
+			this->setXCollisionPosition(oldX);
 		}
 		//TOP EDGE
-		if (this->getYPositionCenter() <= last_room->getYPosition()) {
-			this->setYPosition(oldY - this->getHeight()/2);
+		if (collisionPoint.y - PLAYER_COLLISION_CIRCLE <= last_room->getYPosition()) {
+			this->setYCollisionPosition(oldY);
 		}
 		//BOTTOM EDGE
-		else if (this->getYPositionCenter() >= last_room->getYPosition() + last_room->getHeight()) {
-			this->setYPosition(oldY - this->getHeight()/2);
+		else if (collisionPoint.y + PLAYER_COLLISION_CIRCLE >= last_room->getYPosition() + last_room->getHeight()) {
+			this->setYCollisionPosition(oldY);
 		}
 	}
 	if (last_room == NULL && last_bridge == NULL) {
-		std::cout << "YOU DYING" << std::endl;
         resetPosition();
 	}
 	else {

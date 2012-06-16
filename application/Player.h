@@ -44,6 +44,13 @@ public:
 	
 	static const std::string ANIMATIONS[9];
 	
+	RedBox::Vector2 positionToCollisionPoint(RedBox::Vector2 point);
+	
+	void setYCollisionPosition(float newY);
+	void setXCollisionPosition(float newX);
+	void setCollisionPosition(RedBox::Vector2 position);
+	void setCollisionPosition(float newX, float newY);
+	
 private:
     HookShot* _hook;
 	//Angle at which the player is facing.
