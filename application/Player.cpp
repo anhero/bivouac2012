@@ -13,9 +13,9 @@ using namespace RedBox;
 namespace Bivouac2012 {
 	
 	static const float UP = 0.0;
-	static const float RIGHT = 90.0;
+	static const float LEFT = 90.0;
 	static const float DOWN = 180.0;
-	static const float LEFT = 270.0;
+	static const float RIGHT = 270.0;
 	
 	static const float PLAYER_SPEED = 5;
 
@@ -83,7 +83,8 @@ void Player::onKeyRelease(KeySignalData data) {
 		
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
-		if (data.buttonIndex >= 0 && data.buttonIndex < 4) {
+        std::cout << data.gamePadIndex << std::endl;
+		if (data.buttonIndex < 4) {
 			_hook->throwGraplin(facingAngle);
 		}
 	}
@@ -106,7 +107,9 @@ void Player::thumbStickMovements() {
 			y = 0.0;
 		}
 		Vector2 direction = Vector2(x,y);
-		facingAngle = direction.getAngle();
+        if (direction.getLength()) {
+            facingAngle = direction.getAngle();
+        }
 		move(Vector2(x * PLAYER_SPEED, y * PLAYER_SPEED));
 	}
 }

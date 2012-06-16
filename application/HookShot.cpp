@@ -48,7 +48,7 @@ namespace Bivouac2012 {
             _hook->render();
         }
     }
-    void HookShot::throwGraplin(float &facing){
+    void HookShot::throwGraplin(float facing){
 		Vector2 temp;
         /*
         if (!_isThrown) {
@@ -69,7 +69,7 @@ namespace Bivouac2012 {
                     break;
             }
 		 */
-			temp = Vector2(0,1);
+			temp = Vector2(1,0);
 			temp.setAngle(facing);
 			//L'endroit où le hook ira.
 			_targetHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
