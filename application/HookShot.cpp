@@ -16,7 +16,7 @@ namespace Bivouac2012 {
 
     
     HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): 
-	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _playerHooked(-1), _hookedPlayer(false)
+	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false)
 	{
         _timer.stop();
         _hook = new Sprite(hook);
@@ -36,7 +36,7 @@ namespace Bivouac2012 {
             }
         }
         if (steps != 0 || _isThrown) {
-            setPosition( (_targetHook - (_targetHook - _myOwner->getPositionCenter())/_nbChains*(_nbChains-steps)));
+            setPosition( (_destinationHook - (_destinationHook - _myOwner->getPositionCenter())/_nbChains*(_nbChains-steps)));
             for (int i=0; i< _chains.size(); ++i) {
                 _chains[i]->setPosition(_myOwner->getPositionCenter() + (_hook->getPositionCenter() - _myOwner->getPositionCenter())/_chains.size()*i - _chains[i]->getSize()/2);
                 _chains[i]->update();
@@ -53,7 +53,7 @@ namespace Bivouac2012 {
         }else {
             _timer.stop();
             _hookedPlayer = false;
-            
+            _grabedPlayer = true;
             
         }
     }
@@ -72,7 +72,7 @@ namespace Bivouac2012 {
         temp = Vector2(1,0);
         temp.setAngle(facing);
         //L'endroit où le hook ira.
-        _targetHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
+        _destinationHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
         _hook->setAngle(facing);
         _isThrown = true;
         steps = 1;
@@ -95,6 +95,6 @@ namespace Bivouac2012 {
     void HookShot::grab(int playerId){
         _isThrown = false;
         _hookedPlayer = true;
-        _playerHooked = playerId;
+        _targetId = playerId;
     }
 }
