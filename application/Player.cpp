@@ -9,6 +9,8 @@
 #include "HookShot.h"
 #include "Bacon.h"
 #include <ios>
+#include <math.h>
+
 
 #define MIN_BACON_VELOCITY 100
 #define MAX_BACON_VELOCITY 150
@@ -157,6 +159,41 @@ void Player::update() {
 		return;
 	}
 	collisionsAndShits();
+	
+	//////////////////////
+	// Animation settings...
+	{
+		// Direction
+		int animationIndex = 0;
+		float angle = facingAngle;
+		angle += 180.0f;
+		angle += 360.0f;
+		angle -=  45.0f;
+		angle = fmod(angle,360);
+		std::cout << angle << "°";
+		if (angle < 90.0f) {
+			std::cout << "right";
+			animationIndex = 3;
+		}
+		else if (angle < 180.0f) {
+			std::cout << "up";
+			animationIndex = 0;
+		}
+		else if (angle < 270.0f) {
+			std::cout << "left";
+			animationIndex = 2;
+		}
+		else {
+			std::cout << "down";
+			animationIndex = 1;
+		}
+		
+		std::cout << std::endl;
+		
+		if (getCurrentAnimation() != ANIMATIONS[animationIndex]) {
+			startAnimation(ANIMATIONS[animationIndex]);
+		}
+	}
 	
 	BivouacSprite::update();
     _hook->update();
