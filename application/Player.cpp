@@ -35,8 +35,12 @@ const std::string Player::ANIMATIONS[9] =  {
 	static const float PLAYER_SPEED = 5;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-	 _playerID(id), facingAngle(DOWN), _isMobile(true) {
-		_hook = new HookShot("hook", "ring", this);
+    _playerID(id), facingAngle(DOWN), _isMobile(true) {
+        std::string hookStr = "hook";
+        hookStr.append(Parser::intToString(id));
+        std::string ringStr = "chain";
+        ringStr.append(Parser::intToString(id));
+		_hook = new HookShot(hookStr, ringStr, this);
 
 		//Player 1 is controllable via keyboar, always
 		if (_playerID == 0) {
@@ -69,6 +73,11 @@ const std::string Player::ANIMATIONS[9] =  {
 		}
 		
 		this->startAnimation("standing_down");
+         
+         
+         canHarvestBacon = true;
+         
+         debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
 	}
 
 	Player::~Player() {
@@ -159,6 +168,7 @@ void Player::update() {
 		return;
 	}
 	collisionsAndShits();
+    if(!isFLicking)harvestBacon();
 	
 	//////////////////////
 	// Animation settings...
@@ -194,6 +204,25 @@ void Player::update() {
 	
 	BivouacSprite::update();
     _hook->update();
+    debugCircle->update();
+}
+    
+    
+void Player::harvestBacon(){
+    Vector2 colCirclePosition(getPosition().x +getWidth()/2 , getPosition().y +getHeight() - 50);
+    int radius = 45;
+    
+    debugCircle->setPosition(colCirclePosition);
+    debugCircle->setScaling(Vector2(radius,radius));
+    for (std::list<Bacon*>::iterator i = _parentState->bacons.begin(); i != _parentState->bacons.end(); ) {
+        if (((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
+            (*i)->setToBeDeleted(true);
+            i = _parentState->bacons.erase(i);
+        }
+        else{
+            i++;
+        }
+    }
 }
 
 void Player::baconAssplosion(){
@@ -208,6 +237,7 @@ void Player::baconAssplosion(){
         bacon->setVelocity(baconVelocity);
         bacon->setGlobalDrag(30);
         _parentState->add(bacon);
+        _parentState->bacons.push_back(bacon);
     }
 }
     

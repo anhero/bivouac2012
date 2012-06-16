@@ -253,12 +253,18 @@ void PlayState::initRooms() {
                 //verify the collision with other players
                 for (int j=0; j<_nbPlayers; ++j) {
                     if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30) {
-                        players[j]->setMobile(false);
+                        
                         currentHook->grab(j);
                     }
                 }
             }else if (currentHook->isGrabed()){
                 players[currentHook->getGrabed()]->setPosition(currentHook->getPosition()- players[0]->getSize()/2);
+            }
+            players[i]->setMobile(true);
+        }
+        for (int i=0; i<_nbPlayers; ++i) {
+            if(players[i]->getHook()->isGrabed()){
+                players[players[i]->getHook()->getGrabed()]->setMobile(false);
             }
         }
     }
