@@ -16,7 +16,7 @@ namespace Bivouac2012 {
 
     
     HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): 
-	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _playerGrabed(0)
+	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _playerGrabed(-1), _isGrabed(false)
 	{
         _timer.stop();
         _hook = new Sprite(hook);
