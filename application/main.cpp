@@ -11,6 +11,8 @@ void initResources() {
 	TEX("pierre_2");
 	TEX("pierre_3");
 	
+	TEX("smoke");
+	
 	TEX("floor");
     TEX("player");
     TEX("hook");

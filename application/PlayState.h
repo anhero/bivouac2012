@@ -18,6 +18,8 @@ namespace Bivouac2012 {
 	 */
 	class PlayState : public RedBox::State {
 		friend class Player;
+		//Hack because of getCamera being const...
+		friend class Bridge;
     public:
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();

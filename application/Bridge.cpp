@@ -6,6 +6,9 @@
  */
 
 #include "Bridge.h"
+
+#include "PlayState.h"
+
 using namespace RedBox;
 namespace Bivouac2012 {
 	
@@ -34,12 +37,16 @@ _finisedClosing(false) {
 	for (int i=0; i < NB_EMITTERS; i++) {
 		RedBox::SpriteEmitter *emitter;
 		GraphicElement<Collidable> *particle;
-		switch (i) {
+		switch (i%NB_EMITTERS) {
 			case 0:
 				particle = new GraphicElement<Collidable > ("pierre_1");
 				break;
 			case 1:
 				particle = new GraphicElement<Collidable > ("pierre_2");
+				break;
+			case 2:
+				particle = new GraphicElement<Collidable > ("smoke");
+				particle->setAlpha(50);
 				break;
 			default:
 				particle = new GraphicElement<Collidable > ("pierre_3");
@@ -115,6 +122,19 @@ void Bridge::startRetracting() {
 	_finisedClosing = false;
 }
 
+void Bridge::finishClosing() {
+		for (int i=0; i < NB_EMITTERS; i++) {
+			_emitters[i]->start();
+		}
+		_finisedClosing = true;
+/*		_parentState->getCamera().shake(0.5,0.2,false//,
+//			(_horizontal ? Camera::ShakeAxes::HORIZONTAL_AXIS : Camera::ShakeAxes::VERTICAL_AXIS)
+		);*/
+		_parentState->camera.shake(0.05,0.2,true,
+			(_horizontal ? Camera::ShakeAxes::HORIZONTAL_AXIS : Camera::ShakeAxes::VERTICAL_AXIS)
+		);
+}
+
 //TODO: Intelligent tweening instead of hack...
 void Bridge::update() {
 	Sprite::update();
@@ -126,11 +146,7 @@ void Bridge::update() {
 		startRetracting();
 	}
 	if (!_finisedClosing && _retractedRatio <= 0.0 && !_retracting) {
-		std::cout << "Bridge set to emit" << std::endl;
-		for (int i=0; i < NB_EMITTERS; i++) {
-			_emitters[i]->start();
-		}
-		_finisedClosing = true;
+		finishClosing();
 	}
 	if (_retracting) {
 		if (_retractedRatio > 1.0) {
