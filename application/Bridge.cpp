@@ -129,7 +129,7 @@ void Bridge::finishClosing() {
 /*		_parentState->getCamera().shake(0.5,0.2,false//,
 //			(_horizontal ? Camera::ShakeAxes::HORIZONTAL_AXIS : Camera::ShakeAxes::VERTICAL_AXIS)
 		);*/
-		_parentState->camera.shake(0.05,0.2,true,
+		_parentState->camera.shake(0.02,0.4,true,
 			(_horizontal ? Camera::ShakeAxes::HORIZONTAL_AXIS : Camera::ShakeAxes::VERTICAL_AXIS)
 		);
 }
