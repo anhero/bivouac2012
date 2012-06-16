@@ -45,6 +45,11 @@ namespace Bivouac2012 {
 		this->addAnimation("standing_down", 0.1, 1, 1, 0 + frameOffset);
 		
 		this->startAnimation("standing_down");
+         
+         
+         canHarvestBacon = true;
+         
+         debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
 	}
 
 	Player::~Player() {
@@ -104,6 +109,7 @@ void Player::onKeyRelease(KeySignalData data) {
 void Player::render(){
     BivouacSprite::render();
     _hook->render();
+//    debugCircle->render();
 }
 
 void Player::thumbStickMovements() {
@@ -129,15 +135,39 @@ void Player::thumbStickMovements() {
 void Player::update() {
 	thumbStickMovements();
 
-	//We assume first update
+	
+    
+    //We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
 		BivouacSprite::update();
 		return;
 	}
 	collisionsAndShits();
+    if(!isFLicking)harvestBacon();
 	
+    
+    
 	BivouacSprite::update();
     _hook->update();
+    debugCircle->update();
+}
+    
+    
+void Player::harvestBacon(){
+    Vector2 colCirclePosition(getPosition().x +getWidth()/2 , getPosition().y +getHeight() - 50);
+    int radius = 45;
+    
+    debugCircle->setPosition(colCirclePosition);
+    debugCircle->setScaling(Vector2(radius,radius));
+    for (std::list<Bacon*>::iterator i = _parentState->bacons.begin(); i != _parentState->bacons.end(); ) {
+        if (((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
+            (*i)->setToBeDeleted(true);
+            i = _parentState->bacons.erase(i);
+        }
+        else{
+            i++;
+        }
+    }
 }
 
 void Player::baconAssplosion(){
@@ -152,6 +182,7 @@ void Player::baconAssplosion(){
         bacon->setVelocity(baconVelocity);
         bacon->setGlobalDrag(30);
         _parentState->add(bacon);
+        _parentState->bacons.push_back(bacon);
     }
 }
     

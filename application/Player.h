@@ -41,10 +41,14 @@ private:
 	int _playerID;
     bool _isMobile;
 	
+        bool canHarvestBacon;
     
 	void thumbStickMovements();
 	void collisionsAndShits();
     
+    void harvestBacon();    
+     
+        RedBox::Sprite * debugCircle;    
 };
 
 }
