@@ -12,6 +12,8 @@ void initResources() {
     TEX("player");
     TEX("hook");
     TEX("ring");
+    TEX("bacon_glow");
+    TEX("bacon_strip");
 }
 
 int main(int argc, char *argv[]) {
