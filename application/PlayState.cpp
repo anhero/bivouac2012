@@ -1,6 +1,9 @@
 #include "PlayState.h"
 #include "Player.h"
 
+#include "Bacon.h"
+
+
 using namespace RedBox;
 
 namespace Bivouac2012 {
@@ -34,6 +37,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 
 	void PlayState::update() {
         calculateCollisionButtons();
+       
 	}
     void PlayState::render() {
     }
@@ -41,6 +45,8 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 	void PlayState::onKeyHold( KeySignalData data) {
 		if (data.key == Key::F9) {
 			buttons[0]->activate();
+            players[0]->baconAssplosion();
+            players[0]->flick();
 		}
 		if (data.key == Key::F10) {
 			buttons[1]->activate();
@@ -50,7 +56,8 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 		}
 		if (data.key == Key::F12) {
 			buttons[3]->activate();
-		}
+	
+        }
 		if (data.key == Key::ESCAPE) {
 			RedBox::Engine::exitApplication(0);
 		}
@@ -79,6 +86,20 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
             players.back()->setPosition(Vector2(100,650));
         }
     }
+    
+//    void PlayState::baconAssplosionAt(RedBox::Vector2 coord, int baconCount){
+//        for (int i = 0; i < baconCount; i++) {
+//            Bacon * bacon = new Bacon(coord, this);
+//            Vector2 baconVelocity;
+//            baconVelocity.x =1;
+//            baconVelocity.setAngle(Random::getRandomInteger(0, 360));
+//            baconVelocity.normalize();
+//            baconVelocity *= Random::getRandomFloat(MIN_BACON_VELOCITY, MAX_BACON_VELOCITY);
+//            bacon->setVelocity(baconVelocity);
+//            bacon->setGlobalDrag(30);
+//            add(bacon);
+//        }
+//    }
 
 	void PlayState::onGetFocus() {
 		MainWindow::getInstance().hideCursor();
