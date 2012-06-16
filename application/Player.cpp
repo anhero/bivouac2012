@@ -78,6 +78,8 @@ const std::string Player::ANIMATIONS[9] =  {
          canHarvestBacon = true;
          
          debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
+        
+        resetPosition();
 	}
 
 	Player::~Player() {
@@ -138,6 +140,23 @@ void Player::render(){
     BivouacSprite::render();
     _hook->render();
 }
+    
+    void Player::resetPosition(){
+        if(_playerID == 0){
+            setPosition(Vector2(170,170));
+        }
+        else if(_playerID == 1){
+            setPosition(Vector2(730,170));
+
+        }
+        else if(_playerID == 2){
+            setPosition(Vector2(170,730));
+        }
+        else if(_playerID == 3){
+            setPosition(Vector2(730,730));
+
+        }
+    }
 
 void Player::thumbStickMovements() {
 	//Player movements through thumbsticks
@@ -301,6 +320,7 @@ void Player::collisionsAndShits() {
 	}
 	if (last_room == NULL && last_bridge == NULL) {
 		std::cout << "YOU DYING" << std::endl;
+        resetPosition();
 	}
 	else {
 		//std::cout << "YOU SAFE" << std::endl;

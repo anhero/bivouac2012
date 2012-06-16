@@ -39,6 +39,8 @@ public:
     bool isMobile(){return _state <= IMMUNE;}
     void setState(PlayerState newState){ _state = newState;}
     void baconAssplosion();
+        
+        void resetPosition();
 	
 	static const std::string ANIMATIONS[9];
 	

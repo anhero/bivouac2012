@@ -98,7 +98,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
             add(players.back());
 			
 			//TODO: Position players in the middle of the platforms.
-            players.back()->setPosition(Vector2(100,650));
+//            players.back()->setPosition(Vector2(100,650));
         }
     }
     
