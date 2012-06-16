@@ -25,7 +25,7 @@ void initResources() {
     TEX("hook2");
     TEX("chain2");
     TEX("hook3");
-    TEX("chain4");
+    TEX("chain3");
     TEX("bacon_glow");
     TEX("bacon_strip");
 }

@@ -98,7 +98,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
             add(players.back());
 			
 			//TODO: Position players in the middle of the platforms.
-            players.back()->setPosition(Vector2(100,650));
+//            players.back()->setPosition(Vector2(100,650));
         }
     }
     
@@ -124,15 +124,20 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 	}
     
     void PlayState::calculateCollisionButtons(){
+		//HACK
+		bool activated[4] = {false,false,false,false};
         for (int i=0; i<players.size(); ++i) {
-            
+			
             for (int j=0; j<4; ++j) {
-                if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
-                    buttons[j]->activate();
-                }
-                else {
-                    buttons[j]->disengage();
-                }
+				if (!activated[j]) {
+					if ((players[i]->getCentroid() - buttons[j]->getCentroid()).getLength() < buttons[j]->getWidth()/2) {
+						activated[j] = true;
+						buttons[j]->activate();
+					}
+					else {
+						buttons[j]->disengage();
+					}
+				}
             }
         }
     }
