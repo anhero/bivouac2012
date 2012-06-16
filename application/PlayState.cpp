@@ -39,7 +39,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 	void PlayState::update() {
         calculateCollisionButtons();
         calculateHook();
-        calculateGrabing();
 	}
     void PlayState::render() {
     }
@@ -285,14 +284,19 @@ void PlayState::initRooms() {
             }
             players[i]->setState(MOBILE);
         }
+        syncPlayerStatus();
+    }
+    void PlayState::syncPlayerStatus(){
         for (int i=0; i<_nbPlayers; ++i) {
             if(players[i]->getHook()->hookedPlayer()){
                 players[players[i]->getHook()->getTargetId()]->setState(HOOKED);
             }
         }
-        
-    }
-    void PlayState::calculateGrabing(){
-        
+        for (int i=0; i<_nbPlayers; ++i) {
+            if(players[i]->getHook()->grabedPlayer()){
+                players[players[i]->getHook()->getTargetId()]->setState(CARRIED);
+                players[players[i]->getHook()->getTargetId()]->setGraber(players[i]);
+            }
+        }
     }
 }

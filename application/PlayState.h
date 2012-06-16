@@ -26,6 +26,7 @@ namespace Bivouac2012 {
         PlayState(const std::string &newName = std::string("PlayState"));
         void update();
         void render();
+        std::vector<Player*> getPlayers(){return players;}
 
     private:
         void initPlayers();
@@ -37,6 +38,7 @@ namespace Bivouac2012 {
         void calculateCollisionButtons();
         void calculateHook();
         void calculateGrabing();
+        void syncPlayerStatus();
         void clearBacon();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         

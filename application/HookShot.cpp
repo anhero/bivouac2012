@@ -16,8 +16,9 @@ namespace Bivouac2012 {
 
     
     HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): 
-	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false)
+	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false), _grabedPlayer(false)
 	{
+        _grabedToughtess = Random::getRandomInteger(10, 30);
         _timer.stop();
         _hook = new Sprite(hook);
         _myOwner = myCrazyFuckUser;
@@ -46,15 +47,23 @@ namespace Bivouac2012 {
             if (_isThrown){
                 ++steps;
             }else if(_timer.getTime() > _hookDelay) {
-                --steps;
                 _timer.pause();
+                --steps;
+                if (steps == 0){
+                    _timer.stop();
+                    
+                    if(_hookedPlayer){
+                        _grabedPlayer = true;
+                        _timer.start();
+                        _grabedToughtess = Random::getRandomInteger(10, 30);
+                    }
+                    
+                    _hookedPlayer = false;
+                }
             }
-                
-        }else {
-            _timer.stop();
-            _hookedPlayer = false;
-            _grabedPlayer = true;
-            
+        }
+        if (_grabedPlayer && _grabedToughtess == 0) {
+            shackle();
         }
     }
     void HookShot::render(){
@@ -96,5 +105,12 @@ namespace Bivouac2012 {
         _isThrown = false;
         _hookedPlayer = true;
         _targetId = playerId;
+    }
+    void HookShot::grabedshacle(){
+        --_grabedToughtess;
+    }
+    void HookShot::shackle(){
+        _grabedPlayer = false;
+        _myOwner->_parentState->getPlayers()[_targetId]->flick();
     }
 }

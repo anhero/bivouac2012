@@ -22,13 +22,16 @@ namespace Bivouac2012 {
         bool isThrown(){return _isThrown;}
         void setThrown(bool newThrown){ _isThrown = newThrown;}
         bool hookedPlayer(){return _hookedPlayer;}
+        bool grabedPlayer(){return _grabedPlayer;}
         int getTargetId(){return _targetId;}
         void grab(int playerId);
+        void grabedshacle();
         RedBox::Vector2 getPosition();
         void setPosition(RedBox::Vector2 newPos);
     private:
         const int _nbChains;
-        const float _hookDelay;     
+        const float _hookDelay; 
+        int _grabedToughtess;
         RedBox::Stopwatch _timer;
         bool _isThrown;
         bool _hookedPlayer;
@@ -37,6 +40,7 @@ namespace Bivouac2012 {
         RedBox::Vector2 _destinationHook;
         RedBox::Sprite* _hook;
         int steps;
+        void shackle();
         std::vector<RedBox::Sprite*> _chains;
         const Player* _myOwner;
         

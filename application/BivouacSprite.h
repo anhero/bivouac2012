@@ -18,10 +18,10 @@ namespace Bivouac2012 {
 		
         void update();
         void flick();
+        PlayState *_parentState;
     protected:
         
         virtual void finishedFlicking();
-        PlayState *_parentState;
 
         virtual void collisionsAndShits();
         

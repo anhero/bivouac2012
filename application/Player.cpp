@@ -35,7 +35,7 @@ const std::string Player::ANIMATIONS[9] =  {
 	static const float PLAYER_SPEED = 5;
 
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
-    _playerID(id), facingAngle(DOWN), _state(MOBILE) {
+    _playerID(id), facingAngle(DOWN), _state(MOBILE), _graber(0) {
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -131,7 +131,14 @@ void Player::onKeyRelease(KeySignalData data) {
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
-                _hook->throwGraplin(facingAngle);
+                if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
+                    //SMASH THE FUCK OUT OF HIM!!!!
+                }else if(_state == CARRIED){
+                    _graber->getHook()->grabedshacle();
+                }
+                else{
+                    _hook->throwGraplin(facingAngle);
+                }
             }
         }
 	}
@@ -223,6 +230,7 @@ void Player::update() {
 	
 	BivouacSprite::update();
     _hook->update();
+    refreshGrabed();
     debugCircle->update();
 }
     
@@ -325,7 +333,15 @@ void Player::collisionsAndShits() {
 	else {
 		//std::cout << "YOU SAFE" << std::endl;
 	}
-    }
+    }    
 }
-
+    
+    void Player::refreshGrabed(){
+        if (_state == CARRIED) {
+            setPosition(_graber->getPositionCenter() - Vector2(0,30) - getSize()/2);
+        }
+    }
+    void Player::setGraber(Player* graber){
+        _graber = graber;
+    }
 }
