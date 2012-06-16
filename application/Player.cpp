@@ -39,9 +39,11 @@ const std::string Player::ANIMATIONS[9] =  {
 	
 	static const int STUN_LENGTH = 100;
 
+    static const int DEFAULT_BACON_COUNT = 300;
+    
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
     _playerID(id), facingAngle(DOWN), _state(MOBILE),
-	_stunned(false), _stunned_counter(0), _graber(0) {
+	_stunned(false), _stunned_counter(0), _graber(0), baconCount(DEFAULT_BACON_COUNT){
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -262,6 +264,7 @@ void Player::update() {
     _hook->update();
     refreshGrabed();
     debugCircle->update();
+    std::cout << "bacon count : " << baconCount << std::endl;
 }
     
     
@@ -284,7 +287,15 @@ void Player::harvestBacon(){
 
 void Player::baconAssplosion(){
 //    _parentState->baconAssplosionAt(this->getPosition(), 50);
-    for (int i = 0; i < 50; i++) {
+    
+    int baconAssplosionCount =  MathHelper::roundUpDivision(baconCount, 2);
+    
+    if (baconAssplosionCount < 10) {
+        baconAssplosionCount = baconCount;
+    }
+    baconCount -= baconAssplosionCount;
+    
+    for (int i = 0; i < baconAssplosionCount; i++) {
         Bacon * bacon = new Bacon(this->getCollisionPosition(), _parentState);
         Vector2 baconVelocity;
         baconVelocity.x =1;

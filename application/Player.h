@@ -56,6 +56,9 @@ public:
 	
 	float getYCollisionPosition();
 	float getXCollisionPosition();
+        
+    int baconCount;
+        
 	RedBox::Vector2 getCollisionPosition();
 	
 	void stun();
