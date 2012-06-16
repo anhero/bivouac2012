@@ -37,6 +37,7 @@ void initResources() {
     TEX("crack_2");
     TEX("crack_3");
 
+    TEX("lava");
     
 }
 

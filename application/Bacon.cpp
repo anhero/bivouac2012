@@ -7,6 +7,7 @@ namespace Bivouac2012 {
         _parentState = parentState;
         deleteTimer = 0;
         setPosition(coord);
+		flick();
     }
     
     void Bacon::update(){

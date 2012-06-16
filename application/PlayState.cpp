@@ -70,59 +70,100 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 
     }
     
+    void PlayState::createLavaGrill(float x, float y){
+        Sprite * lavamodel = new Sprite("lava",Vector2(x,y), Vector2(107,107), Vector2(), 6);
+        add(lavamodel);
+        lavamodel->addAnimation("glow", 0.2, -1, 10, 0,1,2,3,4,5,4,3,2,1);
+        lavamodel->startAnimation("glow");
+        
+        Sprite * grille = new Sprite("grille", Vector2(x - 14, y -14));
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+    }
+    
+               
+    
     void PlayState::initGrille(){
         
         
+        //plateforme1
         
-        //plateform 1
-        Sprite * lava = new Sprite("lava_square");
-        lava->setPosition(-36, -36);
-        add(lava);
-        Sprite * grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
+        createLavaGrill(-36, -36);
         
         
+        //plateforme2
+        createLavaGrill(815, -36);
+//        createLavaGrill
         
-        //plateform2
-        lava = new Sprite("lava_square");
-        lava->setPosition(815, -36);
-        add(lava);
-        grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
         
         //plateforme3
-        lava = new Sprite("lava_square");
-        lava->setPosition(-36, 825);
-        add(lava);
-        grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
+        createLavaGrill(-36, 825);
         
+        
+        //plateforme 4
+        createLavaGrill(818, 525);
+        createLavaGrill(518, 525);
+        createLavaGrill(518, 825);
+        
+        
+//        lavamodel->setDefaultFrame(5);
+        
+        //plateform 1
+//        Sprite * lava = new Sprite(*lavamodel);
+//        lava->setPosition(-36, -36);
+//        lava->addAnimation("glow", 0.3, -1, 11, 0,1,2,3,4,5,4,3,2,1);
 
-        //plateforme4
-        lava = new Sprite("lava_square");
-        lava->setPosition(818, 525);
-        add(lava);
-        grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
-        
-        lava = new Sprite("lava_square");
-        lava->setPosition(518, 525);
-        add(lava);
-        grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
-        
-        lava = new Sprite("lava_square");
-        lava->setPosition(518, 825);
-        add(lava);
-        grille = new Sprite("grille");
-        grille->setPosition(lava->getPosition()-Vector2(14,14));
-        add(grille);
-        
+//        lava->startAnimation("glow");
+//        add(lava);
+//        Sprite * grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
+//        
+//        
+//        
+//        //plateform2
+//        lava = new Sprite(*lavamodel);
+//        lava->setPosition(815, -36);
+//        lava->startAnimation("glow");
+//        add(lava);
+//        grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
+//        
+//        //plateforme3
+//        lava = new Sprite(*lavamodel);
+//        lava->setPosition(-36, 825);
+//        lava->startAnimation("glow");
+//        add(lava);
+//        grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
+//        
+//
+//        //plateforme4
+//        lava = new Sprite(*lavamodel);
+//        lava->setPosition(818, 525);
+//        lava->startAnimation("glow");
+//        add(lava);
+//        grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
+//        
+//        lava = new Sprite(*lavamodel);
+//        lava->setPosition(518, 525);
+//        lava->startAnimation("glow");
+//        add(lava);
+//        grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
+//        
+//        lava = new Sprite(*lavamodel);
+//        lava->setPosition(518, 825);
+//        lava->startAnimation("glow");
+//        add(lava);
+//        grille = new Sprite("grille");
+//        grille->setPosition(lava->getPosition()-Vector2(14,14));
+//        add(grille);
         
         
         

@@ -31,6 +31,9 @@ namespace Bivouac2012 {
 
     private:
         
+        void createLavaGrill(float x, float y);
+        
+        
         void onPointerMove(RedBox::PointerButtonSignalData data);
         
         void initPlayers();

@@ -39,9 +39,11 @@ const std::string Player::ANIMATIONS[9] =  {
 	
 	static const int STUN_LENGTH = 100;
 
+    static const int DEFAULT_BACON_COUNT = 300;
+    
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
     _playerID(id), facingAngle(DOWN), _state(MOBILE),
-	_stunned(false), _stunned_counter(0), _graber(0) {
+	_stunned(false), _stunned_counter(0), _graber(0), baconCount(DEFAULT_BACON_COUNT){
         std::string hookStr = "hook";
         hookStr.append(Parser::intToString(id));
         std::string ringStr = "chain";
@@ -262,6 +264,7 @@ void Player::update() {
     _hook->update();
     refreshGrabed();
     debugCircle->update();
+    std::cout << "bacon count : " << baconCount << std::endl;
 }
     
     
@@ -272,9 +275,9 @@ void Player::harvestBacon(){
     debugCircle->setPosition(colCirclePosition);
     debugCircle->setScaling(Vector2(radius,radius));
     for (std::list<Bacon*>::iterator i = _parentState->bacons.begin(); i != _parentState->bacons.end(); ) {
-        if (((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
-            (*i)->setToBeDeleted(true);
-            i = _parentState->bacons.erase(i);
+        if (!(*i)->getIsFlicking() && ((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
+				(*i)->setToBeDeleted(true);
+				i = _parentState->bacons.erase(i);
         }
         else{
             i++;
@@ -285,8 +288,14 @@ void Player::harvestBacon(){
 void Player::baconAssplosion(){
 //    _parentState->baconAssplosionAt(this->getPosition(), 50);
     
-    std::cout << _parentState << std::endl;
-    for (int i = 0; i < 50; i++) {
+    int baconAssplosionCount =  MathHelper::roundUpDivision(baconCount, 2);
+    
+    if (baconAssplosionCount < 10) {
+        baconAssplosionCount = baconCount;
+    }
+    baconCount -= baconAssplosionCount;
+    
+    for (int i = 0; i < baconAssplosionCount; i++) {
         Bacon * bacon = new Bacon(this->getCollisionPosition(), _parentState);
         Vector2 baconVelocity;
         baconVelocity.x =1;
@@ -377,19 +386,19 @@ void Player::collisionsAndShits() {
 	else if (last_room != NULL) {
 		//LEFT EDGE
 		if (collisionPoint.x - PLAYER_COLLISION_CIRCLE <= last_room->getXPosition()) {
-			this->setXCollisionPosition(oldX);
+			this->setXCollisionPosition(oldX + 1);
 		}
 		//RIGHT EDGE
 		else if (collisionPoint.x + PLAYER_COLLISION_CIRCLE >= last_room->getXPosition() + last_room->getWidth()) {
-			this->setXCollisionPosition(oldX);
+			this->setXCollisionPosition(oldX - 1);
 		}
 		//TOP EDGE
 		if (collisionPoint.y - PLAYER_COLLISION_CIRCLE <= last_room->getYPosition()) {
-			this->setYCollisionPosition(oldY);
+			this->setYCollisionPosition(oldY + 1);
 		}
 		//BOTTOM EDGE
 		else if (collisionPoint.y + PLAYER_COLLISION_CIRCLE >= last_room->getYPosition() + last_room->getHeight()) {
-			this->setYCollisionPosition(oldY);
+			this->setYCollisionPosition(oldY - 1);
 		}
 	}
 	if (last_room == NULL && last_bridge == NULL) {
