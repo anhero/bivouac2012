@@ -9,12 +9,13 @@
 using namespace RedBox;
 namespace Bivouac2012 {
 	
-	static const float ACTIVATING_RATIO = 0.2;
-	static const float RETRACTING_RATIO = 0.05;
+	static const float ACTIVATING_RATIO = 0.1;
+	static const float RETRACTING_RATIO = 0.03;
 	
-	static const float RETRACTING_DELAY = 0.0;
+	static const float RETRACTING_DELAY = 0.4;
 	
 	static const int STICK_OUT = 14;
+	static const int STICK_IN = 5;
 	
 Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
 		_retracted(false), _retracting(true), 
@@ -62,6 +63,8 @@ void Bridge::startRetracting() {
 //TODO: Intelligent tweening instead of hack...
 void Bridge::update() {
 	Sprite::update();
+	oldPositions[0] = part1->getPosition();
+	oldPositions[1] = part2->getPosition();
 
 	//When the timer is over a certain time, we begin to retract the bridge.
 	if (!_activating && !_retracted && _timer.getTime() > RETRACTING_DELAY) {
@@ -80,12 +83,12 @@ void Bridge::update() {
 	//Updating the position according to the factor.
 	if (_retracting || _activating) {
 		if (_horizontal) {
-			part1->setXPosition((-1 * (part1->getWidth()-STICK_OUT) * _retractedRatio - part1->getWidth()) + this->getXPosition());
-			part2->setXPosition(( 1 * (part2->getWidth()-STICK_OUT) * _retractedRatio                    ) + this->getXPosition());
+			part1->setXPosition((-1 * (part1->getWidth()-STICK_OUT) * _retractedRatio - part1->getWidth()) + this->getXPosition() + STICK_IN);
+			part2->setXPosition(( 1 * (part2->getWidth()-STICK_OUT) * _retractedRatio                    ) + this->getXPosition() - STICK_IN);
 		}
 		else {
-			part1->setYPosition((-1 * (part1->getHeight()-STICK_OUT) * _retractedRatio - part1->getHeight()) + this->getYPosition());
-			part2->setYPosition(( 1 * (part2->getHeight()-STICK_OUT) * _retractedRatio                     ) + this->getYPosition());
+			part1->setYPosition((-1 * (part1->getHeight()-STICK_OUT) * _retractedRatio - part1->getHeight()) + this->getYPosition() + STICK_IN);
+			part2->setYPosition(( 1 * (part2->getHeight()-STICK_OUT) * _retractedRatio                     ) + this->getYPosition() - STICK_IN);
 		}
 	}
 	if (_activating) {
@@ -191,5 +194,46 @@ bool Bridge::checkIsOnBridge(Vector2 point, bool oldPos) {
 	}
 	return false;
 }
+
+Sprite *Bridge::getPartAtPoint(RedBox::Vector2 point, bool oldPos) {
+		//I add a padding for floating point innaccuracies
+	static const float padding = 1.0f;
+	
+	if (oldPos) {
+		if (
+			point.x > part1->getOldXPosition()-padding && point.x < part1->getOldXPosition()+part1->getWidth()+padding
+		&&	point.y > part1->getOldYPosition()-padding && point.y < part1->getOldYPosition()+part1->getHeight()+padding
+		) {
+			return part1;
+		}
+		if (
+			point.x > part2->getOldXPosition()-padding && point.x < part2->getOldXPosition()+part2->getWidth()+padding
+		&&	point.y > part2->getOldYPosition()-padding && point.y < part2->getOldYPosition()+part2->getHeight()+padding
+		) {
+			return part2;
+		}
+	}
+	else {
+		if (
+			point.x > part1->getXPosition() && point.x < part1->getXPosition()+part1->getWidth()
+		&&	point.y > part1->getYPosition() && point.y < part1->getYPosition()+part1->getHeight()
+		) {
+			return part1;
+		}
+		if (
+			point.x > part2->getXPosition() && point.x < part2->getXPosition()+part2->getWidth()
+		&&	point.y > part2->getYPosition() && point.y < part2->getYPosition()+part2->getHeight()
+		) {
+			return part2;
+		}
+	}
+	return NULL;
+}
+	Vector2 Bridge::getOldPositionForPart(Sprite* part) {
+		if (part == part1) {
+			return oldPositions[0];
+		}
+		return oldPositions[1];
+	}
 
 }
