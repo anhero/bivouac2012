@@ -284,6 +284,8 @@ void Player::harvestBacon(){
 
 void Player::baconAssplosion(){
 //    _parentState->baconAssplosionAt(this->getPosition(), 50);
+    
+    std::cout << _parentState << std::endl;
     for (int i = 0; i < 50; i++) {
         Bacon * bacon = new Bacon(this->getCollisionPosition(), _parentState);
         Vector2 baconVelocity;
@@ -408,6 +410,7 @@ void Player::collisionsAndShits() {
 
 	void Player::stun() {
 		if (!_stunned) {
+            std::cout << _playerID << std::endl;
 			baconAssplosion();
 			flick();
 			_stunned = true;

@@ -81,6 +81,7 @@
 		5C2A74DD158B3ECC00029CFB /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74DA158B3E3100029CFB /* Button.cpp */; };
 		5C2A74F5158B4F1800029CFB /* HookShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74F4158B4F1800029CFB /* HookShot.cpp */; };
 		5C77DE1215470FFF00519AA3 /* PlayState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CAFE7431547031F00804B5A /* PlayState.cpp */; };
+		5CED2A66158D35A400FE64E3 /* font.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5CED2A65158D35A400FE64E3 /* font.ttc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		5C2A74F6158B4F2300029CFB /* HookShot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HookShot.h; sourceTree = "<group>"; };
 		5CAFE7431547031F00804B5A /* PlayState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayState.cpp; sourceTree = "<group>"; };
 		5CAFE7441547031F00804B5A /* PlayState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayState.h; sourceTree = "<group>"; };
+		5CED2A65158D35A400FE64E3 /* font.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				5CED2A65158D35A400FE64E3 /* font.ttc */,
 				51820061158D16C200FA5802 /* bacon_glow_shadow.png */,
 				51820062158D16C200FA5802 /* bacon_glow.png */,
 				51820063158D16C200FA5802 /* bacon_strip_shadow.png */,
@@ -498,6 +501,7 @@
 				518200C7158D16C200FA5802 /* star.png in Resources */,
 				518200C8158D16C200FA5802 /* title_screen_5.png in Resources */,
 				518200CA158D170D00FA5802 /* spritesheet_players_eyes.png in Resources */,
+				5CED2A66158D35A400FE64E3 /* font.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

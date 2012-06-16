@@ -38,6 +38,12 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         initPlayers();
         initGrille();
         initCrack();
+        Text* myFont = new Text("font");
+        myFont->setText("test324");
+        //add(myFont);
+        myFont->setPosition(250,250);
+        
+        
 	}
 
     void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){

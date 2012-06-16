@@ -5,6 +5,7 @@
 
 //TODO: Transfer in a "initState"
 void initResources() {
+    RedBox::ResourceManager::loadFontRelativePath("font", "font.ttc");
 	TEX("button");
 	TEX("button_on");
 	TEX("button_off");
