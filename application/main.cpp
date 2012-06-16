@@ -7,6 +7,9 @@
 void initResources() {
 	TEX("button");
 	TEX("bridge");
+	TEX("pierre_1");
+	TEX("pierre_2");
+	TEX("pierre_3");
 	
 	TEX("floor");
     TEX("player");

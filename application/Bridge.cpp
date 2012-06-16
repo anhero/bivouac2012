@@ -16,20 +16,74 @@ namespace Bivouac2012 {
 	
 	static const int STICK_OUT = 14;
 	static const int STICK_IN = 5;
-	
-Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(), 
-		_retracted(false), _retracting(true), 
-		_horizontal(horizontal), _retractedRatio(0.0), _activating(false) {
+
+Bridge::Bridge(Vector2 pos, bool horizontal) : Sprite(),
+_retracted(false), _retracting(true),
+_horizontal(horizontal), _retractedRatio(0.0), _activating(false),
+_finisedClosing(false) {
 	_timer.stop();
-	
+
 	part1 = new Sprite("bridge");
-            part2 = new Sprite("bridge");
-            part1->setScaling(Vector2(1,1.5));
-            part2->setScaling(Vector2(1,1.5));
-            part2->scale(Vector2(-1,-1));
-            part1->rotate(-90);
-            part2->rotate(-90);
-	
+	part2 = new Sprite("bridge");
+	part1->setScaling(Vector2(1, 1.5));
+	part2->setScaling(Vector2(1, 1.5));
+	part2->scale(Vector2(-1, -1));
+	part1->rotate(-90);
+	part2->rotate(-90);
+
+	for (int i=0; i < NB_EMITTERS; i++) {
+		RedBox::SpriteEmitter *emitter;
+		GraphicElement<Collidable> *particle;
+		switch (i) {
+			case 0:
+				particle = new GraphicElement<Collidable > ("pierre_1");
+				break;
+			case 1:
+				particle = new GraphicElement<Collidable > ("pierre_2");
+				break;
+			default:
+				particle = new GraphicElement<Collidable > ("pierre_3");
+				break;
+
+		}
+		if (_horizontal) {
+			if (i >= NB_EMITTERS / 2) {
+				particle->setYAcceleration(300);
+			}
+			else {
+				particle->setYAcceleration(130);
+			}
+		}
+		else {
+			particle->setYAcceleration(300);
+		}
+		emitter = SpriteFactory::makeExplosion(particle, 10, 200, Vector2(0,0));
+		
+		emitter->setZ(99);
+		
+		if (_horizontal) {
+			if (i >= NB_EMITTERS / 2) {
+				emitter->setShootingAngle(0.0f);
+				emitter->setShootingAngleVariance(10.0f);
+				emitter->setShootingForceVariance(140.0f);
+			}
+			else {
+				emitter->setShootingAngle(0.0f);
+				emitter->setShootingAngleVariance(20.0f);
+				emitter->setShootingForce(100);
+				emitter->setShootingForceVariance(140.0f);
+			}
+		}
+		else {
+			emitter->setShootingAngle(0);
+			emitter->setShootingAngleVariance(60);
+			emitter->setShootingForceVariance(100);
+		}
+		emitter->getPhases().push_back(ParticlePhase(0.3, 0.4, 0.0f, Vector2(), 180.0f, 0.0f, Vector2(), 90.0f));
+		
+		_emitters[i] = emitter;
+	}
+
 	if (_horizontal) {
 		rotate(90);
 	}
@@ -58,6 +112,7 @@ void Bridge::stopRetracting() {
 void Bridge::startRetracting() {
 	_retracting = true;
 	_activating = false;
+	_finisedClosing = false;
 }
 
 //TODO: Intelligent tweening instead of hack...
@@ -69,6 +124,13 @@ void Bridge::update() {
 	//When the timer is over a certain time, we begin to retract the bridge.
 	if (!_activating && !_retracted && _timer.getTime() > RETRACTING_DELAY) {
 		startRetracting();
+	}
+	if (!_finisedClosing && _retractedRatio <= 0.0 && !_retracting) {
+		std::cout << "Bridge set to emit" << std::endl;
+		for (int i=0; i < NB_EMITTERS; i++) {
+			_emitters[i]->start();
+		}
+		_finisedClosing = true;
 	}
 	if (_retracting) {
 		if (_retractedRatio > 1.0) {
@@ -104,6 +166,8 @@ void Bridge::update() {
 	
 	part1->update();
 	part2->update();
+	
+	//_emitter->update();
 }
 
 float Bridge::getHeight() {
@@ -148,16 +212,31 @@ void Bridge::setPosition(float newXPosition, float newYPosition) {
 		part1->moveX(-1 * part1->getWidth()/2);
 		part2->moveX(-1 * part2->getWidth()/2);
 	}
+	
+		for (int i=0; i < NB_EMITTERS; i++) {
+			if (_horizontal) {
+				_emitters[i]->setPosition(newXPosition + 4.0*(i-1.5), newYPosition);
+			}
+			else {
+				_emitters[i]->setPosition(newXPosition, newYPosition + 14.0*(i-1.5));
+			}
+		}
 }
 
 void Bridge::rotate(float angleToAdd) {
 	part1->rotate(angleToAdd);
 	part2->rotate(angleToAdd);
+
+	for (int i = 0; i < NB_EMITTERS; i++) {
+		_emitters[i]->rotate(angleToAdd);
+	}
 }
 
 void Bridge::render() {
 	part1->render();
 	part2->render();
+	
+	//_emitter->render();
 }
 
 bool Bridge::checkIsOnBridge(Vector2 point, bool oldPos) {
@@ -229,11 +308,12 @@ Sprite *Bridge::getPartAtPoint(RedBox::Vector2 point, bool oldPos) {
 	}
 	return NULL;
 }
-	Vector2 Bridge::getOldPositionForPart(Sprite* part) {
-		if (part == part1) {
-			return oldPositions[0];
-		}
-		return oldPositions[1];
+
+Vector2 Bridge::getOldPositionForPart(Sprite* part) {
+	if (part == part1) {
+		return oldPositions[0];
 	}
+	return oldPositions[1];
+}
 
 }

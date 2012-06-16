@@ -166,6 +166,10 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 			bridges[i] = bridge;
 			
 			add(bridge);
+			
+			for (int i=0; i < Bridge::NB_EMITTERS; i++) {
+				add(bridge->_emitters[i]);
+			}
 		}
 		
 		initRooms();

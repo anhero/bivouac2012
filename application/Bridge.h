@@ -13,7 +13,10 @@
 namespace Bivouac2012 {
 
 class Bridge : public RedBox::Sprite  {
+	friend class PlayState;
 public:
+	static const int NB_EMITTERS = 4;
+	
 	Bridge(RedBox::Vector2 pos, bool horizontal);
 	
 	void update();
@@ -54,6 +57,7 @@ private:
 	bool _retracting;
 	bool _retracted;
 	bool _activating;
+	bool _finisedClosing;
 	
 	//0 for closed, 1 for retracted.
 	float _retractedRatio;
@@ -63,6 +67,8 @@ private:
 	RedBox::Sprite *part2;
 	
 	RedBox::Vector2 oldPositions[2];
+	
+	RedBox::SpriteEmitter *_emitters[NB_EMITTERS];
 };
 }
 
