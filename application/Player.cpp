@@ -272,9 +272,9 @@ void Player::harvestBacon(){
     debugCircle->setPosition(colCirclePosition);
     debugCircle->setScaling(Vector2(radius,radius));
     for (std::list<Bacon*>::iterator i = _parentState->bacons.begin(); i != _parentState->bacons.end(); ) {
-        if (((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
-            (*i)->setToBeDeleted(true);
-            i = _parentState->bacons.erase(i);
+        if (!(*i)->getIsFlicking() && ((*i)->getPositionCenter()  - colCirclePosition).getLength() < radius) {
+				(*i)->setToBeDeleted(true);
+				i = _parentState->bacons.erase(i);
         }
         else{
             i++;
