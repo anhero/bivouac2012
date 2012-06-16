@@ -44,7 +44,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
         initCrack();
         Text* myFont = new Text("font");
         myFont->setText("test324");
-        //add(myFont);
+        add(myFont);
         myFont->setPosition(250,250);
         
         
