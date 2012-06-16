@@ -328,19 +328,19 @@ void Player::collisionsAndShits() {
 	else if (last_room != NULL) {
 		//LEFT EDGE
 		if (collisionPoint.x - PLAYER_COLLISION_CIRCLE <= last_room->getXPosition()) {
-			this->setXCollisionPosition(oldX);
+			this->setXCollisionPosition(oldX + 1);
 		}
 		//RIGHT EDGE
 		else if (collisionPoint.x + PLAYER_COLLISION_CIRCLE >= last_room->getXPosition() + last_room->getWidth()) {
-			this->setXCollisionPosition(oldX);
+			this->setXCollisionPosition(oldX - 1);
 		}
 		//TOP EDGE
 		if (collisionPoint.y - PLAYER_COLLISION_CIRCLE <= last_room->getYPosition()) {
-			this->setYCollisionPosition(oldY);
+			this->setYCollisionPosition(oldY + 1);
 		}
 		//BOTTOM EDGE
 		else if (collisionPoint.y + PLAYER_COLLISION_CIRCLE >= last_room->getYPosition() + last_room->getHeight()) {
-			this->setYCollisionPosition(oldY);
+			this->setYCollisionPosition(oldY - 1);
 		}
 	}
 	if (last_room == NULL && last_bridge == NULL) {
