@@ -36,7 +36,7 @@ namespace Bivouac2012 {
 		void initRooms();
         void calculateCollisionButtons();
         void calculateHookGrabing();
-        
+        void clearBacon();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
         std::vector<Player*> players;

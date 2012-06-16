@@ -59,10 +59,23 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 			buttons[3]->activate();
 	
         }
+        if (data.key == Key::BACKSPACE) {
+            clearBacon();
+
+        }
+        
 		if (data.key == Key::ESCAPE) {
 			RedBox::Engine::exitApplication(0);
 		}
 	}
+    
+    void PlayState::clearBacon(){
+        for (std::list<Bacon*>::iterator i = bacons.begin(); i != bacons.end(); ) {
+            (*i)->setToBeDeleted(true);
+            i = bacons.erase(i);
+            i++;
+        }
+    }
 
     void PlayState::initPlayers() {
 		//We check the number of available gamepads.
