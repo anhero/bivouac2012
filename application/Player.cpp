@@ -135,7 +135,7 @@ void Player::onKeyRelease(KeySignalData data) {
         if (data.gamePadIndex == _playerID) {
             if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
-                    //SMASH THE FUCK OUT OF HIM!!!!
+                    _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
                     _graber->getHook()->grabedshacle();
                 }
