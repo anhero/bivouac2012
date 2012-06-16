@@ -170,25 +170,22 @@ void Player::update() {
 		angle += 360.0f;
 		angle -=  45.0f;
 		angle = fmod(angle,360);
-		std::cout << angle << "°";
 		if (angle < 90.0f) {
-			std::cout << "right";
 			animationIndex = 3;
 		}
 		else if (angle < 180.0f) {
-			std::cout << "up";
 			animationIndex = 0;
 		}
 		else if (angle < 270.0f) {
-			std::cout << "left";
 			animationIndex = 2;
 		}
 		else {
-			std::cout << "down";
 			animationIndex = 1;
 		}
 		
-		std::cout << std::endl;
+		if (getOldPosition() != getPosition()) {
+			animationIndex += 4;
+		}
 		
 		if (getCurrentAnimation() != ANIMATIONS[animationIndex]) {
 			startAnimation(ANIMATIONS[animationIndex]);
