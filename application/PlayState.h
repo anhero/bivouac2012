@@ -28,6 +28,9 @@ namespace Bivouac2012 {
         void render();
 
     private:
+        
+        void onPointerMove(RedBox::PointerButtonSignalData data);
+        
         void initPlayers();
 		void onKeyHold(RedBox::KeySignalData data);
 		void onGetFocus();
@@ -38,6 +41,8 @@ namespace Bivouac2012 {
         void calculateHook();
         void calculateGrabing();
         void clearBacon();
+        
+        void initGrille();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
         std::vector<Player*> players;

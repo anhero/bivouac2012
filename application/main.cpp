@@ -28,6 +28,9 @@ void initResources() {
     TEX("chain3");
     TEX("bacon_glow");
     TEX("bacon_strip");
+    TEX("grille");
+    TEX("lava_square");
+    
 }
 
 int main(int argc, char *argv[]) {
