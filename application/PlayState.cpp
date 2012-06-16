@@ -46,6 +46,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 		if (data.key == Key::F9) {
 			buttons[0]->activate();
             players[0]->baconAssplosion();
+            players[0]->flick();
 		}
 		if (data.key == Key::F10) {
 			buttons[1]->activate();

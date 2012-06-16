@@ -129,7 +129,7 @@ void Player::update() {
 	}
 	collisionsAndShits();
 	
-	Sprite::update();
+	BivouacSprite::update();
     _hook->update();
 }
 
