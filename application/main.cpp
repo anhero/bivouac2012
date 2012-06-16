@@ -14,6 +14,8 @@ void initResources() {
 	TEX("rock_2");
 	TEX("rock_3");
 	
+	TEX("hud");
+	
 	TEX("pedantic_smoke_1");
 	
 	TEX("floor");
@@ -53,12 +55,14 @@ int main(int argc, char *argv[]) {
 	RedBox::Engine::setMinFps(5);
 
 	// We initialize the engine with a screen resolution.
-	RedBox::Engine::initializeEngine(900, 900);
+	RedBox::Engine::initializeEngine(1280, 1100);
 
 	initResources();
 
 	RedBox::Engine::addState(new Bivouac2012::PlayState());
 	RedBox::Engine::playState("PlayState");
+	
+//	RedBox::MainWindow::getInstance().setFullScreen(true);
 	
 	// Then start everything.
 	RedBox::Engine::showMainWindow();
