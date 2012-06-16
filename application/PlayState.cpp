@@ -38,8 +38,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
         
-		//camera.setScaling(768.0f/1100.0f,768.0f/1100.0f);
-		//camera.setScaling(0.5,0.5);
+		//Scaling with the game area height
+		camera.setScaling(camera.getHeight()/HEIGHT,camera.getHeight()/HEIGHT);
+		camera.setPosition(0,0);
         initBridges();
         initPlayers();
         initGrille();

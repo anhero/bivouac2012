@@ -55,14 +55,16 @@ int main(int argc, char *argv[]) {
 	RedBox::Engine::setMinFps(5);
 
 	// We initialize the engine with a screen resolution.
-	RedBox::Engine::initializeEngine(1280, 1100);
-
+	//RedBox::Engine::initializeEngine(1760 , 1100);
+	//RedBox::Engine::initializeEngine(1680 , 1050);
+	RedBox::Engine::initializeEngine(1280, 768);
+	
+	//RedBox::MainWindow::getInstance().setFullScreen(true);
+	
 	initResources();
 
 	RedBox::Engine::addState(new Bivouac2012::PlayState());
 	RedBox::Engine::playState("PlayState");
-	
-//	RedBox::MainWindow::getInstance().setFullScreen(true);
 	
 	// Then start everything.
 	RedBox::Engine::showMainWindow();
