@@ -56,7 +56,7 @@ const std::string Player::ANIMATIONS[9] =  {
 			this->addAnimation(ANIMATIONS[i], 0.1, 1, 1, FRAME_OF_DIRECTION(0));
 		}
 		for (int i=0; i < 4; i++) {
-			this->addAnimation(ANIMATIONS[i+4], 0.1, -1, 8
+			this->addAnimation(ANIMATIONS[i+4], 0.07, -1, 8
 				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(1) ,FRAME_OF_DIRECTION(2) ,FRAME_OF_DIRECTION(1) 
 				,FRAME_OF_DIRECTION(0) ,FRAME_OF_DIRECTION(3) ,FRAME_OF_DIRECTION(4) ,FRAME_OF_DIRECTION(3)
 			);
