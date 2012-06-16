@@ -31,11 +31,77 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
         
+//        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
+        
         camera.setScaling(Vector2(0.88,0.88));
         initBridges();
         initPlayers();
+        initGrille();
 	}
 
+    void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){
+        std::cout << data.getPosition() << std::endl;
+    }
+
+    void PlayState::initGrille(){
+        
+        
+        
+        //plateform 1
+        Sprite * lava = new Sprite("lava_square");
+        lava->setPosition(-36, -36);
+        add(lava);
+        Sprite * grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        
+        
+        //plateform2
+        lava = new Sprite("lava_square");
+        lava->setPosition(815, -36);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        //plateforme3
+        lava = new Sprite("lava_square");
+        lava->setPosition(-36, 825);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+
+        //plateforme4
+        lava = new Sprite("lava_square");
+        lava->setPosition(818, 525);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        lava = new Sprite("lava_square");
+        lava->setPosition(518, 525);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        lava = new Sprite("lava_square");
+        lava->setPosition(518, 825);
+        add(lava);
+        grille = new Sprite("grille");
+        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        add(grille);
+        
+        
+        
+        
+        
+    }
+    
 	void PlayState::update() {
         calculateCollisionButtons();
         calculateHook();
@@ -125,7 +191,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -66;
 //    }
 
 	void PlayState::onGetFocus() {
-		MainWindow::getInstance().hideCursor();
+//		MainWindow::getInstance().hideCursor();
 	}
 	
 	void PlayState::onLoseFocus() {
