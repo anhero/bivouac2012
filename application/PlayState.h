@@ -50,6 +50,8 @@ namespace Bivouac2012 {
 		int _nbPlayers;
 		bool _usesGamepads;
         std::list<Bacon*> bacons;
+		
+		unsigned int _zRefreshCounter;
         
 	};
 }
