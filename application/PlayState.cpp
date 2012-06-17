@@ -83,7 +83,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			playerScore->setAlignment(TextAlignment::RIGHT);
 			playerScore->setZ(2005);
 			playerScore->setScaling(Vector2(2.0,2.0));
-			playerScore->setPosition(hud->getXPosition() + 250,450);
+			playerScore->setPosition(hud->getXPosition() + 200,450);
 			playerScore->moveY(100 * i);
 			playerScore->setText("0");
 			Color plCol = Color::BLACK;
@@ -103,6 +103,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			}
 			playerScore->setColor(plCol);
 			add(playerScore);
+			playerScores.push_back(playerScore);
 		}
 		
 		
@@ -187,12 +188,14 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         calculateCollisionButtons();
         calculateHook();
 		
+		//Also refreshes scores
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {
 				players[i]->setZ(players[i]->getYPosition()+200);
 				if (players[i]->_state == CARRIED) {
 					players[i]->setZ(players[i]->getZ() + 92);
 				}
+				playerScores[i]->setText(Parser::intToString(players[i]->baconCount));
 			}
 			_zRefreshCounter = 4;
 		}
