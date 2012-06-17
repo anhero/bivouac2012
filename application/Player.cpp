@@ -170,7 +170,7 @@ void Player::render(){
     BivouacSprite::render();
     _hook->render();
 	
-	if(true||_graber){
+	if(_graber){
 		buttonHud->render();
 		escapeText->render();
 	}
@@ -434,7 +434,7 @@ void Player::collisionsAndShits() {
 }
     
     void Player::refreshGrabed(){
-        if (_state == CARRIED) {
+        if (_state == CARRIED && _graber != 0) {
             setPosition(_graber->getPositionCenter() - Vector2(0,30) - getSize()/2);
         }
     }
