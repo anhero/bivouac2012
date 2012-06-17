@@ -76,6 +76,7 @@
 		518200C7158D16C200FA5802 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820093158D16C200FA5802 /* star.png */; };
 		518200C8158D16C200FA5802 /* title_screen_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820094158D16C200FA5802 /* title_screen_5.png */; };
 		518200CA158D170D00FA5802 /* spritesheet_players_eyes.png in Resources */ = {isa = PBXBuildFile; fileRef = 518200C9158D170D00FA5802 /* spritesheet_players_eyes.png */; };
+		51F04151158DBADA0034FF59 /* realdude-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 51F04150158DBADA0034FF59 /* realdude-1.wav */; };
 		51F38BD7158CB03C008EF15D /* Bacon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51F38BD5158CB03C008EF15D /* Bacon.cpp */; };
 		51F38BF2158CBDC9008EF15D /* BivouacSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51F38BF0158CBDC9008EF15D /* BivouacSprite.cpp */; };
 		5C2A74D3158B35A200029CFB /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74D1158B27CC00029CFB /* Player.cpp */; };
@@ -183,6 +184,7 @@
 		51820093158D16C200FA5802 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		51820094158D16C200FA5802 /* title_screen_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_screen_5.png; sourceTree = "<group>"; };
 		518200C9158D170D00FA5802 /* spritesheet_players_eyes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet_players_eyes.png; sourceTree = "<group>"; };
+		51F04150158DBADA0034FF59 /* realdude-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "realdude-1.wav"; sourceTree = "<group>"; };
 		51F38BD5158CB03C008EF15D /* Bacon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bacon.cpp; sourceTree = "<group>"; };
 		51F38BD6158CB03C008EF15D /* Bacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bacon.h; sourceTree = "<group>"; };
 		51F38BF0158CBDC9008EF15D /* BivouacSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BivouacSprite.cpp; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				51F04150158DBADA0034FF59 /* realdude-1.wav */,
 				512224C1158D6485003C9172 /* hud_button2.png */,
 				5CAC74F7158D407C006E249B /* font.ttf */,
 				510955AA158D2DF300F58D57 /* lava.png */,
@@ -518,6 +521,7 @@
 				5CAC7520158D5D66006E249B /* hud.png in Resources */,
 				5CAC7522158D61C9006E249B /* lava2.png in Resources */,
 				512224C2158D6485003C9172 /* hud_button2.png in Resources */,
+				51F04151158DBADA0034FF59 /* realdude-1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

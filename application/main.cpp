@@ -44,6 +44,9 @@ void initResources() {
     TEX("lava2");
     TEX("BaconSheet");
 	TEX("hud_button2");
+	
+	RedBox::ResourceManager::loadMusicRelativePath("bg", "realdude-1.wav");
+	
 }
 
 int main(int argc, char *argv[]) {

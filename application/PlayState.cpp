@@ -37,7 +37,8 @@ static const int MEGATIMER_DURATION = 60;
         setBackgroundColor(Color(0, 0, 0));
 		
 		
-		
+		AudioEngine::getMusicEngine().getBackgroundMusic("bg", false)->play(-1, 4.5);
+
 		
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
