@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #include "Bacon.h"
+#include <math.h>
 
 
 using namespace RedBox;
@@ -28,7 +29,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
-	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0) {
+	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer(2.0f * 60 *48) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
@@ -203,6 +204,17 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         }else{
             reset();
         }
+		if (megatimer % 48 == 0) {
+			countDown->setText(Parser::intToString(megatimer/48));
+		}
+		
+		megatimer--;
+		if (megatimer <=0) {
+			//FINITO BITCHES
+		}
+		
+		
+		
 	}
     void PlayState::render() {
     }
