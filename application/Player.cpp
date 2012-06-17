@@ -39,7 +39,7 @@ const std::string Player::ANIMATIONS[9] =  {
 	
 	static const int STUN_LENGTH = 100;
 
-    static const int DEFAULT_BACON_COUNT = 300;
+    static const int DEFAULT_BACON_COUNT = 150;
     
 	Player::Player(PlayState *parentState, int id) : BivouacSprite("spritesheet_players_eyes", Vector2(54, 92), Vector2(), 88, parentState),
     _playerID(id), facingAngle(DOWN), _state(MOBILE),
@@ -199,6 +199,10 @@ void Player::thumbStickMovements() {
 		GamePadState gamePadState = InputManager::getInstance().getGamePad(_playerID)->getState();
 		float x = gamePadState.getThumbstick(0);
 		float y = gamePadState.getThumbstick(1);
+		
+		if(_playerID == 0){
+			std::cout << "0: " << gamePadState.getThumbstick(3) << std::endl;
+		}
 		if (fabs(x) < 0.2) {
 			x = 0.0;
 		}

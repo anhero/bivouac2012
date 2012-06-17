@@ -18,7 +18,7 @@ namespace Bivouac2012 {
     HookShot::HookShot(const std::string& hook, const std::string& chain, Player* myCrazyFuckUser): 
 	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false), _grabedPlayer(false)
 	{
-        _grabedToughtess = Random::getRandomInteger(10, 30);
+        _grabedToughtess = 2; //Random::getRandomInteger(1, );
         _timer.stop();
         _hook = new Sprite(hook);
         _myOwner = myCrazyFuckUser;
