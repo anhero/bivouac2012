@@ -29,7 +29,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
-	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer(2.0f * 60 *48) {
+	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( 60 *48) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
@@ -39,24 +39,84 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
         
-		//camera.setScaling(768.0f/1100.0f,768.0f/1100.0f);
-		//camera.setScaling(0.5,0.5);
+		//Scaling with the game area height
+		_screenHeight = camera.getHeight();
+		
+		camera.setScaling(_screenHeight/HEIGHT,_screenHeight/HEIGHT);
+		camera.setPosition(0,0);
         initBridges();
         initPlayers();
         initGrille();
         initCrack();
-        Text* myFont = new Text("font");
-        myFont->setText("0123456789");
-		myFont->setColor(Color::YELLOW);
-        add(myFont);
-        myFont->setPosition(250,250);
+		
+		makeTheHud();
+	}
+
+	void PlayState::makeTheHud() {
+		float offset = WIDTH;
+		//This centers on the 5:3 display
+		
 		
 		Sprite *hud = new Sprite("hud");
-		hud->setPosition(1000,20);
-		add(hud);
+		hud->setPosition(offset,-110);
         
+		Sprite *right_bg = new Sprite("right_border");
+		right_bg->setPosition(0, 0);
+		right_bg->setXScaling(
+			0.65
+		);
+		right_bg->setXPosition(camera.getWidth() - right_bg->getWidth());
 		
-        
+		right_bg->setZ(2000);
+		hud->setZ(2001);
+		
+        countDown = new Text("font");
+        countDown->setText("000");
+		countDown->setAlignment(TextAlignment::RIGHT);
+		countDown->setZ(2005);
+		countDown->setScaling(Vector2(2.0,2.0));
+		
+		//TODO SCORES LOOP
+		
+		for (int i=0; i < players.size(); i++) {
+			RedBox::Text *playerScore = new Text("font");
+			playerScore->setText("000");
+			playerScore->setAlignment(TextAlignment::RIGHT);
+			playerScore->setZ(2005);
+			playerScore->setScaling(Vector2(2.0,2.0));
+			playerScore->setPosition(hud->getXPosition() + 200,450);
+			playerScore->moveY(100 * i);
+			playerScore->setText("0");
+			Color plCol = Color::BLACK;
+			switch (i) {
+				case 0:
+					plCol = Color(155,85,31);
+					break;
+				case 1:
+					plCol = Color(119,121,120);
+					break;
+				case 2:
+					plCol = Color(149,190,92);
+					break;
+				case 3:
+					plCol = Color(158,94,127);
+					break;
+			}
+			playerScore->setColor(plCol);
+			add(playerScore);
+			playerScores.push_back(playerScore);
+		}
+		
+		
+		countDown->setAlignment(TextAlignment::CENTER);
+		countDown->setScaling(Vector2(2.6,2.6));
+        countDown->setPosition(hud->getXPosition() + 90,100);
+		countDown->setColor(Color(120,120,120));
+        add(countDown);
+		
+		
+		add(right_bg);
+		add(hud);
 	}
 
     void PlayState::onPointerMove(RedBox::PointerButtonSignalData data){
@@ -129,12 +189,14 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         calculateCollisionButtons();
         calculateHook();
 		
+		//Also refreshes scores
 		if (_zRefreshCounter == 0) {
 			for (int i = 0; i < players.size(); ++i) {
 				players[i]->setZ(players[i]->getYPosition()+200);
 				if (players[i]->_state == CARRIED) {
 					players[i]->setZ(players[i]->getZ() + 92);
 				}
+				playerScores[i]->setText(Parser::intToString(players[i]->baconCount));
 			}
 			_zRefreshCounter = 4;
 		}
@@ -142,10 +204,13 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         }else{
             reset();
         }
+		if (megatimer % 48 == 0) {
+			countDown->setText(Parser::intToString(megatimer/48));
+		}
 		
 		megatimer--;
 		if (megatimer <=0) {
-			//FINITO BITCHES
+			gameOver();
 		}
 		
 		

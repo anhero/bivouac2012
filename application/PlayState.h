@@ -48,6 +48,9 @@ namespace Bivouac2012 {
         void syncPlayerStatus();
         void clearBacon();
         void createLava();
+		
+		void makeTheHud();
+        
         
         void initCrack();
         void initGrille();
@@ -71,8 +74,16 @@ namespace Bivouac2012 {
 		bool _usesGamepads;
         std::list<Bacon*> bacons;
 		
+		float _screenHeight;
+
 		unsigned int _zRefreshCounter;
+		
+		
         void gameOver();
+
+		std::vector<RedBox::Text*> playerScores;
+		RedBox::Text *countDown;
+        
 	};
 }
 
