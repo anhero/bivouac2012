@@ -130,4 +130,7 @@ namespace Bivouac2012 {
         
     }
 
+	int Bacon::_maxFlicks() {
+		return 3;
+	}
 }

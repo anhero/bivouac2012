@@ -44,6 +44,7 @@ namespace Bivouac2012 {
         void shackle();
         std::vector<RedBox::Sprite*> _chains;
          Player* _myOwner;
+		 unsigned int _cooldown;
         
     };
 }

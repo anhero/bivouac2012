@@ -29,6 +29,8 @@ namespace Bivouac2012 {
         int flickCount;
         int flickFrequencyCount;
         bool isFLicking;
+		
+		virtual int _maxFlicks();
 
 	};
 }

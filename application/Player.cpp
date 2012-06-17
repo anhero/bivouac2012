@@ -484,4 +484,7 @@ void Player::collisionsAndShits() {
     HookShot* Player::getHook(){
         return _hook;
     }
+	int Player::_maxFlicks() {
+		return 3;
+	}
 }

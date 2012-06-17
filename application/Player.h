@@ -65,6 +65,9 @@ public:
 	RedBox::Vector2 getCollisionPosition();
 	
 	void stun();
+	
+	protected:
+		int _maxFlicks();
 
 private:
     HookShot* _hook;

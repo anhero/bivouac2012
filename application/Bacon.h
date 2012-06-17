@@ -19,6 +19,10 @@ namespace Bivouac2012 {
         Bacon(RedBox::Vector2 coord, PlayState *parentState);
         
         void update();
+		
+	protected:
+		int _maxFlicks();
+		
     private:
         bool startedFlicking;
         PlayState *_parentState;

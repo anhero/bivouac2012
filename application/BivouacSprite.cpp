@@ -20,7 +20,7 @@ namespace Bivouac2012 {
         Sprite::update();
         
         if(isFLicking){
-            if (flickCount/(10) < 10) {
+            if (flickCount/(10) < _maxFlicks()) {
             flickFrequencyCount++;
             if(flickFrequencyCount > 5){
                 this->setAlpha(100);
@@ -46,4 +46,8 @@ namespace Bivouac2012 {
     void BivouacSprite::finishedFlicking(){}
     
     void BivouacSprite::collisionsAndShits(){}
+	
+	int BivouacSprite::_maxFlicks() {
+		return 0;
+	}
 }

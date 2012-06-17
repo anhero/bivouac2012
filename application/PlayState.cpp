@@ -28,7 +28,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
-static const int MEGATIMER_DURATION = 3660;
+static const int MEGATIMER_DURATION = 60 * 2 + 30;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( MEGATIMER_DURATION * 48)

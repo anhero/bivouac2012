@@ -17,6 +17,7 @@ namespace Bivouac2012 {
     
     HookShot::HookShot(const std::string& hook, const std::string& chain, Player* myCrazyFuckUser): 
 	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false), _grabedPlayer(false)
+	, _cooldown(0)
 	{
         _grabedToughtess = 2; //Random::getRandomInteger(1, );
         _timer.stop();
@@ -28,8 +29,11 @@ namespace Bivouac2012 {
         }
     }
     
-    void HookShot::update()
-    {
+    void HookShot::update() {
+		if (_cooldown > 0) {
+			_cooldown--;
+		}
+		
         if (steps == _nbChains || _hookedPlayer) {
             _isThrown = false;
             if (!_timer.isStarted()) {
@@ -76,6 +80,11 @@ namespace Bivouac2012 {
         }
     }
     void HookShot::throwGraplin(float facing){
+		if (_cooldown) {
+			return;
+		}
+		_cooldown = 48 / 4 * 3; // 3/4 of a second.
+		
 		Vector2 unitVectorWithAngle;
 
         unitVectorWithAngle = Vector2(1,0);
