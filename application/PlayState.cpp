@@ -47,11 +47,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         initPlayers();
         initGrille();
         initCrack();
-        Text* myFont = new Text("font");
-        myFont->setText("0123456789");
-		myFont->setColor(Color::YELLOW);
-        add(myFont);
-        myFont->setPosition(250,250);
 		
 		makeTheHud();
 	}
@@ -59,22 +54,66 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 	void PlayState::makeTheHud() {
 		float offset = WIDTH;
 		//This centers on the 5:3 display
-		/* */
-		if (_screenHeight == 768.0f) {
-			offset += 51.0f;
-		}
-		/* */
-		offset += 30;
 		
 		
 		Sprite *hud = new Sprite("hud");
-		hud->setPosition(offset + 90,100);
+		hud->setPosition(offset,-110);
         
-		Sprite *blackbg = SpriteFactory::makePolygon(4,1,Color::BLACK);
-		blackbg->setScaling(660 - 30,1100);
-		blackbg->setPosition(offset + 0, 0);
+		Sprite *right_bg = new Sprite("right_border");
+		right_bg->setPosition(0, 0);
+		right_bg->setXScaling(
+			0.65
+		);
+		right_bg->setXPosition(camera.getWidth() - right_bg->getWidth());
 		
-		add(blackbg);
+		right_bg->setZ(2000);
+		hud->setZ(2001);
+		
+        countDown = new Text("font");
+        countDown->setText("000");
+		countDown->setAlignment(TextAlignment::RIGHT);
+		countDown->setZ(2005);
+		countDown->setScaling(Vector2(2.0,2.0));
+		
+		//TODO SCORES LOOP
+		
+		for (int i=0; i < players.size(); i++) {
+			RedBox::Text *playerScore = new Text("font");
+			playerScore->setText("000");
+			playerScore->setAlignment(TextAlignment::RIGHT);
+			playerScore->setZ(2005);
+			playerScore->setScaling(Vector2(2.0,2.0));
+			playerScore->setPosition(hud->getXPosition() + 250,450);
+			playerScore->moveY(100 * i);
+			playerScore->setText("0");
+			Color plCol = Color::BLACK;
+			switch (i) {
+				case 0:
+					plCol = Color(155,85,31);
+					break;
+				case 1:
+					plCol = Color(119,121,120);
+					break;
+				case 2:
+					plCol = Color(149,190,92);
+					break;
+				case 3:
+					plCol = Color(158,94,127);
+					break;
+			}
+			playerScore->setColor(plCol);
+			add(playerScore);
+		}
+		
+		
+		countDown->setAlignment(TextAlignment::CENTER);
+		countDown->setScaling(Vector2(2.6,2.6));
+        countDown->setPosition(hud->getXPosition() + 90,100);
+		countDown->setColor(Color(120,120,120));
+        add(countDown);
+		
+		
+		add(right_bg);
 		add(hud);
 	}
 

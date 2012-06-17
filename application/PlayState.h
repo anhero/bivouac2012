@@ -72,6 +72,10 @@ namespace Bivouac2012 {
 		float _screenHeight;
 
 		unsigned int _zRefreshCounter;
+		
+		
+		std::vector<RedBox::Text*> playerScores;
+		RedBox::Text *countDown;
         
 	};
 }

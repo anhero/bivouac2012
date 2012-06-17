@@ -166,17 +166,17 @@ void Player::render(){
     
     void Player::resetPosition(){
         if(_playerID == 0){
-            setCollisionPosition(Vector2(170,170));
+            setCollisionPosition(Vector2(240,240));
         }
         else if(_playerID == 1){
-            setCollisionPosition(Vector2(730,170));
+            setCollisionPosition(Vector2(860,240));
 
         }
         else if(_playerID == 2){
-            setCollisionPosition(Vector2(170,730));
+            setCollisionPosition(Vector2(860,860));
         }
         else if(_playerID == 3){
-            setCollisionPosition(Vector2(730,730));
+            setCollisionPosition(Vector2(240,860));
 
         }
     }

@@ -15,6 +15,7 @@ void initResources() {
 	TEX("rock_3");
 	
 	TEX("hud");
+	TEX("right_border");
 	
 	TEX("pedantic_smoke_1");
 	
