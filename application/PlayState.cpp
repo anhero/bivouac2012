@@ -512,13 +512,23 @@ void PlayState::initRooms() {
         OVER->setZ(5500);
         OVER->setPosition(Vector2(-50,-50));
         add(OVER);
+		{
+            Text* gameOverTitle = new Text("font");
+            gameOverTitle->setZ(5501);
+            gameOverTitle->setText("GAME OVER");
+            gameOverTitle->setColor(Color::WHITE);
+			gameOverTitle->setScaling(Vector2(1.6,1.6));
+            add(gameOverTitle);
+            gameOverTitle->setYPosition(100);
+			gameOverTitle->setXPosition(camera.getWidth() / 2 - gameOverTitle->getWidth() / 2);
+		}
         for (int i=0; i<_nbPlayers; ++i) {
             Text* finalScore = new Text("font");
             finalScore->setZ(5501);
-            finalScore->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
+            finalScore->setText("Player " + Parser::intToString(i+1) + "   " + Parser::intToString(players[i]->baconCount));
             finalScore->setColor(playerScores[i]->getColor());
             add(finalScore);
-            finalScore->setYPosition(100*i + 100);
+            finalScore->setYPosition(100*i + 300);
 			finalScore->setXPosition(camera.getWidth() / 2 - finalScore->getWidth() / 2);
             players[i]->setAlpha(0);
         }
