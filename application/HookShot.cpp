@@ -18,7 +18,7 @@ namespace Bivouac2012 {
     HookShot::HookShot(const std::string& hook, const std::string& chain, Player* myCrazyFuckUser): 
 	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false), _grabedPlayer(false)
 	{
-        _grabedToughtess = Random::getRandomInteger(10, 30);
+        _grabedToughtess = 2; //Random::getRandomInteger(1, );
         _timer.stop();
         _hook = new Sprite(hook);
         _myOwner = myCrazyFuckUser;
@@ -76,12 +76,12 @@ namespace Bivouac2012 {
         }
     }
     void HookShot::throwGraplin(float facing){
-		Vector2 temp;
+		Vector2 unitVectorWithAngle;
 
-        temp = Vector2(1,0);
-        temp.setAngle(facing);
+        unitVectorWithAngle = Vector2(1,0);
+        unitVectorWithAngle.setAngle(facing);
         //L'endroit où le hook ira.
-        _destinationHook = _myOwner->getPosition() + (2*_nbChains*temp*_chains[0]->getWidth());
+        _destinationHook = _myOwner->getPositionCenter() + (2*_nbChains*unitVectorWithAngle*_chains[0]->getWidth());
         _hook->setAngle(facing);
         _isThrown = true;
         steps = 1;
