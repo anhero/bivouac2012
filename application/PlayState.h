@@ -53,6 +53,10 @@ namespace Bivouac2012 {
         void initGrille();
 //        void baconAssplosionAt(RedBox::Vector2 coord, int baconCount);
         
+		
+		
+		int megatimer;
+		
         std::vector<Player*> players;
 		
         void reset();
