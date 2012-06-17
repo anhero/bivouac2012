@@ -147,7 +147,7 @@ void Player::onKeyRelease(KeySignalData data) {
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
         if (data.gamePadIndex == _playerID) {
-            if (data.buttonIndex < 4) {
+            //if (data.buttonIndex < 4) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
                     Player* target = _parentState->getPlayers()[_hook->getTargetId()];
                     Vector2 temp = Vector2(-300,0);
@@ -162,7 +162,7 @@ void Player::onKeyRelease(KeySignalData data) {
                 else{
                     _hook->throwGraplin(facingAngle);
                 }
-            }
+            //}
         }
 	}
 
@@ -200,9 +200,6 @@ void Player::thumbStickMovements() {
 		float x = gamePadState.getThumbstick(0);
 		float y = gamePadState.getThumbstick(1);
 		
-		if(_playerID == 0){
-			std::cout << "0: " << gamePadState.getThumbstick(3) << std::endl;
-		}
 		if (fabs(x) < 0.2) {
 			x = 0.0;
 		}
@@ -214,11 +211,33 @@ void Player::thumbStickMovements() {
             facingAngle = direction.getAngle();
         }
 		move(Vector2(x * PLAYER_SPEED, y * PLAYER_SPEED));
+		
+		
+		//Direction according to the second thumbsticks.
+		if (InputManager::getInstance().getGamePad(_playerID)->getNbOfThumbstick() == 4) {
+			y = gamePadState.getThumbstick(2);
+			x = gamePadState.getThumbstick(3);
+		}
+		//XBOX 360 PAD!
+		else {
+			x = gamePadState.getThumbstick(3);
+			y = gamePadState.getThumbstick(4);
+		}
+
+		if (fabs(x) < 0.2) {
+			x = 0.0;
+		}
+		if (fabs(y) < 0.2) {
+			y = 0.0;
+		}
+		if (fabs(x) > 0.2 || fabs(y) > 0.2) {
+			direction = Vector2(x,y);
+			facingAngle = direction.getAngle();
+		}
 	}
 }
 
 void Player::update() {
-	thumbStickMovements();
 
 	//We assume first update
 	if (this->getOldXPosition() == 0 && this->getOldYPosition() == 0) {
@@ -280,7 +299,8 @@ void Player::update() {
 			startAnimation(ANIMATIONS[animationIndex]);
 		}
 	}
-	
+		thumbStickMovements();
+
 	BivouacSprite::update();
     _hook->update();
     refreshGrabed();
