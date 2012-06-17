@@ -146,7 +146,7 @@ void Player::onKeyRelease(KeySignalData data) {
 		
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
-        if (data.gamePadIndex == _playerID) {
+        if (data.gamePadIndex == _playerID && !_parentState->getGameOver()) {
             if (data.buttonIndex < 4 && !_stunned) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
                     Player* target = _parentState->getPlayers()[_hook->getTargetId()];
