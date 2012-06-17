@@ -157,7 +157,9 @@ void Player::onKeyRelease(KeySignalData data) {
                     target->stun();
                     _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
-                    _graber->getHook()->grabedshacle();
+					if (_graber != NULL) {
+						_graber->getHook()->grabedshacle();
+					}
                 }
                 else{
 					if (!_stunned) {
