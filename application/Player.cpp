@@ -157,10 +157,14 @@ void Player::onKeyRelease(KeySignalData data) {
                     target->stun();
                     _hook->releasePlayer();
                 }else if(_state == CARRIED || _state == HOOKED){
-                    _graber->getHook()->grabedshacle();
+					if (_graber != NULL) {
+						_graber->getHook()->grabedshacle();
+					}
                 }
                 else{
-                    _hook->throwGraplin(facingAngle);
+					if (!_stunned) {
+						_hook->throwGraplin(facingAngle);
+					}
                 }
             //}
         }
@@ -244,6 +248,8 @@ void Player::update() {
 		BivouacSprite::update();
 		return;
 	}
+	thumbStickMovements();
+
 	collisionsAndShits();
     
     if(!isFLicking)harvestBacon();
@@ -299,7 +305,6 @@ void Player::update() {
 			startAnimation(ANIMATIONS[animationIndex]);
 		}
 	}
-		thumbStickMovements();
 
 	BivouacSprite::update();
     _hook->update();

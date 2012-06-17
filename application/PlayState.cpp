@@ -28,17 +28,20 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
-static const int MEGATIMER_DURATION = 60;
+static const int MEGATIMER_DURATION = 3660;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( MEGATIMER_DURATION * 48)
-	, _gameOver(false){
+	, _gameOver(false), OVER(0){
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
 		
 		AudioEngine::getMusicEngine().getBackgroundMusic("bg", false)->play(-1, 4.5);
 
+        OVER = SpriteFactory::makePolygon(4, 1, Color::BLACK);
+        OVER->setXPosition(5000);
+		
 		
         
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
@@ -184,6 +187,12 @@ static const int MEGATIMER_DURATION = 60;
         
     }
     void PlayState::reset(){
+        for (int i=0; i<gameOverText.size(); ++i) {
+            gameOverText[i]->setAlpha(0);
+        }
+        if (OVER) {
+            OVER->setXPosition(5000);
+        }
         clearBacon();
         initPlayers();
     }
@@ -508,29 +517,28 @@ void PlayState::initRooms() {
     }
     void PlayState::gameOver(){
 		_gameOver = true;
-        Sprite* OVER = SpriteFactory::makePolygon(4, 1, Color::BLACK);
         OVER->scale(2000, 2000);
         OVER->setZ(5500);
         OVER->setPosition(Vector2(-50,-50));
         add(OVER);
 		{
-            Text* gameOverTitle = new Text("font");
-            gameOverTitle->setZ(5501);
-            gameOverTitle->setText("GAME OVER");
-            gameOverTitle->setColor(Color::WHITE);
-			gameOverTitle->setScaling(Vector2(1.6,1.6));
-            add(gameOverTitle);
-            gameOverTitle->setYPosition(100);
-			gameOverTitle->setXPosition(camera.getWidth() / 2 - gameOverTitle->getWidth() / 2);
+            gameOverText.push_back(new Text("font"));
+            gameOverText.back()->setZ(5501);
+            gameOverText.back()->setText("GAME OVER");
+            gameOverText.back()->setColor(Color::WHITE);
+			gameOverText.back()->setScaling(Vector2(1.6,1.6));
+            add(gameOverText.back());
+            gameOverText.back()->setYPosition(100);
+			gameOverText.back()->setXPosition(camera.getWidth() / 2 - gameOverText.back()->getWidth() / 2);
 		}
         for (int i=0; i<_nbPlayers; ++i) {
-            Text* finalScore = new Text("font");
-            finalScore->setZ(5501);
-            finalScore->setText("Player " + Parser::intToString(i+1) + "   " + Parser::intToString(players[i]->baconCount));
-            finalScore->setColor(playerScores[i]->getColor());
-            add(finalScore);
-            finalScore->setYPosition(100*i + 300);
-			finalScore->setXPosition(camera.getWidth() / 2 - finalScore->getWidth() / 2);
+            gameOverText.push_back(new Text("font"));
+            gameOverText.back()->setZ(5501);
+            gameOverText.back()->setText("Player " + Parser::intToString(i+1) + "   " + Parser::intToString(players[i]->baconCount));
+            gameOverText.back()->setColor(playerScores[i]->getColor());
+            add(gameOverText.back());
+            gameOverText.back()->setYPosition(100*i + 300);
+			gameOverText.back()->setXPosition(camera.getWidth() / 2 - gameOverText.back()->getWidth() / 2);
             players[i]->setAlpha(0);
         }
         
