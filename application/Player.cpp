@@ -82,16 +82,23 @@ const std::string Player::ANIMATIONS[9] =  {
 		
 		this->startAnimation("standing_down");
          
-         
+		escapeText = new Text("font", "TO ESCAPE");
+		
+		escapeText->setColor(Color::WHITE);
          canHarvestBacon = true;
          
          debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
         
+		buttonHud = new Sprite("hud_button2", Vector2(), Vector2(33,29), Vector2(), 2);
+		buttonHud->addAnimation("boblol", 0.08, -1, 2, 0,1);
+		buttonHud->startAnimation("boblol");
         resetPosition();
 	}
 
 	Player::~Player() {
 		delete _hook;
+		delete buttonHud;
+		delete escapeText;
 	}
 
 	//KEYBOARD HANDLING
@@ -162,6 +169,11 @@ void Player::onKeyRelease(KeySignalData data) {
 void Player::render(){
     BivouacSprite::render();
     _hook->render();
+	
+	if(_graber){
+		buttonHud->render();
+		escapeText->render();
+	}
 }
     
     void Player::resetPosition(){
@@ -269,6 +281,10 @@ void Player::update() {
     _hook->update();
     refreshGrabed();
     debugCircle->update();
+	buttonHud->update();
+	escapeText->update();
+	escapeText->setPosition(getPosition() + Vector2(80, -50));
+	buttonHud->setPosition(getPosition() + Vector2(40, -50));
 //    std::cout << "bacon count : " << baconCount << std::endl;
 }
     
@@ -418,7 +434,7 @@ void Player::collisionsAndShits() {
 }
     
     void Player::refreshGrabed(){
-        if (_state == CARRIED) {
+        if (_state == CARRIED && _graber != 0) {
             setPosition(_graber->getPositionCenter() - Vector2(0,30) - getSize()/2);
         }
     }

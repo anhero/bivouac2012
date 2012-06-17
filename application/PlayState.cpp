@@ -30,7 +30,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
-        setBackgroundColor(Color(255, 0, 0));
+        setBackgroundColor(Color(0, 0, 0));
 		
 		
 		
@@ -151,8 +151,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 //        grille->setPosition(lava->getPosition()-Vector2(14,14));
         add(grille);
     }
-    
-               
+      
     
     void PlayState::initGrille(){
         
@@ -181,7 +180,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
     }
     void PlayState::reset(){
         clearBacon();
-        _reset = false;
         initPlayers();
     }
 	void PlayState::update() {
@@ -237,10 +235,16 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
             clearBacon();
 
         }
+		if(data.key == Key::ESCAPE){
+			RedBox::Engine::exitApplication(0);
+		}
         
-		if (data.key == Key::ESCAPE) {
+		if (data.key == Key::ENTER) {
             for (int i = 0; i<_nbPlayers; ++i) {
                 players[i]->setToBeDeleted(true);
+            }
+            for (int i = 0; i<_nbPlayers; ++i) {
+                players.pop_back();
             }
 			_reset = true;
 		}
@@ -276,6 +280,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			//TODO: Position players in the middle of the platforms.
 //            players.back()->setPosition(Vector2(100,650));
         }
+        _reset = false;
     }
     
 //    void PlayState::baconAssplosionAt(RedBox::Vector2 coord, int baconCount){

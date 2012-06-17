@@ -58,6 +58,8 @@ public:
 	float getXCollisionPosition();
         
     int baconCount;
+		
+		RedBox::Text * escapeText;
         
 	RedBox::Vector2 getCollisionPosition();
 	
@@ -72,6 +74,7 @@ private:
     Player* _graber;
     PlayerState _state;
 	
+		RedBox::Sprite * buttonHud;
         bool canHarvestBacon;
     
 	void thumbStickMovements();

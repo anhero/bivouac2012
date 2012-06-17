@@ -24,7 +24,7 @@ namespace Bivouac2012 {
         bool hookedPlayer(){return _hookedPlayer;}
         bool grabedPlayer(){return _grabedPlayer;}
         int getTargetId(){return _targetId;}
-        void releasePlayer(){_grabedPlayer = false;}
+        void releasePlayer();
         void grab(int playerId);
         void grabedshacle();
         RedBox::Vector2 getPosition();

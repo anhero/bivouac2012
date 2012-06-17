@@ -39,9 +39,11 @@ void initResources() {
     TEX("crack_1");
     TEX("crack_2");
     TEX("crack_3");
-
+    
     TEX("lava");
+    TEX("lava2");
     TEX("BaconSheet");
+	TEX("hud_button2");
 }
 
 int main(int argc, char *argv[]) {

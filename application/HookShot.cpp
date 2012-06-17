@@ -111,6 +111,12 @@ namespace Bivouac2012 {
     }
     void HookShot::shackle(){
         _grabedPlayer = false;
+        
         _myOwner->_parentState->getPlayers()[_targetId]->flick();
+        _myOwner->_parentState->getPlayers()[_targetId]->setGraber(0);
+    }
+    void HookShot::releasePlayer(){
+        _grabedPlayer = false;
+        _myOwner->_parentState->getPlayers()[_targetId]->setGraber(0);
     }
 }
