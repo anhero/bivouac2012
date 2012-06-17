@@ -87,11 +87,15 @@ const std::string Player::ANIMATIONS[9] =  {
          
          debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
         
+		buttonHud = new Sprite("hud_button2", Vector2(), Vector2(33,29), Vector2(), 2);
+		buttonHud->addAnimation("boblol", 0.08, -1, 2, 0,1);
+		buttonHud->startAnimation("boblol");
         resetPosition();
 	}
 
 	Player::~Player() {
 		delete _hook;
+		delete buttonHud;
 	}
 
 	//KEYBOARD HANDLING
@@ -162,6 +166,10 @@ void Player::onKeyRelease(KeySignalData data) {
 void Player::render(){
     BivouacSprite::render();
     _hook->render();
+	
+	if(true||_graber){
+		buttonHud->render();
+	}
 }
     
     void Player::resetPosition(){
@@ -269,6 +277,8 @@ void Player::update() {
     _hook->update();
     refreshGrabed();
     debugCircle->update();
+	buttonHud->update();
+	buttonHud->setPosition(getPosition() + Vector2(40, -50));
 //    std::cout << "bacon count : " << baconCount << std::endl;
 }
     

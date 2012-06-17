@@ -41,6 +41,7 @@ void initResources() {
 
     TEX("lava");
     TEX("BaconSheet");
+	TEX("hud_button2");
 }
 
 int main(int argc, char *argv[]) {

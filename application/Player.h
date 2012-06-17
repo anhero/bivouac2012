@@ -72,6 +72,7 @@ private:
     Player* _graber;
     PlayerState _state;
 	
+		RedBox::Sprite * buttonHud;
         bool canHarvestBacon;
     
 	void thumbStickMovements();
