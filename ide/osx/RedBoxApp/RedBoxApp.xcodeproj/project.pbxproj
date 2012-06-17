@@ -23,7 +23,7 @@
 		240489F414F2BAA2001F8F61 /* libRedBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2404897614F2B508001F8F61 /* libRedBox.a */; };
 		2489A5E315047EC40032DE88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2489A5C215047EAA0032DE88 /* main.cpp */; };
 		510955AB158D2DF300F58D57 /* lava.png in Resources */ = {isa = PBXBuildFile; fileRef = 510955AA158D2DF300F58D57 /* lava.png */; };
-		510955DE158D618A00F58D57 /* hud_button2.png in Resources */ = {isa = PBXBuildFile; fileRef = 510955DD158D618A00F58D57 /* hud_button2.png */; };
+		512224C2158D6485003C9172 /* hud_button2.png in Resources */ = {isa = PBXBuildFile; fileRef = 512224C1158D6485003C9172 /* hud_button2.png */; };
 		51820095158D16C200FA5802 /* bacon_glow_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820061158D16C200FA5802 /* bacon_glow_shadow.png */; };
 		51820096158D16C200FA5802 /* bacon_glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820062158D16C200FA5802 /* bacon_glow.png */; };
 		51820097158D16C200FA5802 /* bacon_strip_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 51820063158D16C200FA5802 /* bacon_strip_shadow.png */; };
@@ -84,8 +84,8 @@
 		5C2A74F5158B4F1800029CFB /* HookShot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A74F4158B4F1800029CFB /* HookShot.cpp */; };
 		5C77DE1215470FFF00519AA3 /* PlayState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CAFE7431547031F00804B5A /* PlayState.cpp */; };
 		5CAC74F8158D407C006E249B /* font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CAC74F7158D407C006E249B /* font.ttf */; };
-		5CAC751E158D55BF006E249B /* lava2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CAC751D158D55BF006E249B /* lava2.png */; };
 		5CAC7520158D5D66006E249B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CAC751F158D5D66006E249B /* hud.png */; };
+		5CAC7522158D61C9006E249B /* lava2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CAC7521158D61C9006E249B /* lava2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,7 +130,7 @@
 		240489DC14F2BA36001F8F61 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2489A5C215047EAA0032DE88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		510955AA158D2DF300F58D57 /* lava.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lava.png; sourceTree = "<group>"; };
-		510955DD158D618A00F58D57 /* hud_button2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hud_button2.png; sourceTree = "<group>"; };
+		512224C1158D6485003C9172 /* hud_button2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hud_button2.png; sourceTree = "<group>"; };
 		51820061158D16C200FA5802 /* bacon_glow_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_glow_shadow.png; sourceTree = "<group>"; };
 		51820062158D16C200FA5802 /* bacon_glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_glow.png; sourceTree = "<group>"; };
 		51820063158D16C200FA5802 /* bacon_strip_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon_strip_shadow.png; sourceTree = "<group>"; };
@@ -196,8 +196,8 @@
 		5C2A74F4158B4F1800029CFB /* HookShot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HookShot.cpp; sourceTree = "<group>"; };
 		5C2A74F6158B4F2300029CFB /* HookShot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HookShot.h; sourceTree = "<group>"; };
 		5CAC74F7158D407C006E249B /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
-		5CAC751D158D55BF006E249B /* lava2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lava2.png; sourceTree = "<group>"; };
 		5CAC751F158D5D66006E249B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hud.png; sourceTree = "<group>"; };
+		5CAC7521158D61C9006E249B /* lava2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lava2.png; sourceTree = "<group>"; };
 		5CAFE7431547031F00804B5A /* PlayState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayState.cpp; sourceTree = "<group>"; };
 		5CAFE7441547031F00804B5A /* PlayState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayState.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,18 +270,18 @@
 		2404895814F2B4B4001F8F61 /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				510955DD158D618A00F58D57 /* hud_button2.png */,
+				512224C1158D6485003C9172 /* hud_button2.png */,
 				5CAC74F7158D407C006E249B /* font.ttf */,
 				510955AA158D2DF300F58D57 /* lava.png */,
-				51820061158D16C200FA5802 /* bacon_glow_shadow.png */,
+				5CAC7521158D61C9006E249B /* lava2.png */,
 				51820062158D16C200FA5802 /* bacon_glow.png */,
 				51820063158D16C200FA5802 /* bacon_strip_shadow.png */,
-				5CAC751D158D55BF006E249B /* lava2.png */,
 				51820064158D16C200FA5802 /* bacon_strip.png */,
 				51820065158D16C200FA5802 /* BaconSheet.png */,
 				51820066158D16C200FA5802 /* blood_1.png */,
 				5CAC751F158D5D66006E249B /* hud.png */,
 				51820067158D16C200FA5802 /* blood_2.png */,
+				51820061158D16C200FA5802 /* bacon_glow_shadow.png */,
 				51820068158D16C200FA5802 /* blood_3.png */,
 				51820069158D16C200FA5802 /* bridge.png */,
 				5182006A158D16C200FA5802 /* button_off.png */,
@@ -515,9 +515,9 @@
 				518200CA158D170D00FA5802 /* spritesheet_players_eyes.png in Resources */,
 				510955AB158D2DF300F58D57 /* lava.png in Resources */,
 				5CAC74F8158D407C006E249B /* font.ttf in Resources */,
-				5CAC751E158D55BF006E249B /* lava2.png in Resources */,
 				5CAC7520158D5D66006E249B /* hud.png in Resources */,
-				510955DE158D618A00F58D57 /* hud_button2.png in Resources */,
+				5CAC7522158D61C9006E249B /* lava2.png in Resources */,
+				512224C2158D6485003C9172 /* hud_button2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
