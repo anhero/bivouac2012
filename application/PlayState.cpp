@@ -28,7 +28,7 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
-static const int MEGATIMER_DURATION = 30;
+static const int MEGATIMER_DURATION = 60;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( MEGATIMER_DURATION * 48)
@@ -65,9 +65,6 @@ static const int MEGATIMER_DURATION = 30;
         
 		Sprite *right_bg = new Sprite("right_border");
 		right_bg->setPosition(0, 0);
-		right_bg->setXScaling(
-			0.65
-		);
 		right_bg->setXPosition(camera.getWidth() - right_bg->getWidth());
 		
 		right_bg->setZ(2000);
@@ -118,7 +115,9 @@ static const int MEGATIMER_DURATION = 30;
         add(countDown);
 		
 		
-		add(right_bg);
+		if (_screenHeight == 768) {
+			add(right_bg);
+		}
 		add(hud);
 	}
 
@@ -514,13 +513,13 @@ void PlayState::initRooms() {
         OVER->setPosition(Vector2(-50,-50));
         add(OVER);
         for (int i=0; i<_nbPlayers; ++i) {
-            
-            Text* myFont = new Text("font");
-            myFont->setZ(5501);
-            myFont->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
-            myFont->setColor(Color::YELLOW);
-            add(myFont);
-            myFont->setPosition(250,100*i + 100);
+            Text* finalScore = new Text("font");
+            finalScore->setZ(5501);
+            finalScore->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
+            finalScore->setColor(playerScores[i]->getColor());
+            add(finalScore);
+            finalScore->setYPosition(100*i + 100);
+			finalScore->setXPosition(camera.getWidth() / 2 - finalScore->getWidth() / 2);
             players[i]->setAlpha(0);
         }
         
