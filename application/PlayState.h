@@ -83,6 +83,8 @@ namespace Bivouac2012 {
 
 		std::vector<RedBox::Text*> playerScores;
 		RedBox::Text *countDown;
+		
+		bool _gameOver;
         
 	};
 }

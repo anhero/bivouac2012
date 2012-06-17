@@ -28,8 +28,11 @@ static const int BRIDGE_OFFSET_FROM_SCREEN = 200;
 static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
+static const int MEGATIMER_DURATION = 60;
+
 	PlayState::PlayState(const std::string &newName) : State(newName),
-	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( 9999990) {
+	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( MEGATIMER_DURATION * 48)
+	, _gameOver(false){
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
@@ -62,9 +65,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         
 		Sprite *right_bg = new Sprite("right_border");
 		right_bg->setPosition(0, 0);
-		right_bg->setXScaling(
-			0.65
-		);
 		right_bg->setXPosition(camera.getWidth() - right_bg->getWidth());
 		
 		right_bg->setZ(2000);
@@ -115,7 +115,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         add(countDown);
 		
 		
-		add(right_bg);
+		if (_screenHeight == 768) {
+			add(right_bg);
+		}
 		add(hud);
 	}
 
@@ -208,8 +210,10 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			countDown->setText(Parser::intToString(megatimer/48));
 		}
 		
-		megatimer--;
-		if (megatimer <=0) {
+		if (megatimer > 0) {
+			megatimer--;
+		}
+		if (megatimer <= 0 && !_gameOver) {
 			gameOver();
 		}
 		
@@ -475,7 +479,7 @@ void PlayState::initRooms() {
                 //verify the collision with other players
                 for (int j=0; j<_nbPlayers; ++j) {
                     if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30 &&
-                        !players[j]->getIsFlicking() && players[i]->isMobile()) {
+                        !players[j]->getIsFlicking()) {
                         
                         currentHook->grab(j);
                     }
@@ -502,19 +506,20 @@ void PlayState::initRooms() {
         }
     }
     void PlayState::gameOver(){
-        Sprite* pixel = SpriteFactory::makePolygon(4, 1, Color::BLACK);
-        pixel->scale(2000, 2000);
-        pixel->setZ(500);
-        pixel->setPosition(Vector2(-50,-50));
-        add(pixel);
+		_gameOver = true;
+        Sprite* OVER = SpriteFactory::makePolygon(4, 1, Color::BLACK);
+        OVER->scale(2000, 2000);
+        OVER->setZ(5500);
+        OVER->setPosition(Vector2(-50,-50));
+        add(OVER);
         for (int i=0; i<_nbPlayers; ++i) {
-            
-            Text* myFont = new Text("font");
-            myFont->setZ(510);
-            myFont->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
-            myFont->setColor(Color::YELLOW);
-            add(myFont);
-            myFont->setPosition(250,100*i + 100);
+            Text* finalScore = new Text("font");
+            finalScore->setZ(5501);
+            finalScore->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
+            finalScore->setColor(playerScores[i]->getColor());
+            add(finalScore);
+            finalScore->setYPosition(100*i + 100);
+			finalScore->setXPosition(camera.getWidth() / 2 - finalScore->getWidth() / 2);
             players[i]->setAlpha(0);
         }
         
