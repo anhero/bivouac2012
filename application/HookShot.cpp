@@ -102,10 +102,21 @@ namespace Bivouac2012 {
     }
     
     void HookShot::grab(int playerId){
-        if (_myOwner->isMobile()) {
+		Player * grabbed = _myOwner->_parentState->getPlayers()[playerId];
+		if (grabbed->_hook->getTargetId() != -1  && grabbed->_hook->grabedPlayer()) {
+			grabbed->_hook->shackle();
+		}
+		else if (_myOwner->isMobile()) {
             _isThrown = false;
             _hookedPlayer = true;
-            _myOwner->_parentState->getPlayers()[playerId]->setGraber(_myOwner);
+			
+			if (grabbed->_graber != NULL) {
+				grabbed->_graber->_hook->_hookedPlayer = false;
+				grabbed->_graber->_hook->_grabedPlayer = false;
+				grabbed->_graber->_hook->_targetId = -1;
+			}
+			
+            grabbed->setGraber(_myOwner);
             _targetId = playerId;
         }
     }

@@ -24,6 +24,7 @@ namespace Bivouac2012 {
     };
     class Player : public BivouacSprite, public sigly::HasSlots<> {
 		friend class PlayState;
+		friend class HookShot;
 public:
 	Player(PlayState *parentState, int id);
 	~Player();

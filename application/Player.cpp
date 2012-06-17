@@ -129,9 +129,9 @@ void Player::onKeyHold(KeySignalData data) {
     
 void Player::onKeyPress(KeySignalData data) {
     switch (data.key) {
-        case Key::SPACE:
+/*        case Key::SPACE:
             _hook->throwGraplin(facingAngle);
-            break;
+            break; */
             
         default:
             break;
