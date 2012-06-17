@@ -29,7 +29,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
-	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( 60 *48) {
+	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( 9999990) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
@@ -475,7 +475,7 @@ void PlayState::initRooms() {
                 //verify the collision with other players
                 for (int j=0; j<_nbPlayers; ++j) {
                     if (players[i] != players[j] && (currentHook->getPosition() - players[j]->getPositionCenter()).getLength() < 30 &&
-                        !players[j]->getIsFlicking()) {
+                        !players[j]->getIsFlicking() && players[i]->isMobile()) {
                         
                         currentHook->grab(j);
                     }
