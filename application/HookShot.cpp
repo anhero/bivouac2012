@@ -15,7 +15,7 @@ using namespace RedBox;
 namespace Bivouac2012 {
 
     
-    HookShot::HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser): 
+    HookShot::HookShot(const std::string& hook, const std::string& chain, Player* myCrazyFuckUser): 
 	_isThrown(false), steps(0), _nbChains(10), _hookDelay(0.2), _targetId(-1), _hookedPlayer(false), _grabedPlayer(false)
 	{
         _grabedToughtess = Random::getRandomInteger(10, 30);
@@ -104,6 +104,7 @@ namespace Bivouac2012 {
     void HookShot::grab(int playerId){
         _isThrown = false;
         _hookedPlayer = true;
+        _myOwner->_parentState->getPlayers()[playerId]->setGraber(_myOwner);
         _targetId = playerId;
     }
     void HookShot::grabedshacle(){

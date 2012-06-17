@@ -15,7 +15,7 @@ namespace Bivouac2012 {
     class Player;
     class HookShot  {
     public:
-        HookShot(const std::string& hook, const std::string& chain, const Player* myCrazyFuckUser);
+        HookShot(const std::string& hook, const std::string& chain, Player* myCrazyFuckUser);
         void throwGraplin(float facing);
         void update();
         void render();
@@ -43,7 +43,7 @@ namespace Bivouac2012 {
         int steps;
         void shackle();
         std::vector<RedBox::Sprite*> _chains;
-        const Player* _myOwner;
+         Player* _myOwner;
         
     };
 }
