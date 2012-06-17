@@ -29,7 +29,7 @@ static const int ROOM_OFFSET_FROM_EDGE_OF_SCREEN = 0;
 static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
 	PlayState::PlayState(const std::string &newName) : State(newName),
-	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer(2.0f * 60 *48) {
+	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0), megatimer( 60 *48) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
         setBackgroundColor(Color(0, 0, 0));
 		
@@ -210,7 +210,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 		
 		megatimer--;
 		if (megatimer <=0) {
-			//FINITO BITCHES
+			gameOver();
 		}
 		
 		
@@ -262,6 +262,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
                 players.pop_back();
             }
 			_reset = true;
+		}
+		if (data.key == Key::G) {
+            gameOver();
 		}
 	}
     
@@ -497,5 +500,23 @@ void PlayState::initRooms() {
                 players[players[i]->getHook()->getTargetId()]->setGraber(players[i]);
             }
         }
+    }
+    void PlayState::gameOver(){
+        Sprite* pixel = SpriteFactory::makePolygon(4, 1, Color::BLACK);
+        pixel->scale(2000, 2000);
+        pixel->setZ(500);
+        pixel->setPosition(Vector2(-50,-50));
+        add(pixel);
+        for (int i=0; i<_nbPlayers; ++i) {
+            
+            Text* myFont = new Text("font");
+            myFont->setZ(510);
+            myFont->setText("player" + Parser::intToString(i+1) + " " + Parser::intToString(players[i]->baconCount));
+            myFont->setColor(Color::YELLOW);
+            add(myFont);
+            myFont->setPosition(250,100*i + 100);
+            players[i]->setAlpha(0);
+        }
+        
     }
 }

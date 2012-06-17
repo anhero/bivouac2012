@@ -79,6 +79,8 @@ namespace Bivouac2012 {
 		unsigned int _zRefreshCounter;
 		
 		
+        void gameOver();
+
 		std::vector<RedBox::Text*> playerScores;
 		RedBox::Text *countDown;
         
