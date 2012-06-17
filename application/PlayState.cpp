@@ -37,6 +37,8 @@ static const int MEGATIMER_DURATION = 3660;
         setBackgroundColor(Color(0, 0, 0));
 		
 		
+		AudioEngine::getMusicEngine().getBackgroundMusic("bg", false)->play(-1, 4.5);
+
         OVER = SpriteFactory::makePolygon(4, 1, Color::BLACK);
         OVER->setXPosition(5000);
 		
