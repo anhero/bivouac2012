@@ -47,7 +47,7 @@ namespace Bivouac2012 {
         void calculateGrabing();
         void syncPlayerStatus();
         void clearBacon();
-        
+        void createLava();
         
         void initCrack();
         void initGrille();

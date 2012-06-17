@@ -82,7 +82,9 @@ const std::string Player::ANIMATIONS[9] =  {
 		
 		this->startAnimation("standing_down");
          
-         
+		escapeText = new Text("font", "TO ESCAPE");
+		
+		escapeText->setColor(Color::WHITE);
          canHarvestBacon = true;
          
          debugCircle = SpriteFactory::makePolygon(4, 1, Color::WHITE);
@@ -96,6 +98,7 @@ const std::string Player::ANIMATIONS[9] =  {
 	Player::~Player() {
 		delete _hook;
 		delete buttonHud;
+		delete escapeText;
 	}
 
 	//KEYBOARD HANDLING
@@ -169,6 +172,7 @@ void Player::render(){
 	
 	if(true||_graber){
 		buttonHud->render();
+		escapeText->render();
 	}
 }
     
@@ -278,6 +282,8 @@ void Player::update() {
     refreshGrabed();
     debugCircle->update();
 	buttonHud->update();
+	escapeText->update();
+	escapeText->setPosition(getPosition() + Vector2(80, -50));
 	buttonHud->setPosition(getPosition() + Vector2(40, -50));
 //    std::cout << "bacon count : " << baconCount << std::endl;
 }
