@@ -34,7 +34,7 @@ public:
 	//void onThumbstickMove(RedBox::GamePadThumbstickSignalData data);
 	void onButtonHold(RedBox::GamePadButtonSignalData data);
 	void onButtonPress(RedBox::GamePadButtonSignalData data);
-	HookShot* getHook(){return _hook;}
+        HookShot* getHook();
     void render();
 	void update();
     bool isMobile(){return _state <= IMMUNE;}

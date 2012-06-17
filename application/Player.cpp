@@ -147,7 +147,7 @@ void Player::onKeyRelease(KeySignalData data) {
 	}
 	void Player::onButtonPress(RedBox::GamePadButtonSignalData data) {
         if (data.gamePadIndex == _playerID) {
-            if (data.buttonIndex < 4) {
+            if (data.buttonIndex < 4 && !_stunned) {
                 if (_hook->getTargetId() != -1  && _hook->grabedPlayer()) {
                     Player* target = _parentState->getPlayers()[_hook->getTargetId()];
                     Vector2 temp = Vector2(-300,0);
@@ -451,5 +451,8 @@ void Player::collisionsAndShits() {
 	
     void Player::setGraber(Player* graber){
         _graber = graber;
+    }
+    HookShot* Player::getHook(){
+        return _hook;
     }
 }
