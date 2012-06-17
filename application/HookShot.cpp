@@ -55,7 +55,7 @@ namespace Bivouac2012 {
                     if(_hookedPlayer){
                         _grabedPlayer = true;
                         _timer.start();
-                        _grabedToughtess = Random::getRandomInteger(10, 30);
+                        _grabedToughtess = Random::getRandomInteger(5, 10);
                     }
                     
                     _hookedPlayer = false;
