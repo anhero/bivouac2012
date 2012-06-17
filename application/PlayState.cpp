@@ -39,7 +39,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 //        Pointer::connectButtonPress(this, &PlayState::onPointerMove);
         
 		//Scaling with the game area height
-		camera.setScaling(camera.getHeight()/HEIGHT,camera.getHeight()/HEIGHT);
+		_screenHeight = camera.getHeight();
+		
+		camera.setScaling(_screenHeight/HEIGHT,_screenHeight/HEIGHT);
 		camera.setPosition(0,0);
         initBridges();
         initPlayers();
@@ -51,13 +53,27 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         add(myFont);
         myFont->setPosition(250,250);
 		
+		makeTheHud();
+	}
+
+	void PlayState::makeTheHud() {
+		float offset = WIDTH;
+		//This centers on the 5:3 display
+		/* */
+		if (_screenHeight == 768.0f) {
+			offset += 51.0f;
+		}
+		/* */
+		offset += 30;
+		
+		
 		Sprite *hud = new Sprite("hud");
-		hud->setPosition(1100 + 105,100);
+		hud->setPosition(offset + 90,100);
         
 		Sprite *blackbg = SpriteFactory::makePolygon(4,1,Color::BLACK);
-		blackbg->setScaling(660,1100);
-		blackbg->setPosition(1100,0);
-        
+		blackbg->setScaling(660 - 30,1100);
+		blackbg->setPosition(offset + 0, 0);
+		
 		add(blackbg);
 		add(hud);
 	}
@@ -68,21 +84,21 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 
     
     void PlayState::initCrack(){
-        Sprite * crack1;
-        Sprite * crack2;
-        Sprite * crack3;
-        
-        crack1 = new Sprite("crack_1");
-        add(crack1);
-        crack1->setPosition(264, -36);
-        
-        crack2 = new Sprite("crack_2");
-        crack2->setPosition(-36, 264);
-        add(crack2);
-
-        crack3 = new Sprite("crack_3");
-        crack3->setPosition(264, 264);
-        add(crack3);
+//        Sprite * crack1;
+//        Sprite * crack2;
+//        Sprite * crack3;
+//        
+//        crack1 = new Sprite("crack_1");
+//        add(crack1);
+//        crack1->setPosition(264, -36);
+//        
+//        crack2 = new Sprite("crack_2");
+//        crack2->setPosition(-36, 264);
+//        add(crack2);
+//
+//        crack3 = new Sprite("crack_3");
+//        crack3->setPosition(264, 264);
+//        add(crack3);
 
     }
     
@@ -104,89 +120,33 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         
         //plateforme1
         
-        createLavaGrill(-36, -36);
+        createLavaGrill(20, 20);
         
         
         //plateforme2
-        createLavaGrill(815, -36);
+        createLavaGrill(950, 20);
 //        createLavaGrill
         
         
         //plateforme3
-        createLavaGrill(-36, 825);
+        createLavaGrill(315, 665);
         
         
         //plateforme 4
-        createLavaGrill(818, 525);
-        createLavaGrill(518, 525);
-        createLavaGrill(518, 825);
-        
-        
-//        lavamodel->setDefaultFrame(5);
-        
-        //plateform 1
-//        Sprite * lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, -36);
-//        lava->addAnimation("glow", 0.3, -1, 11, 0,1,2,3,4,5,4,3,2,1);
+        createLavaGrill(955, 665);
+        createLavaGrill(955, 960);
+        createLavaGrill(665, 665);
 
-//        lava->startAnimation("glow");
-//        add(lava);
-//        Sprite * grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        
-//        
-//        //plateform2
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(815, -36);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        //plateforme3
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(-36, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//
-//        //plateforme4
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(818, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 525);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-//        
-//        lava = new Sprite(*lavamodel);
-//        lava->setPosition(518, 825);
-//        lava->startAnimation("glow");
-//        add(lava);
-//        grille = new Sprite("grille");
-//        grille->setPosition(lava->getPosition()-Vector2(14,14));
-//        add(grille);
-        
-        
         
         
     }
-    
+    void PlayState::reset(){
+        clearBacon();
+        _reset = false;
+        initPlayers();
+    }
 	void PlayState::update() {
+        if (!_reset) {
         calculateCollisionButtons();
         calculateHook();
 		
@@ -200,7 +160,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			_zRefreshCounter = 4;
 		}
 		_zRefreshCounter--;
-        
+        }else{
+            reset();
+        }
 	}
     void PlayState::render() {
     }
@@ -238,7 +200,10 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         }
         
 		if (data.key == Key::ESCAPE) {
-			RedBox::Engine::exitApplication(0);
+            for (int i = 0; i<_nbPlayers; ++i) {
+                players[i]->setToBeDeleted(true);
+            }
+			_reset = true;
 		}
 	}
     

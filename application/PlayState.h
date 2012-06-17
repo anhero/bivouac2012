@@ -47,6 +47,8 @@ namespace Bivouac2012 {
         void calculateGrabing();
         void syncPlayerStatus();
         void clearBacon();
+		
+		void makeTheHud();
         
         
         void initCrack();
@@ -55,6 +57,9 @@ namespace Bivouac2012 {
         
         std::vector<Player*> players;
 		
+        void reset();
+        bool _reset = false;
+        
 		Button * buttons[4];
 		Bridge * bridges[4];
 		
@@ -64,6 +69,8 @@ namespace Bivouac2012 {
 		bool _usesGamepads;
         std::list<Bacon*> bacons;
 		
+		float _screenHeight;
+
 		unsigned int _zRefreshCounter;
         
 	};
