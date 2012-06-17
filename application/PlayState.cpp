@@ -30,7 +30,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 	PlayState::PlayState(const std::string &newName) : State(newName),
 	_nbPlayers(0), _usesGamepads(true), _zRefreshCounter(0) {
 		Keyboard::connectKeyHold(this, &PlayState::onKeyHold);
-        setBackgroundColor(Color(255, 0, 0));
+        setBackgroundColor(Color(58, 32, 27));
 		
 		
 		
@@ -92,13 +92,22 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
         add(grille);
     }
     
-               
+    void PlayState::createLava(){
+        Sprite * lava = new Sprite("lava2",Vector2(0,camera.getPositionCenter().y-20), Vector2(272,40), Vector2(), 6);
+        add(lava);
+        lava->addAnimation("glow", 0.2, -1, 6, 0,1,2,3,4,5);
+        lava->startAnimation("glow");
+        lava->setZ(-150);
+        
+        //        grille->setPosition(lava->getPosition()-Vector2(14,14));
+        
+    }      
     
     void PlayState::initGrille(){
         
         
         //plateforme1
-        
+        createLava();
         createLavaGrill(20, 20);
         
         
