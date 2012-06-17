@@ -121,7 +121,6 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
     }
     void PlayState::reset(){
         clearBacon();
-        _reset = false;
         initPlayers();
     }
 	void PlayState::update() {
@@ -182,6 +181,9 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
             for (int i = 0; i<_nbPlayers; ++i) {
                 players[i]->setToBeDeleted(true);
             }
+            for (int i = 0; i<_nbPlayers; ++i) {
+                players.pop_back();
+            }
 			_reset = true;
 		}
 	}
@@ -216,6 +218,7 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
 			//TODO: Position players in the middle of the platforms.
 //            players.back()->setPosition(Vector2(100,650));
         }
+        _reset = false;
     }
     
 //    void PlayState::baconAssplosionAt(RedBox::Vector2 coord, int baconCount){
