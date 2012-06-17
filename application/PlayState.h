@@ -68,7 +68,7 @@ namespace Bivouac2012 {
         std::list<Bacon*> bacons;
 		
 		unsigned int _zRefreshCounter;
-        
+        void gameOver();
 	};
 }
 
