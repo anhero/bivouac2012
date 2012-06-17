@@ -185,8 +185,11 @@ static const int ROOM_BACKGROUND_OFFSET_FROM_EDGE_OF_SCREEN = -75;
             clearBacon();
 
         }
+		if(data.key == Key::ESCAPE){
+			RedBox::Engine::exitApplication(0);
+		}
         
-		if (data.key == Key::ESCAPE) {
+		if (data.key == Key::ENTER) {
             for (int i = 0; i<_nbPlayers; ++i) {
                 players[i]->setToBeDeleted(true);
             }
