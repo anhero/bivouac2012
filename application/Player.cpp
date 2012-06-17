@@ -476,4 +476,7 @@ void Player::collisionsAndShits() {
     void Player::setGraber(Player* graber){
         _graber = graber;
     }
+    HookShot* Player::getHook(){
+        return _hook;
+    }
 }

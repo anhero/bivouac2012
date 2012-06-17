@@ -28,6 +28,7 @@ namespace Bivouac2012 {
         void render();
         std::vector<Player*> getPlayers(){return players;}		
 		void stun();
+        bool getGameOver(){return _gameOver;}
 
     private:
         
